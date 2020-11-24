@@ -6,91 +6,83 @@ namespace DataLayer
 {
     public class DatabaseConnection : DatabaseProxy
     {
-        //connection string do skoly
-        // "server=dbsys.cs.vsb.cz\\STUDENT;database=userID;user=userID;password=heslo;"
-        //connection string do lokalniho souboru
-        // "Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=Q:\VSB_Vyuka\VIS_2020\Projekt_cv2\Data\Knihovna.mdf;Integrated Security=True;Connect Timeout=30"
+        private SqlConnection connection;
+        private SqlTransaction sqlTransaction;
 
-        private SqlConnection m_Connection;
-        private SqlTransaction m_SqlTransaction;
-        private static readonly Object m_LockObj = new object();
-        private static DatabaseConnection m_Instance = null;
+        private static readonly object lockObj = new object();
+        private static DatabaseConnection instance = null;
+
 
         public SqlTransaction SqlTransaction {
-            get => m_SqlTransaction;
-            set => m_SqlTransaction = value;
+            get => sqlTransaction;
+            set => sqlTransaction = value;
         }
 
         public SqlConnection Connection {
-            get => m_Connection;
-            set => m_Connection = value;
+            get => connection;
+            set => connection = value;
         }
 
         public static DatabaseConnection Instance {
             get {
-                lock (m_LockObj)
+                lock (lockObj)
                 {
-                    return m_Instance ?? (m_Instance = new DatabaseConnection());
+                    return instance ?? (instance = new DatabaseConnection());
                 }
             }
         }
 
-
         private DatabaseConnection()
         {
-            m_Connection = new SqlConnection();
+            connection = new SqlConnection();
         }
 
-        /// <summary>
-        /// Connect
-        /// </summary>
-        public bool Connect()
+
+        // Service methods
+        public override bool Connect()
         {
-            if (Connection.State != System.Data.ConnectionState.Open)
+            if (Connection.State != ConnectionState.Open)
             {
-                //Connection string je v konfiguraèním souboru xxxx.dll.config
-                Connection.ConnectionString = Properties.DBLayer.Default.ConnString;
+                // Connection string je v konfiguraèním souboru xxxx.dll.config
+                Connection.ConnectionString = Properties.Settings.Default.ConnectionString;
                 Connection.Open();
             }
             return true;
         }
 
-        /// <summary>
-        /// Close
-        /// </summary>
-        public void Close()
+        public override bool Connect(string connectionString)
+        {
+            if (Connection.State != ConnectionState.Open)
+            {
+                Connection.ConnectionString = connectionString;
+                Connection.Open();
+            }
+            return true;
+        }
+
+        public override void Close()
         {
             Connection.Close();
         }
 
-        /// <summary>
-        /// Begin a transaction.
-        /// </summary>
-        public void BeginTransaction()
+        public override void BeginTransaction()
         {
             SqlTransaction = Connection.BeginTransaction(IsolationLevel.Serializable);
         }
 
-        /// <summary>
-        /// End a transaction.
-        /// </summary>
-        public void EndTransaction()
+        public override void EndTransaction()
         {
             SqlTransaction.Commit();
             Close();
         }
 
-        /// <summary>
-        /// If a transaction is failed call it.
-        /// </summary>
-        public void Rollback()
+        public override void Rollback()
         {
             SqlTransaction.Rollback();
         }
 
-        /// <summary>
-        /// Insert a record encapulated in the command.
-        /// </summary>
+
+        // Database manipulation methods
         public int ExecuteNonQuery(SqlCommand command)
         {
             int rowNumber = 0;
@@ -105,9 +97,6 @@ namespace DataLayer
             return rowNumber;
         }
 
-        /// <summary>
-        /// Create command
-        /// </summary>
         public SqlCommand CreateCommand(string strCommand)
         {
             SqlCommand command = new SqlCommand(strCommand, Connection);
@@ -119,14 +108,10 @@ namespace DataLayer
             return command;
         }
 
-        /// <summary>
-        /// Select encapulated in the command.
-        /// </summary>
         public SqlDataReader Select(SqlCommand command)
         {
             SqlDataReader sqlReader = command.ExecuteReader();
             return sqlReader;
         }
-
     }
 }

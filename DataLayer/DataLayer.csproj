@@ -43,6 +43,11 @@
   <ItemGroup>
     <Compile Include="DatabaseConnection.cs" />
     <Compile Include="DatabaseProxy.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="TableDataGateways\CategoryGateway.cs" />
     <Compile Include="TableDataGateways\DailyStatisticsGateway.cs" />
     <Compile Include="TableDataGateways\FavoriteGameGateway.cs" />
@@ -54,6 +59,13 @@
     <Compile Include="TableDataGateways\UserReviewGateway.cs" />
     <Compile Include="TableDataGateways\UserGateway.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
