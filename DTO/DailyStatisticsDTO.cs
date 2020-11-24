@@ -6,7 +6,7 @@ namespace DTO
     {
         public int Id { get; set; }
         public DateTime Date { get; set; }
-        public int number_of_reviews { get; set; }
+        public int NumberOfReviews { get; set; }
         public string Type { get; set; }
     }
 }

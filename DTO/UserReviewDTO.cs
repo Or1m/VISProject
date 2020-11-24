@@ -9,7 +9,7 @@ namespace DTO
         public int UserId { get; set; }
         public int GameId { get; set; }
         public DateTime Date { get; set; }
-        public int Order_of_review { get; set; }
+        public int OrderOfReview { get; set; }
 
         public UserDTO User { get; set; }
         public GameDTO Game { get; set; }
