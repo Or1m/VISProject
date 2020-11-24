@@ -25,10 +25,10 @@ namespace DataLayer.TableDataGateways
         // Methods
         public int registerNewReviewer(Reviewer reviewer)
         {
-            DatabaseConnection db = new DatabaseConnection();
+            var db = DatabaseConnection.Instance;
             db.Connect();
 
-            OracleCommand command = db.CreateCommand(SQL_REGISTER_NEW);
+            var command = db.CreateCommand(SQL_REGISTER_NEW);
             PrepareCommand(command, reviewer);
             int ret = db.ExecuteNonQuery(command);
             db.Close();
@@ -37,10 +37,10 @@ namespace DataLayer.TableDataGateways
         
         public int updateReviewer(Reviewer reviewer)
         {
-            DatabaseConnection db = new DatabaseConnection();
+            var db = DatabaseConnection.Instance;
             db.Connect();
 
-            OracleCommand command = db.CreateCommand(SQL_UPDATE);
+            var command = db.CreateCommand(SQL_UPDATE);
             PrepareCommand(command, reviewer);
             int ret = db.ExecuteNonQuery(command);
             db.Close();
@@ -49,10 +49,10 @@ namespace DataLayer.TableDataGateways
 
         public int deleteReviewerById(int id)
         {
-            DatabaseConnection db = new DatabaseConnection();
+            var db = DatabaseConnection.Instance;
             db.Connect();
 
-            OracleCommand command = db.CreateCommand(SQL_DELETE_ID);
+            var command = db.CreateCommand(SQL_DELETE_ID);
 
             command.Parameters.AddWithValue(":reviewer_id", id);
             int ret = db.ExecuteNonQuery(command);
@@ -73,7 +73,7 @@ namespace DataLayer.TableDataGateways
                 db = (DatabaseConnection)pDb;
             }
 
-            OracleCommand command = db.CreateCommand(SQL_SELECT_ALL_REVIEWERS_HEADER);
+            var command = db.CreateCommand(SQL_SELECT_ALL_REVIEWERS_HEADER);
             OracleDataReader reader = db.Select(command);
 
             List<Reviewer> reviewers = ReadHeader(reader);
@@ -101,7 +101,7 @@ namespace DataLayer.TableDataGateways
                 db = (DatabaseConnection)pDb;
             }
 
-            OracleCommand command = db.CreateCommand(SQL_SELECT_FAVORIT_REVIEWERS_FOR_USER);
+            var command = db.CreateCommand(SQL_SELECT_FAVORIT_REVIEWERS_FOR_USER);
             command.Parameters.AddWithValue(":user_id", userId);
             OracleDataReader reader = db.Select(command);
 
@@ -130,7 +130,7 @@ namespace DataLayer.TableDataGateways
                 db = (DatabaseConnection)pDb;
             }
 
-            OracleCommand command = db.CreateCommand(SQL_SELECT_REVIEWER);
+            var command = db.CreateCommand(SQL_SELECT_REVIEWER);
             command.Parameters.AddWithValue(":reviewer_id", id);
             OracleDataReader reader = db.Select(command);
 
@@ -159,7 +159,7 @@ namespace DataLayer.TableDataGateways
                 db = (DatabaseConnection)pDb;
             }
 
-            OracleCommand command = db.CreateCommand(SQL_SELECT_REVIEWER_WITH_CATEGORY);
+            var command = db.CreateCommand(SQL_SELECT_REVIEWER_WITH_CATEGORY);
             command.Parameters.AddWithValue(":reviewer_id", id);
             OracleDataReader reader = db.Select(command);
 
@@ -175,7 +175,7 @@ namespace DataLayer.TableDataGateways
             return reviewers.ElementAt(0);
         }
 
-        private static void PrepareCommand(OracleCommand command, Reviewer reviewer)
+        private static void PrepareCommand(var command, Reviewer reviewer)
         {
             command.BindByName = true;
             command.Parameters.AddWithValue(":reviewer_id", reviewer.Reviewer_id);

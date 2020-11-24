@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesktopApp", "DesktopApp\De
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp", "WebApp\WebApp.csproj", "{206A112C-8871-40A8-909A-A91A5CA87E33}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DTO", "DTO\DTO.csproj", "{EFCC6743-C7C3-4537-B393-E7DC903A94A0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{206A112C-8871-40A8-909A-A91A5CA87E33}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{206A112C-8871-40A8-909A-A91A5CA87E33}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{206A112C-8871-40A8-909A-A91A5CA87E33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EFCC6743-C7C3-4537-B393-E7DC903A94A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFCC6743-C7C3-4537-B393-E7DC903A94A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFCC6743-C7C3-4537-B393-E7DC903A94A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFCC6743-C7C3-4537-B393-E7DC903A94A0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

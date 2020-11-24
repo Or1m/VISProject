@@ -25,7 +25,7 @@ namespace DataLayer.TableDataGateways
                 db = (DatabaseConnection)pDb;
             }
 
-            OracleCommand command = db.CreateCommand(SQL_SELECT_ALL);
+            var command = db.CreateCommand(SQL_SELECT_ALL);
             OracleDataReader reader = db.Select(command);
 
             List<DailyStatistics> statistics = Read(reader);
@@ -53,7 +53,7 @@ namespace DataLayer.TableDataGateways
                 db = (DatabaseConnection)pDb;
             }
 
-            OracleCommand command = db.CreateCommand(SQL_SELECT_BY_ID);
+            var command = db.CreateCommand(SQL_SELECT_BY_ID);
             command.Parameters.AddWithValue(":id", id);
             OracleDataReader reader = db.Select(command);
 

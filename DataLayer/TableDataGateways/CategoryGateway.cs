@@ -22,10 +22,10 @@ namespace DataLayer.TableDataGateways
         // Methods
         public int insertNew(string name)
         {
-            DatabaseConnection db = new DatabaseConnection();
+            var db = DatabaseConnection.Instance;
             db.Connect();
 
-            OracleCommand command = db.CreateCommand(SQL_INSERT_NEW);
+            var command = db.CreateCommand(SQL_INSERT_NEW);
             command.Parameters.AddWithValue(":name", name);
             int ret = db.ExecuteNonQuery(command);
             db.Close();
@@ -34,10 +34,10 @@ namespace DataLayer.TableDataGateways
 
         public int deleteById(int id)
         {
-            DatabaseConnection db = new DatabaseConnection();
+            var db = DatabaseConnection.Instance;
             db.Connect();
 
-            OracleCommand command = db.CreateCommand(SQL_DELETE_ID);
+            var command = db.CreateCommand(SQL_DELETE_ID);
             command.Parameters.AddWithValue(":category_id", id);
             int ret = db.ExecuteNonQuery(command);
             db.Close();
@@ -46,10 +46,10 @@ namespace DataLayer.TableDataGateways
 
         public int update(int id, string name)
         {
-            DatabaseConnection db = new DatabaseConnection();
+            var db = DatabaseConnection.Instance;
             db.Connect();
 
-            OracleCommand command = db.CreateCommand(SQL_UPDATE);
+            var command = db.CreateCommand(SQL_UPDATE);
             command.Parameters.AddWithValue(":name", name);
             command.Parameters.AddWithValue(":category_id", id);
             int ret = db.ExecuteNonQuery(command);
@@ -70,7 +70,7 @@ namespace DataLayer.TableDataGateways
                 db = (DatabaseConnection)pDb;
             }
 
-            OracleCommand command = db.CreateCommand(SQL_SELECT_ALL);
+            var command = db.CreateCommand(SQL_SELECT_ALL);
             OracleDataReader reader = db.Select(command);
 
             List<Category> categories = Read(reader);
@@ -98,7 +98,7 @@ namespace DataLayer.TableDataGateways
                 db = (DatabaseConnection)pDb;
             }
 
-            OracleCommand command = db.CreateCommand(SQL_SELECT_FOR_GAME);
+            var command = db.CreateCommand(SQL_SELECT_FOR_GAME);
             command.Parameters.AddWithValue(":game_id", gameId);
             OracleDataReader reader = db.Select(command);
 
@@ -127,7 +127,7 @@ namespace DataLayer.TableDataGateways
                 db = (DatabaseConnection)pDb;
             }
 
-            OracleCommand command = db.CreateCommand(SQL_SELECT_BY_ID);
+            var command = db.CreateCommand(SQL_SELECT_BY_ID);
             command.Parameters.AddWithValue(":category_id", id);
             OracleDataReader reader = db.Select(command);
 
@@ -155,7 +155,7 @@ namespace DataLayer.TableDataGateways
                 db = (DatabaseConnection)pDb;
             }
 
-            OracleCommand command = db.CreateCommand(SQL_SELECT_BY_NAME);
+            var command = db.CreateCommand(SQL_SELECT_BY_NAME);
             command.Parameters.AddWithValue(":name", name);
             OracleDataReader reader = db.Select(command);
 

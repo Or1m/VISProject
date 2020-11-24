@@ -10,10 +10,10 @@ namespace DataLayer.TableDataGateways
         // Methods
         public int insertNew(int game_game_id, int category_category_id)
         {
-            DatabaseConnection db = new DatabaseConnection();
+            var db = DatabaseConnection.Instance;
             db.Connect();
 
-            OracleCommand command = db.CreateCommand(SQL_INSERT_NEW);
+            var command = db.CreateCommand(SQL_INSERT_NEW);
             command.Parameters.AddWithValue(":game_game_id", game_game_id);
             command.Parameters.AddWithValue(":category_category_id", category_category_id);
             int ret = db.ExecuteNonQuery(command);
@@ -23,10 +23,10 @@ namespace DataLayer.TableDataGateways
 
         public int delete(int game_game_id, int category_category_id)
         {
-            DatabaseConnection db = new DatabaseConnection();
+            var db = DatabaseConnection.Instance;
             db.Connect();
 
-            OracleCommand command = db.CreateCommand(SQL_DELETE);
+            var command = db.CreateCommand(SQL_DELETE);
             command.Parameters.AddWithValue(":game_game_id", game_game_id);
             command.Parameters.AddWithValue(":category_category_id", category_category_id);
             int ret = db.ExecuteNonQuery(command);

@@ -22,10 +22,10 @@ namespace DataLayer.TableDataGateways
         // Methods
         public int insertNew(User_review review)
         {
-            DatabaseConnection db = new DatabaseConnection();
+            var db = DatabaseConnection.Instance;
             db.Connect();
 
-            OracleCommand command = db.CreateCommand(SQL_INSERT_NEW);
+            var command = db.CreateCommand(SQL_INSERT_NEW);
             PrepareCommand(command, review);
             int ret = db.ExecuteNonQuery(command);
             db.Close();
@@ -34,10 +34,10 @@ namespace DataLayer.TableDataGateways
 
         public int delete(int userId, int gameId, int order)
         {
-            DatabaseConnection db = new DatabaseConnection();
+            var db = DatabaseConnection.Instance;
             db.Connect();
 
-            OracleCommand command = db.CreateCommand(SQL_DELETE);
+            var command = db.CreateCommand(SQL_DELETE);
 
             command.Parameters.AddWithValue(":user_user_id", userId);
             command.Parameters.AddWithValue(":game_game_id", gameId);
@@ -61,7 +61,7 @@ namespace DataLayer.TableDataGateways
                 db = (DatabaseConnection)pDb;
             }
 
-            OracleCommand command = db.CreateCommand(SQL_SELECT_REVIEW);
+            var command = db.CreateCommand(SQL_SELECT_REVIEW);
             command.Parameters.AddWithValue(":user_user_id", userId);
             command.Parameters.AddWithValue(":game_game_id", gameId);
             command.Parameters.AddWithValue(":order_of_review", order);
@@ -93,7 +93,7 @@ namespace DataLayer.TableDataGateways
                 db = (DatabaseConnection)pDb;
             }
 
-            OracleCommand command = db.CreateCommand(SQL_SELECT_ALL);
+            var command = db.CreateCommand(SQL_SELECT_ALL);
             OracleDataReader reader = db.Select(command);
 
             List<User_review> User_reviews = Read(reader);
@@ -121,7 +121,7 @@ namespace DataLayer.TableDataGateways
                 db = (DatabaseConnection)pDb;
             }
 
-            OracleCommand command = db.CreateCommand(SQL_SELECT_ALL_BY_USER);
+            var command = db.CreateCommand(SQL_SELECT_ALL_BY_USER);
             command.Parameters.AddWithValue(":user_user_id", userId);
             OracleDataReader reader = db.Select(command);
 
@@ -150,7 +150,7 @@ namespace DataLayer.TableDataGateways
                 db = (DatabaseConnection)pDb;
             }
 
-            OracleCommand command = db.CreateCommand(SQL_SELECT_ALL_BY_GAME);
+            var command = db.CreateCommand(SQL_SELECT_ALL_BY_GAME);
             command.Parameters.AddWithValue(":game_game_id", gameId);
             OracleDataReader reader = db.Select(command);
 
@@ -166,7 +166,7 @@ namespace DataLayer.TableDataGateways
             return User_reviews;
         }
 
-        private static void PrepareCommand(OracleCommand command, User_review Review)
+        private static void PrepareCommand(var command, User_review Review)
         {
             command.BindByName = true;
             command.Parameters.AddWithValue(":title", Review.Title);

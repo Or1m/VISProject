@@ -47,6 +47,7 @@ namespace DataLayer
                 Connection.ConnectionString = Properties.Settings.Default.ConnectionString;
                 Connection.Open();
             }
+
             return true;
         }
 
@@ -57,6 +58,7 @@ namespace DataLayer
                 Connection.ConnectionString = connectionString;
                 Connection.Open();
             }
+
             return true;
         }
 

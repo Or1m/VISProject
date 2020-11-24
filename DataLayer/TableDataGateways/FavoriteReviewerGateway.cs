@@ -10,10 +10,10 @@ namespace DataLayer.TableDataGateways
         // Methods
         public int insertNew(int userId, int reviewer_id)
         {
-            DatabaseConnection db = new DatabaseConnection();
+            var db = DatabaseConnection.Instance;
             db.Connect();
 
-            OracleCommand command = db.CreateCommand(SQL_INSERT_NEW);
+            var command = db.CreateCommand(SQL_INSERT_NEW);
             command.Parameters.AddWithValue(":user_user_id", userId);
             command.Parameters.AddWithValue(":reviewer_reviewer_id", reviewer_id);
             int ret = db.ExecuteNonQuery(command);
@@ -23,10 +23,10 @@ namespace DataLayer.TableDataGateways
 
         public int delete(int userId, int reviewer_id)
         {
-            DatabaseConnection db = new DatabaseConnection();
+            var db = DatabaseConnection.Instance;
             db.Connect();
 
-            OracleCommand command = db.CreateCommand(SQL_DELETE);
+            var command = db.CreateCommand(SQL_DELETE);
             command.Parameters.AddWithValue(":user_user_id", userId);
             command.Parameters.AddWithValue(":reviewer_reviewer_id", reviewer_id);
             int ret = db.ExecuteNonQuery(command);

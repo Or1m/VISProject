@@ -28,10 +28,10 @@ namespace DataLayer.TableDataGateways
         // Methods
         public int insertNewGame(Game game)
         {
-            DatabaseConnection db = new DatabaseConnection();
+            var db = DatabaseConnection.Instance;
             db.Connect();
 
-            OracleCommand command = db.CreateCommand(SQL_INSERT_NEW);
+            var command = db.CreateCommand(SQL_INSERT_NEW);
             PrepareCommand(command, game);
             int ret = db.ExecuteNonQuery(command);
             db.Close();
@@ -40,10 +40,10 @@ namespace DataLayer.TableDataGateways
 
         public int updateGame(Game game)
         {
-            DatabaseConnection db = new DatabaseConnection();
+            var db = DatabaseConnection.Instance;
             db.Connect();
 
-            OracleCommand command = db.CreateCommand(SQL_UPDATE);
+            var command = db.CreateCommand(SQL_UPDATE);
             PrepareCommand(command, game);
             int ret = db.ExecuteNonQuery(command);
             db.Close();
@@ -52,10 +52,10 @@ namespace DataLayer.TableDataGateways
 
         public int deleteGameById(int id)
         {
-            DatabaseConnection db = new DatabaseConnection();
+            var db = DatabaseConnection.Instance;
             db.Connect();
 
-            OracleCommand command = db.CreateCommand(SQL_DELETE_ID);
+            var command = db.CreateCommand(SQL_DELETE_ID);
 
             command.Parameters.AddWithValue(":game_id", id);
             int ret = db.ExecuteNonQuery(command);
@@ -76,7 +76,7 @@ namespace DataLayer.TableDataGateways
                 db = (DatabaseConnection)pDb;
             }
 
-            OracleCommand command = db.CreateCommand(SQL_SELECT_ALL_HEADERS);
+            var command = db.CreateCommand(SQL_SELECT_ALL_HEADERS);
             OracleDataReader reader = db.Select(command);
 
             List<Game> games = ReadHeader(reader);
@@ -104,7 +104,7 @@ namespace DataLayer.TableDataGateways
                 db = (DatabaseConnection)pDb;
             }
 
-            OracleCommand command = db.CreateCommand(SQL_SELECT_FAVORIT_GAMES_FOR_USER);
+            var command = db.CreateCommand(SQL_SELECT_FAVORIT_GAMES_FOR_USER);
             command.Parameters.AddWithValue(":user_id", userId);
             OracleDataReader reader = db.Select(command);
 
@@ -133,7 +133,7 @@ namespace DataLayer.TableDataGateways
                 db = (DatabaseConnection)pDb;
             }
 
-            OracleCommand command = db.CreateCommand(SQL_SELECT_GAME_BY_ID);
+            var command = db.CreateCommand(SQL_SELECT_GAME_BY_ID);
             command.Parameters.AddWithValue(":game_id", id);
             OracleDataReader reader = db.Select(command);
 
@@ -162,7 +162,7 @@ namespace DataLayer.TableDataGateways
                 db = (DatabaseConnection)pDb;
             }
 
-            OracleCommand command = db.CreateCommand(SQL_SELECT_GAMES_BY_NAME);
+            var command = db.CreateCommand(SQL_SELECT_GAMES_BY_NAME);
             command.Parameters.AddWithValue(":name", name);
             OracleDataReader reader = db.Select(command);
 
@@ -191,7 +191,7 @@ namespace DataLayer.TableDataGateways
                 db = (DatabaseConnection)pDb;
             }
 
-            OracleCommand command = db.CreateCommand(SQL_SELECT_GAMES_BY_DEVELOPER_HEADER);
+            var command = db.CreateCommand(SQL_SELECT_GAMES_BY_DEVELOPER_HEADER);
             command.Parameters.AddWithValue(":developer", developer);
             OracleDataReader reader = db.Select(command);
 
@@ -220,7 +220,7 @@ namespace DataLayer.TableDataGateways
                 db = (DatabaseConnection)pDb;
             }
 
-            OracleCommand command = db.CreateCommand(SQL_SELECT_GAMES_WITH_CATEGORIES);
+            var command = db.CreateCommand(SQL_SELECT_GAMES_WITH_CATEGORIES);
             OracleDataReader reader = db.Select(command);
 
             List<Game> games = ReadWithCategories(reader);
@@ -262,7 +262,7 @@ namespace DataLayer.TableDataGateways
             return categoryDict.Select(c => c.Value).ToList();
         }
 
-        private static void PrepareCommand(OracleCommand command, Game game)
+        private static void PrepareCommand(var command, Game game)
         {
             command.BindByName = true;
             command.Parameters.AddWithValue(":game_id", game.Game_id);

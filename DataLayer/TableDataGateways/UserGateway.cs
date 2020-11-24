@@ -32,10 +32,10 @@ namespace DataLayer.TableDataGateways
         // Methods
         public int registerNewUser(User user)
         {
-            DatabaseConnection db = new DatabaseConnection();
+            var db = DatabaseConnection.Instance;
             db.Connect();
 
-            OracleCommand command = db.CreateCommand(SQL_REGISTER_NEW);
+            var command = db.CreateCommand(SQL_REGISTER_NEW);
             PrepareCommand(command, user);
             int ret = db.ExecuteNonQuery(command);
             db.Close();
@@ -44,10 +44,10 @@ namespace DataLayer.TableDataGateways
 
         public int updateUser(User user)
         {
-            DatabaseConnection db = new DatabaseConnection();
+            var db = DatabaseConnection.Instance;
             db.Connect();
 
-            OracleCommand command = db.CreateCommand(SQL_UPDATE);
+            var command = db.CreateCommand(SQL_UPDATE);
             PrepareCommand(command, user);
             int ret = db.ExecuteNonQuery(command);
             db.Close();
@@ -56,10 +56,10 @@ namespace DataLayer.TableDataGateways
 
         public int deleteUserById(int id)
         {
-            DatabaseConnection db = new DatabaseConnection();
+            var db = DatabaseConnection.Instance;
             db.Connect();
 
-            OracleCommand command = db.CreateCommand(SQL_DELETE_ID);
+            var command = db.CreateCommand(SQL_DELETE_ID);
 
             command.Parameters.AddWithValue(":user_id", id);
             int ret = db.ExecuteNonQuery(command);
@@ -80,7 +80,7 @@ namespace DataLayer.TableDataGateways
                 db = (DatabaseConnection)pDb;
             }
 
-            OracleCommand command = db.CreateCommand(SQL_SELECT_ALL_USERS_HEADER);
+            var command = db.CreateCommand(SQL_SELECT_ALL_USERS_HEADER);
             OracleDataReader reader = db.Select(command);
 
             List<User> users = ReadHeader(reader);
@@ -108,7 +108,7 @@ namespace DataLayer.TableDataGateways
                 db = (DatabaseConnection)pDb;
             }
 
-            OracleCommand command = db.CreateCommand(SQL_SELECT_USER_BY_ID);
+            var command = db.CreateCommand(SQL_SELECT_USER_BY_ID);
             command.Parameters.AddWithValue(":user_id", id);
             OracleDataReader reader = db.Select(command);
 
@@ -137,7 +137,7 @@ namespace DataLayer.TableDataGateways
                 db = (DatabaseConnection)pDb;
             }
 
-            OracleCommand command = db.CreateCommand(SQL_SELECT_USER_BY_NICK);
+            var command = db.CreateCommand(SQL_SELECT_USER_BY_NICK);
             command.Parameters.AddWithValue(":nick", nick);
             OracleDataReader reader = db.Select(command);
 
@@ -166,7 +166,7 @@ namespace DataLayer.TableDataGateways
                 db = (DatabaseConnection)pDb;
             }
 
-            OracleCommand command = db.CreateCommand(SQL_SELECT_USER_BY_ID_WITH_CATEGORY);
+            var command = db.CreateCommand(SQL_SELECT_USER_BY_ID_WITH_CATEGORY);
             command.Parameters.AddWithValue(":user_id", id);
             OracleDataReader reader = db.Select(command);
 
@@ -195,7 +195,7 @@ namespace DataLayer.TableDataGateways
                 db = (DatabaseConnection)pDb;
             }
 
-            OracleCommand command = db.CreateCommand(SQL_SELECT_USER_BY_NICK_WITH_CATEGORY);
+            var command = db.CreateCommand(SQL_SELECT_USER_BY_NICK_WITH_CATEGORY);
             command.Parameters.AddWithValue(":nick", nick);
             OracleDataReader reader = db.Select(command);
 
@@ -214,7 +214,7 @@ namespace DataLayer.TableDataGateways
                 return null;
         }
 
-        private static void PrepareCommand(OracleCommand command, User user)
+        private static void PrepareCommand(var command, User user)
         {
             command.BindByName = true;
             command.Parameters.AddWithValue(":user_id", user.User_id);
