@@ -13,7 +13,7 @@ namespace BusinessLayer.BusinessObjects
         public int UserId { get; set; }
         public int GameId { get; set; }
         public DateTime Date { get; set; }
-        public int Order_of_review { get; set; }
+        public int OrderOfReview { get; set; }
 
         public User User { get; set; }
         public Game Game { get; set; }
@@ -27,7 +27,7 @@ namespace BusinessLayer.BusinessObjects
             UserId = userId;
             GameId = gameId;
             Date = date;
-            Order_of_review = order_of_review;
+            OrderOfReview = order_of_review;
             User = user;
             Game = game;
         }

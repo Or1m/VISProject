@@ -43,10 +43,10 @@
   <ItemGroup>
     <Compile Include="BusinessObjects\Category.cs" />
     <Compile Include="BusinessObjects\DailyStatistics.cs" />
-    <Compile Include="BusinessObjects\Favorit_game.cs" />
-    <Compile Include="BusinessObjects\Favorit_reviewer.cs" />
+    <Compile Include="BusinessObjects\FavoriteGame.cs" />
+    <Compile Include="BusinessObjects\FavoriteReviewer.cs" />
     <Compile Include="BusinessObjects\Game.cs" />
-    <Compile Include="BusinessObjects\Game_category.cs" />
+    <Compile Include="BusinessObjects\GameCategory.cs" />
     <Compile Include="BusinessObjects\Reviewer.cs" />
     <Compile Include="BusinessObjects\Reviewer_review.cs" />
     <Compile Include="BusinessObjects\User.cs" />

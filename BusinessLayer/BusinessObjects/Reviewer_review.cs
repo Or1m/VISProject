@@ -9,12 +9,12 @@ namespace BusinessLayer.BusinessObjects
     public class Reviewer_review
     {
         public string Title { get; set; }
-        public string Text_of_review { get; set; }
+        public string TextOfReview { get; set; }
         public int Score { get; set; }
         public int ReviewerId { get; set; }
         public int GameId { get; set; }
         public DateTime Date { get; set; }
-        public int Order_of_review { get; set; }
+        public int OrderOfReview { get; set; }
 
         public Reviewer Reviewer { get; set; }
         public Game Game { get; set; }
@@ -23,19 +23,19 @@ namespace BusinessLayer.BusinessObjects
         public Reviewer_review(string title, string text_of_review, int score, int reviewerId, int gameId, DateTime date, int order_of_review, Reviewer reviewer = null, Game game = null)
         {
             Title = title;
-            Text_of_review = text_of_review;
+            TextOfReview = text_of_review;
             Score = score;
             ReviewerId = reviewerId;
             GameId = gameId;
             Date = date;
-            Order_of_review = order_of_review;
+            OrderOfReview = order_of_review;
             Reviewer = reviewer;
             Game = game;
         }
 
         public override string ToString()
         {
-            return Title + " " + Text_of_review + " " + Score + " " + Date.Date; 
+            return Title + " " + TextOfReview + " " + Score + " " + Date.Date; 
         }
 
         public string ToStringHeader()

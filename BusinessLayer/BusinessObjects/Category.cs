@@ -1,19 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BusinessLayer.BusinessObjects
+﻿namespace BusinessLayer.BusinessObjects
 {
     public class Category
     {
-        public int Category_id { get; set; }
+        public int CategoryId { get; set; }
         public string Name { get; set; }
 
         public override string ToString()
         {
-            return Category_id + " " + Name;
+            return CategoryId + " " + Name;
         }
 
         public string ToStringHeader()
