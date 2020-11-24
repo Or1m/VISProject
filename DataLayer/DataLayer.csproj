@@ -41,30 +41,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Database\Database.cs" />
-    <Compile Include="Database\DatabaseProxy.cs" />
-    <Compile Include="Database\DBTables\CategoryTable.cs" />
-    <Compile Include="Database\DBTables\DailyStatisticsTable.cs" />
-    <Compile Include="Database\DBTables\FavoritGameTable.cs" />
-    <Compile Include="Database\DBTables\FavoritReviewerTable.cs" />
-    <Compile Include="Database\DBTables\GameCategoryTable.cs" />
-    <Compile Include="Database\DBTables\GameTable.cs" />
-    <Compile Include="Database\DBTables\ReviewerReviewTable.cs" />
-    <Compile Include="Database\DBTables\ReviewerTable.cs" />
-    <Compile Include="Database\DBTables\UserReviewTable.cs" />
-    <Compile Include="Database\DBTables\UserTable.cs" />
-    <Compile Include="MainClasses\Category.cs" />
-    <Compile Include="MainClasses\DailyStatistics.cs" />
-    <Compile Include="MainClasses\Favorit_game.cs" />
-    <Compile Include="MainClasses\Favorit_reviewer.cs" />
-    <Compile Include="MainClasses\Game.cs" />
-    <Compile Include="MainClasses\Game_category.cs" />
+    <Compile Include="DatabaseConnection.cs" />
+    <Compile Include="DatabaseProxy.cs" />
+    <Compile Include="TableDataGateways\CategoryGateway.cs" />
+    <Compile Include="TableDataGateways\DailyStatisticsGateway.cs" />
+    <Compile Include="TableDataGateways\FavoriteGameGateway.cs" />
+    <Compile Include="TableDataGateways\FavoriteReviewerGateway.cs" />
+    <Compile Include="TableDataGateways\GameCategoryGateway.cs" />
+    <Compile Include="TableDataGateways\GameGateway.cs" />
+    <Compile Include="TableDataGateways\ReviewerReviewGateway.cs" />
+    <Compile Include="TableDataGateways\ReviewerGateway.cs" />
+    <Compile Include="TableDataGateways\UserReviewGateway.cs" />
+    <Compile Include="TableDataGateways\UserGateway.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="MainClasses\Reviewer.cs" />
-    <Compile Include="MainClasses\Reviewer_review.cs" />
-    <Compile Include="MainClasses\User.cs" />
-    <Compile Include="MainClasses\User_review.cs" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

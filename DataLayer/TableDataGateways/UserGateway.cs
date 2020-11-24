@@ -1,16 +1,10 @@
-﻿using Oracle.ManagedDataAccess.Client;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UDBS;
-using UDBS.Oracle;
-using UDBS.Proxy;
 
-namespace DaisORM.UDBS.Oracle
+namespace DataLayer.TableDataGateways
 {
-    public class UserTable
+    public class UserGateway
     {
         public static string SQL_REGISTER_NEW = "INSERT INTO \"User\" (nick, gender, country, date_of_birth, registration_date, first_name, last_name, favorit_category_id) "
             + " VALUES (:nick, :gender, :country, :date_of_birth,:registration_date, :first_name, :last_name, :favorit_category_id)";
@@ -38,7 +32,7 @@ namespace DaisORM.UDBS.Oracle
         // Methods
         public int registerNewUser(User user)
         {
-            Database db = new Database();
+            DatabaseConnection db = new DatabaseConnection();
             db.Connect();
 
             OracleCommand command = db.CreateCommand(SQL_REGISTER_NEW);
@@ -50,7 +44,7 @@ namespace DaisORM.UDBS.Oracle
 
         public int updateUser(User user)
         {
-            Database db = new Database();
+            DatabaseConnection db = new DatabaseConnection();
             db.Connect();
 
             OracleCommand command = db.CreateCommand(SQL_UPDATE);
@@ -62,7 +56,7 @@ namespace DaisORM.UDBS.Oracle
 
         public int deleteUserById(int id)
         {
-            Database db = new Database();
+            DatabaseConnection db = new DatabaseConnection();
             db.Connect();
 
             OracleCommand command = db.CreateCommand(SQL_DELETE_ID);
@@ -75,15 +69,15 @@ namespace DaisORM.UDBS.Oracle
 
         public List<User> selectUsers(DatabaseProxy pDb = null)
         {
-            Database db;
+            DatabaseConnection db;
             if (pDb == null)
             {
-                db = new Database();
+                db = new DatabaseConnection();
                 db.Connect();
             }
             else
             {
-                db = (Database)pDb;
+                db = (DatabaseConnection)pDb;
             }
 
             OracleCommand command = db.CreateCommand(SQL_SELECT_ALL_USERS_HEADER);
@@ -103,15 +97,15 @@ namespace DaisORM.UDBS.Oracle
 
         public User selectUserById(int id, DatabaseProxy pDb = null)
         {
-            Database db;
+            DatabaseConnection db;
             if (pDb == null)
             {
-                db = new Database();
+                db = new DatabaseConnection();
                 db.Connect();
             }
             else
             {
-                db = (Database)pDb;
+                db = (DatabaseConnection)pDb;
             }
 
             OracleCommand command = db.CreateCommand(SQL_SELECT_USER_BY_ID);
@@ -132,15 +126,15 @@ namespace DaisORM.UDBS.Oracle
 
         public User selectUserByNick(string nick, DatabaseProxy pDb = null)
         {
-            Database db;
+            DatabaseConnection db;
             if (pDb == null)
             {
-                db = new Database();
+                db = new DatabaseConnection();
                 db.Connect();
             }
             else
             {
-                db = (Database)pDb;
+                db = (DatabaseConnection)pDb;
             }
 
             OracleCommand command = db.CreateCommand(SQL_SELECT_USER_BY_NICK);
@@ -161,15 +155,15 @@ namespace DaisORM.UDBS.Oracle
 
         public User selectUserByIdWithCategory(int id, DatabaseProxy pDb = null)
         {
-            Database db;
+            DatabaseConnection db;
             if (pDb == null)
             {
-                db = new Database();
+                db = new DatabaseConnection();
                 db.Connect();
             }
             else
             {
-                db = (Database)pDb;
+                db = (DatabaseConnection)pDb;
             }
 
             OracleCommand command = db.CreateCommand(SQL_SELECT_USER_BY_ID_WITH_CATEGORY);
@@ -190,15 +184,15 @@ namespace DaisORM.UDBS.Oracle
 
         public User selectUserByNickWithCategory(string nick, DatabaseProxy pDb = null)
         {
-            Database db;
+            DatabaseConnection db;
             if (pDb == null)
             {
-                db = new Database();
+                db = new DatabaseConnection();
                 db.Connect();
             }
             else
             {
-                db = (Database)pDb;
+                db = (DatabaseConnection)pDb;
             }
 
             OracleCommand command = db.CreateCommand(SQL_SELECT_USER_BY_NICK_WITH_CATEGORY);

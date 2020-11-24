@@ -1,14 +1,7 @@
-﻿using Oracle.ManagedDataAccess.Client;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UDBS.Oracle;
-
-namespace DaisORM.UDBS.Oracle
+﻿
+namespace DataLayer.TableDataGateways
 {
-    public class FavoritGameTable
+    public class FavoriteGameGateway
     {
         public static string SQL_INSERT_NEW = "INSERT INTO Favorit_game (user_user_id, game_game_id) VALUES (:user_user_id, :game_game_id)";
 
@@ -17,7 +10,7 @@ namespace DaisORM.UDBS.Oracle
         // Methods
         public int insertNew(int userId, int game_id)
         {
-            Database db = new Database();
+            DatabaseConnection db = new DatabaseConnection();
             db.Connect();
 
             OracleCommand command = db.CreateCommand(SQL_INSERT_NEW);
@@ -30,7 +23,7 @@ namespace DaisORM.UDBS.Oracle
 
         public int delete(int userId, int game_id)
         {
-            Database db = new Database();
+            DatabaseConnection db = new DatabaseConnection();
             db.Connect();
 
             OracleCommand command = db.CreateCommand(SQL_DELETE);

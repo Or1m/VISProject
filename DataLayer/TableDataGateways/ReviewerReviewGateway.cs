@@ -1,16 +1,7 @@
-﻿using Oracle.ManagedDataAccess.Client;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UDBS;
-using UDBS.Oracle;
-using UDBS.Proxy;
-
-namespace DaisORM.UDBS.Oracle
+﻿
+namespace DataLayer.TableDataGateways
 {
-    public class ReviewerReviewTable
+    public class ReviewerReviewGateway
     {
         public static string SQL_INSERT_NEW = "INSERT INTO Reviewer_review (title, text_of_review, score, reviewer_reviewer_id, game_game_id, \"date\", order_of_review) "
             + " VALUES (:title, :text_of_review, :score, :reviewer_reviewer_id, :game_game_id, :datee, :order_of_review)";
@@ -31,7 +22,7 @@ namespace DaisORM.UDBS.Oracle
         // Methods
         public int insertNew(Reviewer_review review)
         {
-            Database db = new Database();
+            DatabaseConnection db = new DatabaseConnection();
             db.Connect();
 
             OracleCommand command = db.CreateCommand(SQL_INSERT_NEW);
@@ -43,7 +34,7 @@ namespace DaisORM.UDBS.Oracle
 
         public int delete(int reviewerId, int gameId, int order)
         {
-            Database db = new Database();
+            DatabaseConnection db = new DatabaseConnection();
             db.Connect();
 
             OracleCommand command = db.CreateCommand(SQL_DELETE);
@@ -59,15 +50,15 @@ namespace DaisORM.UDBS.Oracle
 
         public Reviewer_review selectReview(int reviewerId, int gameId, int order, DatabaseProxy pDb = null)
         {
-            Database db;
+            DatabaseConnection db;
             if (pDb == null)
             {
-                db = new Database();
+                db = new DatabaseConnection();
                 db.Connect();
             }
             else
             {
-                db = (Database)pDb;
+                db = (DatabaseConnection)pDb;
             }
 
             OracleCommand command = db.CreateCommand(SQL_SELECT_REVIEW);
@@ -91,15 +82,15 @@ namespace DaisORM.UDBS.Oracle
 
         public List<Reviewer_review> selectReviews(DatabaseProxy pDb = null)
         {
-            Database db;
+            DatabaseConnection db;
             if (pDb == null)
             {
-                db = new Database();
+                db = new DatabaseConnection();
                 db.Connect();
             }
             else
             {
-                db = (Database)pDb;
+                db = (DatabaseConnection)pDb;
             }
 
             OracleCommand command = db.CreateCommand(SQL_SELECT_ALL);
@@ -119,15 +110,15 @@ namespace DaisORM.UDBS.Oracle
 
         public List<Reviewer_review> selectReviewsForReviewer(int reviewerId, DatabaseProxy pDb = null)
         {
-            Database db;
+            DatabaseConnection db;
             if (pDb == null)
             {
-                db = new Database();
+                db = new DatabaseConnection();
                 db.Connect();
             }
             else
             {
-                db = (Database)pDb;
+                db = (DatabaseConnection)pDb;
             }
 
             OracleCommand command = db.CreateCommand(SQL_SELECT_ALL_BY_REVIEWER);
@@ -148,15 +139,15 @@ namespace DaisORM.UDBS.Oracle
 
         public List<Reviewer_review> selectReviewsForGame(int gameId, DatabaseProxy pDb = null)
         {
-            Database db;
+            DatabaseConnection db;
             if (pDb == null)
             {
-                db = new Database();
+                db = new DatabaseConnection();
                 db.Connect();
             }
             else
             {
-                db = (Database)pDb;
+                db = (DatabaseConnection)pDb;
             }
 
             OracleCommand command = db.CreateCommand(SQL_SELECT_ALL_BY_GAME);

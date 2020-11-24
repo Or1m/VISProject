@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataLayer.MainClasses
+namespace BusinessLayer.BusinessObjects
 {
     public class Game_category
     {

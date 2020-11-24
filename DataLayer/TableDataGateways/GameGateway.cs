@@ -1,14 +1,5 @@
-﻿using Oracle.ManagedDataAccess.Client;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UDBS;
-using UDBS.Oracle;
-using UDBS.Proxy;
-
-namespace DaisORM.UDBS.Oracle
+﻿
+namespace DataLayer.TableDataGateways
 {
     public class GameTable
     {
@@ -37,7 +28,7 @@ namespace DaisORM.UDBS.Oracle
         // Methods
         public int insertNewGame(Game game)
         {
-            Database db = new Database();
+            DatabaseConnection db = new DatabaseConnection();
             db.Connect();
 
             OracleCommand command = db.CreateCommand(SQL_INSERT_NEW);
@@ -49,7 +40,7 @@ namespace DaisORM.UDBS.Oracle
 
         public int updateGame(Game game)
         {
-            Database db = new Database();
+            DatabaseConnection db = new DatabaseConnection();
             db.Connect();
 
             OracleCommand command = db.CreateCommand(SQL_UPDATE);
@@ -61,7 +52,7 @@ namespace DaisORM.UDBS.Oracle
 
         public int deleteGameById(int id)
         {
-            Database db = new Database();
+            DatabaseConnection db = new DatabaseConnection();
             db.Connect();
 
             OracleCommand command = db.CreateCommand(SQL_DELETE_ID);
@@ -74,15 +65,15 @@ namespace DaisORM.UDBS.Oracle
 
         public List<Game> selectGames(DatabaseProxy pDb = null)
         {
-            Database db;
+            DatabaseConnection db;
             if (pDb == null)
             {
-                db = new Database();
+                db = new DatabaseConnection();
                 db.Connect();
             }
             else
             {
-                db = (Database)pDb;
+                db = (DatabaseConnection)pDb;
             }
 
             OracleCommand command = db.CreateCommand(SQL_SELECT_ALL_HEADERS);
@@ -102,15 +93,15 @@ namespace DaisORM.UDBS.Oracle
 
         public List<Game> selectFavoritGames(int userId, DatabaseProxy pDb = null)
         {
-            Database db;
+            DatabaseConnection db;
             if (pDb == null)
             {
-                db = new Database();
+                db = new DatabaseConnection();
                 db.Connect();
             }
             else
             {
-                db = (Database)pDb;
+                db = (DatabaseConnection)pDb;
             }
 
             OracleCommand command = db.CreateCommand(SQL_SELECT_FAVORIT_GAMES_FOR_USER);
@@ -131,15 +122,15 @@ namespace DaisORM.UDBS.Oracle
 
         public Game selectGame(int id, DatabaseProxy pDb = null)
         {
-            Database db;
+            DatabaseConnection db;
             if (pDb == null)
             {
-                db = new Database();
+                db = new DatabaseConnection();
                 db.Connect();
             }
             else
             {
-                db = (Database)pDb;
+                db = (DatabaseConnection)pDb;
             }
 
             OracleCommand command = db.CreateCommand(SQL_SELECT_GAME_BY_ID);
@@ -160,15 +151,15 @@ namespace DaisORM.UDBS.Oracle
 
         public List<Game> selectGamesByName(string name, DatabaseProxy pDb = null)
         {
-            Database db;
+            DatabaseConnection db;
             if (pDb == null)
             {
-                db = new Database();
+                db = new DatabaseConnection();
                 db.Connect();
             }
             else
             {
-                db = (Database)pDb;
+                db = (DatabaseConnection)pDb;
             }
 
             OracleCommand command = db.CreateCommand(SQL_SELECT_GAMES_BY_NAME);
@@ -189,15 +180,15 @@ namespace DaisORM.UDBS.Oracle
 
         public List<Game> selectGamesByDeveloper(string developer, DatabaseProxy pDb = null)
         {
-            Database db;
+            DatabaseConnection db;
             if (pDb == null)
             {
-                db = new Database();
+                db = new DatabaseConnection();
                 db.Connect();
             }
             else
             {
-                db = (Database)pDb;
+                db = (DatabaseConnection)pDb;
             }
 
             OracleCommand command = db.CreateCommand(SQL_SELECT_GAMES_BY_DEVELOPER_HEADER);
@@ -218,15 +209,15 @@ namespace DaisORM.UDBS.Oracle
 
         public List<Game> selectGamesWithCategories(DatabaseProxy pDb = null)
         {
-            Database db;
+            DatabaseConnection db;
             if (pDb == null)
             {
-                db = new Database();
+                db = new DatabaseConnection();
                 db.Connect();
             }
             else
             {
-                db = (Database)pDb;
+                db = (DatabaseConnection)pDb;
             }
 
             OracleCommand command = db.CreateCommand(SQL_SELECT_GAMES_WITH_CATEGORIES);

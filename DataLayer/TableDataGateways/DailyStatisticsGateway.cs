@@ -1,17 +1,9 @@
-﻿using DaisORM.UDBS.Oracle;
-using Oracle.ManagedDataAccess.Client;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UDBS;
-using UDBS.Oracle;
-using UDBS.Proxy;
 
-namespace DaisORM.UDBS.oracle
+namespace DataLayer.TableDataGateways
 {
-    class DailyStatisticsTable
+    class DailyStatisticsGateway
     {
         public static string SQL_SELECT_ALL = "SELECT id, \"date\", number_of_reviews, type FROM DailyStatistics";
 
@@ -22,15 +14,15 @@ namespace DaisORM.UDBS.oracle
         // Methods
         public List<DailyStatistics> selectStatistics(DatabaseProxy pDb = null)
         {
-            Database db;
+            DatabaseConnection db;
             if (pDb == null)
             {
-                db = new Database();
+                db = new DatabaseConnection();
                 db.Connect();
             }
             else
             {
-                db = (Database)pDb;
+                db = (DatabaseConnection)pDb;
             }
 
             OracleCommand command = db.CreateCommand(SQL_SELECT_ALL);
@@ -50,15 +42,15 @@ namespace DaisORM.UDBS.oracle
 
         public DailyStatistics selectStatisticById(int id, DatabaseProxy pDb = null)
         {
-            Database db;
+            DatabaseConnection db;
             if (pDb == null)
             {
-                db = new Database();
+                db = new DatabaseConnection();
                 db.Connect();
             }
             else
             {
-                db = (Database)pDb;
+                db = (DatabaseConnection)pDb;
             }
 
             OracleCommand command = db.CreateCommand(SQL_SELECT_BY_ID);

@@ -1,16 +1,9 @@
-﻿using Oracle.ManagedDataAccess.Client;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UDBS;
-using UDBS.Oracle;
-using UDBS.Proxy;
 
-namespace DaisORM.UDBS.Oracle
+namespace DataLayer.TableDataGateways
 {
-    public class CategoryTable
+    public class CategoryGateway
     {
         public static string SQL_INSERT_NEW = "INSERT INTO Category (name) VALUES (:name)";
 
@@ -29,7 +22,7 @@ namespace DaisORM.UDBS.Oracle
         // Methods
         public int insertNew(string name)
         {
-            Database db = new Database();
+            DatabaseConnection db = new DatabaseConnection();
             db.Connect();
 
             OracleCommand command = db.CreateCommand(SQL_INSERT_NEW);
@@ -41,7 +34,7 @@ namespace DaisORM.UDBS.Oracle
 
         public int deleteById(int id)
         {
-            Database db = new Database();
+            DatabaseConnection db = new DatabaseConnection();
             db.Connect();
 
             OracleCommand command = db.CreateCommand(SQL_DELETE_ID);
@@ -53,7 +46,7 @@ namespace DaisORM.UDBS.Oracle
 
         public int update(int id, string name)
         {
-            Database db = new Database();
+            DatabaseConnection db = new DatabaseConnection();
             db.Connect();
 
             OracleCommand command = db.CreateCommand(SQL_UPDATE);
@@ -66,15 +59,15 @@ namespace DaisORM.UDBS.Oracle
 
         public List<Category> selectCategories(DatabaseProxy pDb = null)
         {
-            Database db;
+            DatabaseConnection db;
             if (pDb == null)
             {
-                db = new Database();
+                db = new DatabaseConnection();
                 db.Connect();
             }
             else
             {
-                db = (Database)pDb;
+                db = (DatabaseConnection)pDb;
             }
 
             OracleCommand command = db.CreateCommand(SQL_SELECT_ALL);
@@ -94,15 +87,15 @@ namespace DaisORM.UDBS.Oracle
 
         public List<Category> selectCategoriesForGame(int gameId, DatabaseProxy pDb = null)
         {
-            Database db;
+            DatabaseConnection db;
             if (pDb == null)
             {
-                db = new Database();
+                db = new DatabaseConnection();
                 db.Connect();
             }
             else
             {
-                db = (Database)pDb;
+                db = (DatabaseConnection)pDb;
             }
 
             OracleCommand command = db.CreateCommand(SQL_SELECT_FOR_GAME);
@@ -123,15 +116,15 @@ namespace DaisORM.UDBS.Oracle
 
         public Category selectCategory(int id, DatabaseProxy pDb = null)
         {
-            Database db;
+            DatabaseConnection db;
             if (pDb == null)
             {
-                db = new Database();
+                db = new DatabaseConnection();
                 db.Connect();
             }
             else
             {
-                db = (Database)pDb;
+                db = (DatabaseConnection)pDb;
             }
 
             OracleCommand command = db.CreateCommand(SQL_SELECT_BY_ID);
@@ -151,15 +144,15 @@ namespace DaisORM.UDBS.Oracle
         }
         public List<Category> selectCategoryByName(string name, DatabaseProxy pDb = null)
         {
-            Database db;
+            DatabaseConnection db;
             if (pDb == null)
             {
-                db = new Database();
+                db = new DatabaseConnection();
                 db.Connect();
             }
             else
             {
-                db = (Database)pDb;
+                db = (DatabaseConnection)pDb;
             }
 
             OracleCommand command = db.CreateCommand(SQL_SELECT_BY_NAME);

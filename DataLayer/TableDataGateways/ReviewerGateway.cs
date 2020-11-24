@@ -1,16 +1,7 @@
-﻿using Oracle.ManagedDataAccess.Client;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UDBS;
-using UDBS.Oracle;
-using UDBS.Proxy;
-
-namespace DaisORM.UDBS.Oracle
+﻿
+namespace DataLayer.TableDataGateways
 {
-    public class ReviewerTable
+    public class ReviewerGateway
     {
         public static string SQL_REGISTER_NEW = "INSERT INTO Reviewer (first_name, last_name, gender, country, work, date_of_birth, registration_date, favorit_category_id) "
             + " VALUES (:first_name, :last_name, :gender, :country, :work, :date_of_birth, :registration_date, :favorit_category_id)";
@@ -34,7 +25,7 @@ namespace DaisORM.UDBS.Oracle
         // Methods
         public int registerNewReviewer(Reviewer reviewer)
         {
-            Database db = new Database();
+            DatabaseConnection db = new DatabaseConnection();
             db.Connect();
 
             OracleCommand command = db.CreateCommand(SQL_REGISTER_NEW);
@@ -46,7 +37,7 @@ namespace DaisORM.UDBS.Oracle
         
         public int updateReviewer(Reviewer reviewer)
         {
-            Database db = new Database();
+            DatabaseConnection db = new DatabaseConnection();
             db.Connect();
 
             OracleCommand command = db.CreateCommand(SQL_UPDATE);
@@ -58,7 +49,7 @@ namespace DaisORM.UDBS.Oracle
 
         public int deleteReviewerById(int id)
         {
-            Database db = new Database();
+            DatabaseConnection db = new DatabaseConnection();
             db.Connect();
 
             OracleCommand command = db.CreateCommand(SQL_DELETE_ID);
@@ -71,15 +62,15 @@ namespace DaisORM.UDBS.Oracle
 
         public List<Reviewer> selectReviewers(DatabaseProxy pDb = null)
         {
-            Database db;
+            DatabaseConnection db;
             if (pDb == null)
             {
-                db = new Database();
+                db = new DatabaseConnection();
                 db.Connect();
             }
             else
             {
-                db = (Database)pDb;
+                db = (DatabaseConnection)pDb;
             }
 
             OracleCommand command = db.CreateCommand(SQL_SELECT_ALL_REVIEWERS_HEADER);
@@ -99,15 +90,15 @@ namespace DaisORM.UDBS.Oracle
 
         public List<Reviewer> selectFavoritReviewers(int userId, DatabaseProxy pDb = null)
         {
-            Database db;
+            DatabaseConnection db;
             if (pDb == null)
             {
-                db = new Database();
+                db = new DatabaseConnection();
                 db.Connect();
             }
             else
             {
-                db = (Database)pDb;
+                db = (DatabaseConnection)pDb;
             }
 
             OracleCommand command = db.CreateCommand(SQL_SELECT_FAVORIT_REVIEWERS_FOR_USER);
@@ -128,15 +119,15 @@ namespace DaisORM.UDBS.Oracle
 
         public Reviewer selectReviewer(int id, DatabaseProxy pDb = null)
         {
-            Database db;
+            DatabaseConnection db;
             if (pDb == null)
             {
-                db = new Database();
+                db = new DatabaseConnection();
                 db.Connect();
             }
             else
             {
-                db = (Database)pDb;
+                db = (DatabaseConnection)pDb;
             }
 
             OracleCommand command = db.CreateCommand(SQL_SELECT_REVIEWER);
@@ -157,15 +148,15 @@ namespace DaisORM.UDBS.Oracle
 
         public Reviewer selectReviewerByIdWithCategory(int id, DatabaseProxy pDb = null)
         {
-            Database db;
+            DatabaseConnection db;
             if (pDb == null)
             {
-                db = new Database();
+                db = new DatabaseConnection();
                 db.Connect();
             }
             else
             {
-                db = (Database)pDb;
+                db = (DatabaseConnection)pDb;
             }
 
             OracleCommand command = db.CreateCommand(SQL_SELECT_REVIEWER_WITH_CATEGORY);
