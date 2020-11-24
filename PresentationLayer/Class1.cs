@@ -8,5 +8,6 @@ namespace PresentationLayer
 {
     public class Class1
     {
+        //User user = new User();
     }
 }
