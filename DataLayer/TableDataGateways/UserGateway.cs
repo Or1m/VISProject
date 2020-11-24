@@ -1,5 +1,7 @@
-﻿using System;
+﻿using DTO;
+using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 
 namespace DataLayer.TableDataGateways
@@ -30,49 +32,52 @@ namespace DataLayer.TableDataGateways
             "FROM \"User\" u JOIN category on category_id = favorit_category_id WHERE nick=:nick";
 
         // Methods
-        public int registerNewUser(User user)
+        public int registerNewUser(UserDTO user)
         {
-            var db = DatabaseConnection.Instance;
+            DatabaseConnection db = DatabaseConnection.Instance;
             db.Connect();
 
-            var command = db.CreateCommand(SQL_REGISTER_NEW);
+            SqlCommand command = db.CreateCommand(SQL_REGISTER_NEW);
             PrepareCommand(command, user);
             int ret = db.ExecuteNonQuery(command);
+
             db.Close();
             return ret;
         }
 
-        public int updateUser(User user)
+        public int updateUser(UserDTO user)
         {
-            var db = DatabaseConnection.Instance;
+            DatabaseConnection db = DatabaseConnection.Instance;
             db.Connect();
 
-            var command = db.CreateCommand(SQL_UPDATE);
+            SqlCommand command = db.CreateCommand(SQL_UPDATE);
             PrepareCommand(command, user);
             int ret = db.ExecuteNonQuery(command);
+
             db.Close();
             return ret;
         }
 
         public int deleteUserById(int id)
         {
-            var db = DatabaseConnection.Instance;
+            DatabaseConnection db = DatabaseConnection.Instance;
             db.Connect();
 
-            var command = db.CreateCommand(SQL_DELETE_ID);
+            SqlCommand command = db.CreateCommand(SQL_DELETE_ID);
 
             command.Parameters.AddWithValue(":user_id", id);
             int ret = db.ExecuteNonQuery(command);
+
             db.Close();
             return ret;
         }
 
-        public List<User> selectUsers(DatabaseProxy pDb = null)
+        public List<UserDTO> selectUsers(DatabaseProxy pDb = null)
         {
             DatabaseConnection db;
             if (pDb == null)
             {
-                db = new DatabaseConnection();
+                db = DatabaseConnection.Instance;
                 db.Connect();
             }
             else
@@ -80,10 +85,10 @@ namespace DataLayer.TableDataGateways
                 db = (DatabaseConnection)pDb;
             }
 
-            var command = db.CreateCommand(SQL_SELECT_ALL_USERS_HEADER);
-            OracleDataReader reader = db.Select(command);
+            SqlCommand command = db.CreateCommand(SQL_SELECT_ALL_USERS_HEADER);
+            SqlDataReader reader = db.Select(command);
 
-            List<User> users = ReadHeader(reader);
+            List<UserDTO> users = ReadHeader(reader);
 
             reader.Close();
 
@@ -95,12 +100,12 @@ namespace DataLayer.TableDataGateways
             return users;
         }
 
-        public User selectUserById(int id, DatabaseProxy pDb = null)
+        public UserDTO selectUserById(int id, DatabaseProxy pDb = null)
         {
             DatabaseConnection db;
             if (pDb == null)
             {
-                db = new DatabaseConnection();
+                db = DatabaseConnection.Instance;
                 db.Connect();
             }
             else
@@ -108,11 +113,11 @@ namespace DataLayer.TableDataGateways
                 db = (DatabaseConnection)pDb;
             }
 
-            var command = db.CreateCommand(SQL_SELECT_USER_BY_ID);
+            SqlCommand command = db.CreateCommand(SQL_SELECT_USER_BY_ID);
             command.Parameters.AddWithValue(":user_id", id);
-            OracleDataReader reader = db.Select(command);
+            SqlDataReader reader = db.Select(command);
 
-            List<User> users = Read(reader);
+            List<UserDTO> users = Read(reader);
 
             reader.Close();
 
@@ -124,12 +129,12 @@ namespace DataLayer.TableDataGateways
             return users.ElementAt(0);
         }
 
-        public User selectUserByNick(string nick, DatabaseProxy pDb = null)
+        public UserDTO selectUserByNick(string nick, DatabaseProxy pDb = null)
         {
             DatabaseConnection db;
             if (pDb == null)
             {
-                db = new DatabaseConnection();
+                db = DatabaseConnection.Instance;
                 db.Connect();
             }
             else
@@ -137,11 +142,11 @@ namespace DataLayer.TableDataGateways
                 db = (DatabaseConnection)pDb;
             }
 
-            var command = db.CreateCommand(SQL_SELECT_USER_BY_NICK);
+            SqlCommand command = db.CreateCommand(SQL_SELECT_USER_BY_NICK);
             command.Parameters.AddWithValue(":nick", nick);
-            OracleDataReader reader = db.Select(command);
+            SqlDataReader reader = db.Select(command);
 
-            List<User> users = Read(reader);
+            List<UserDTO> users = Read(reader);
 
             reader.Close();
 
@@ -153,12 +158,12 @@ namespace DataLayer.TableDataGateways
             return users.ElementAt(0);
         }
 
-        public User selectUserByIdWithCategory(int id, DatabaseProxy pDb = null)
+        public UserDTO selectUserByIdWithCategory(int id, DatabaseProxy pDb = null)
         {
             DatabaseConnection db;
             if (pDb == null)
             {
-                db = new DatabaseConnection();
+                db = DatabaseConnection.Instance;
                 db.Connect();
             }
             else
@@ -166,11 +171,11 @@ namespace DataLayer.TableDataGateways
                 db = (DatabaseConnection)pDb;
             }
 
-            var command = db.CreateCommand(SQL_SELECT_USER_BY_ID_WITH_CATEGORY);
+            SqlCommand command = db.CreateCommand(SQL_SELECT_USER_BY_ID_WITH_CATEGORY);
             command.Parameters.AddWithValue(":user_id", id);
-            OracleDataReader reader = db.Select(command);
+            SqlDataReader reader = db.Select(command);
 
-            List<User> users = Read(reader, true);
+            List<UserDTO> users = Read(reader, true);
 
             reader.Close();
 
@@ -182,12 +187,12 @@ namespace DataLayer.TableDataGateways
             return users.ElementAt(0);
         }
 
-        public User selectUserByNickWithCategory(string nick, DatabaseProxy pDb = null)
+        public UserDTO selectUserByNickWithCategory(string nick, DatabaseProxy pDb = null)
         {
             DatabaseConnection db;
             if (pDb == null)
             {
-                db = new DatabaseConnection();
+                db = DatabaseConnection.Instance;
                 db.Connect();
             }
             else
@@ -195,11 +200,11 @@ namespace DataLayer.TableDataGateways
                 db = (DatabaseConnection)pDb;
             }
 
-            var command = db.CreateCommand(SQL_SELECT_USER_BY_NICK_WITH_CATEGORY);
+            SqlCommand command = db.CreateCommand(SQL_SELECT_USER_BY_NICK_WITH_CATEGORY);
             command.Parameters.AddWithValue(":nick", nick);
-            OracleDataReader reader = db.Select(command);
+            SqlDataReader reader = db.Select(command);
 
-            List<User> users = Read(reader, true);
+            List<UserDTO> users = Read(reader, true);
 
             reader.Close();
 
@@ -214,30 +219,29 @@ namespace DataLayer.TableDataGateways
                 return null;
         }
 
-        private static void PrepareCommand(var command, User user)
+        private static void PrepareCommand(SqlCommand command, UserDTO user)
         {
-            command.BindByName = true;
-            command.Parameters.AddWithValue(":user_id", user.User_id);
+            command.Parameters.AddWithValue(":user_id", user.UserId);
             command.Parameters.AddWithValue(":nick", user.Nick);
             command.Parameters.AddWithValue(":gender", user.Gender);
             command.Parameters.AddWithValue(":country", user.Country);
-            command.Parameters.AddWithValue(":date_of_birth", user.Date_of_birth);
-            command.Parameters.AddWithValue(":registration_date", user.Registration_date);
-            command.Parameters.AddWithValue(":first_name", user.First_name);
-            command.Parameters.AddWithValue(":last_name", user.Last_name);
-            command.Parameters.AddWithValue(":favorit_category_id", user.Favorit_category_id == null ? DBNull.Value : (object)user.Favorit_category_id);
+            command.Parameters.AddWithValue(":date_of_birth", user.DateOfBirth);
+            command.Parameters.AddWithValue(":registration_date", user.RegistrationDate);
+            command.Parameters.AddWithValue(":first_name", user.FirstName);
+            command.Parameters.AddWithValue(":last_name", user.LastName);
+            command.Parameters.AddWithValue(":favorit_category_id", user.FavoriteCategoryId == null ? DBNull.Value : (object)user.FavoriteCategoryId);
             command.Parameters.AddWithValue(":deleted", user.Deleted == null ? DBNull.Value : (object)user.Deleted);
         }
 
-        private static List<User> ReadHeader(OracleDataReader reader, bool withFavoritCategory = false)
+        private static List<UserDTO> ReadHeader(SqlDataReader reader, bool withFavoritCategory = false)
         {
-            List<User> users = new List<User>();
+            List<UserDTO> users = new List<UserDTO>();
 
             while (reader.Read())
             {
                 int i = -1;
-                User user = new User();
-                user.User_id = reader.GetInt32(++i);
+                UserDTO user = new UserDTO();
+                user.UserId = reader.GetInt32(++i);
                 user.Nick = reader.GetString(++i);
                 user.Country = reader.GetString(++i);
 
@@ -246,26 +250,26 @@ namespace DataLayer.TableDataGateways
             return users;
         }
 
-        private static List<User> Read(OracleDataReader reader, bool withFavoritCategory = false)
+        private static List<UserDTO> Read(SqlDataReader reader, bool withFavoritCategory = false)
         {
-            List<User> users = new List<User>();
+            List<UserDTO> users = new List<UserDTO>();
             bool hasFavorit = false;
 
             while (reader.Read())
             {
                 int i = -1;
-                User user = new User();
-                user.User_id = reader.GetInt32(++i);
+                UserDTO user = new UserDTO();
+                user.UserId = reader.GetInt32(++i);
                 user.Nick = reader.GetString(++i);
                 user.Gender = reader.GetString(++i)[0];
                 user.Country = reader.GetString(++i);
-                user.Date_of_birth = reader.GetDateTime(++i);
-                user.Registration_date = reader.GetDateTime(++i);
-                user.First_name = reader.GetString(++i);
-                user.Last_name = reader.GetString(++i);
+                user.DateOfBirth = reader.GetDateTime(++i);
+                user.RegistrationDate = reader.GetDateTime(++i);
+                user.FirstName = reader.GetString(++i);
+                user.LastName = reader.GetString(++i);
                 if (!reader.IsDBNull(++i))
                 {
-                    user.Favorit_category_id = reader.GetInt32(i);
+                    user.FavoriteCategoryId = reader.GetInt32(i);
                     hasFavorit = true;
                 }
                 if (!reader.IsDBNull(++i))
@@ -275,10 +279,10 @@ namespace DataLayer.TableDataGateways
 
                 if(withFavoritCategory && hasFavorit)
                 {
-                    Category category = new Category();
-                    category.Category_id = (int)user.Favorit_category_id;
+                    CategoryDTO category = new CategoryDTO();
+                    category.CategoryId = (int)user.FavoriteCategoryId;
                     category.Name = reader.GetString(++i);
-                    user.Favorit_category = category;
+                    user.FavoriteCategory = category;
                 }
 
                 users.Add(user);

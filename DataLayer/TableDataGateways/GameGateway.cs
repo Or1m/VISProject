@@ -1,4 +1,10 @@
 ﻿
+using DTO;
+using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Linq;
+
 namespace DataLayer.TableDataGateways
 {
     public class GameTable
@@ -26,49 +32,52 @@ namespace DataLayer.TableDataGateways
             "JOIN game_category gc ON g.game_id = gc.game_game_id JOIN category c ON c.category_id = gc.category_category_id";
 
         // Methods
-        public int insertNewGame(Game game)
+        public int insertNewGame(GameDTO game)
         {
-            var db = DatabaseConnection.Instance;
+            DatabaseConnection db = DatabaseConnection.Instance;
             db.Connect();
 
-            var command = db.CreateCommand(SQL_INSERT_NEW);
+            SqlCommand command = db.CreateCommand(SQL_INSERT_NEW);
             PrepareCommand(command, game);
             int ret = db.ExecuteNonQuery(command);
+
             db.Close();
             return ret;
         }
 
-        public int updateGame(Game game)
+        public int updateGame(GameDTO game)
         {
-            var db = DatabaseConnection.Instance;
+            DatabaseConnection db = DatabaseConnection.Instance;
             db.Connect();
 
-            var command = db.CreateCommand(SQL_UPDATE);
+            SqlCommand command = db.CreateCommand(SQL_UPDATE);
             PrepareCommand(command, game);
             int ret = db.ExecuteNonQuery(command);
+
             db.Close();
             return ret;
         }
 
         public int deleteGameById(int id)
         {
-            var db = DatabaseConnection.Instance;
+            DatabaseConnection db = DatabaseConnection.Instance;
             db.Connect();
 
-            var command = db.CreateCommand(SQL_DELETE_ID);
+            SqlCommand command = db.CreateCommand(SQL_DELETE_ID);
 
             command.Parameters.AddWithValue(":game_id", id);
             int ret = db.ExecuteNonQuery(command);
+
             db.Close();
             return ret;
         }
 
-        public List<Game> selectGames(DatabaseProxy pDb = null)
+        public List<GameDTO> selectGames(DatabaseProxy pDb = null)
         {
             DatabaseConnection db;
             if (pDb == null)
             {
-                db = new DatabaseConnection();
+                db = DatabaseConnection.Instance;
                 db.Connect();
             }
             else
@@ -76,10 +85,10 @@ namespace DataLayer.TableDataGateways
                 db = (DatabaseConnection)pDb;
             }
 
-            var command = db.CreateCommand(SQL_SELECT_ALL_HEADERS);
-            OracleDataReader reader = db.Select(command);
+            SqlCommand command = db.CreateCommand(SQL_SELECT_ALL_HEADERS);
+            SqlDataReader reader = db.Select(command);
 
-            List<Game> games = ReadHeader(reader);
+            List<GameDTO> games = ReadHeader(reader);
 
             reader.Close();
 
@@ -91,12 +100,12 @@ namespace DataLayer.TableDataGateways
             return games;
         }
 
-        public List<Game> selectFavoritGames(int userId, DatabaseProxy pDb = null)
+        public List<GameDTO> selectFavoritGames(int userId, DatabaseProxy pDb = null)
         {
             DatabaseConnection db;
             if (pDb == null)
             {
-                db = new DatabaseConnection();
+                db = DatabaseConnection.Instance;
                 db.Connect();
             }
             else
@@ -104,11 +113,11 @@ namespace DataLayer.TableDataGateways
                 db = (DatabaseConnection)pDb;
             }
 
-            var command = db.CreateCommand(SQL_SELECT_FAVORIT_GAMES_FOR_USER);
+            SqlCommand command = db.CreateCommand(SQL_SELECT_FAVORIT_GAMES_FOR_USER);
             command.Parameters.AddWithValue(":user_id", userId);
-            OracleDataReader reader = db.Select(command);
+            SqlDataReader reader = db.Select(command);
 
-            List<Game> games = ReadHeader(reader);
+            List<GameDTO> games = ReadHeader(reader);
 
             reader.Close();
 
@@ -120,12 +129,12 @@ namespace DataLayer.TableDataGateways
             return games;
         }
 
-        public Game selectGame(int id, DatabaseProxy pDb = null)
+        public GameDTO selectGame(int id, DatabaseProxy pDb = null)
         {
             DatabaseConnection db;
             if (pDb == null)
             {
-                db = new DatabaseConnection();
+                db = DatabaseConnection.Instance;
                 db.Connect();
             }
             else
@@ -133,11 +142,11 @@ namespace DataLayer.TableDataGateways
                 db = (DatabaseConnection)pDb;
             }
 
-            var command = db.CreateCommand(SQL_SELECT_GAME_BY_ID);
+            SqlCommand command = db.CreateCommand(SQL_SELECT_GAME_BY_ID);
             command.Parameters.AddWithValue(":game_id", id);
-            OracleDataReader reader = db.Select(command);
+            SqlDataReader reader = db.Select(command);
 
-            List<Game> games = Read(reader);
+            List<GameDTO> games = Read(reader);
 
             reader.Close();
 
@@ -149,12 +158,12 @@ namespace DataLayer.TableDataGateways
             return games.ElementAt(0);
         }
 
-        public List<Game> selectGamesByName(string name, DatabaseProxy pDb = null)
+        public List<GameDTO> selectGamesByName(string name, DatabaseProxy pDb = null)
         {
             DatabaseConnection db;
             if (pDb == null)
             {
-                db = new DatabaseConnection();
+                db = DatabaseConnection.Instance;
                 db.Connect();
             }
             else
@@ -162,11 +171,11 @@ namespace DataLayer.TableDataGateways
                 db = (DatabaseConnection)pDb;
             }
 
-            var command = db.CreateCommand(SQL_SELECT_GAMES_BY_NAME);
+            SqlCommand command = db.CreateCommand(SQL_SELECT_GAMES_BY_NAME);
             command.Parameters.AddWithValue(":name", name);
-            OracleDataReader reader = db.Select(command);
+            SqlDataReader reader = db.Select(command);
 
-            List<Game> games = Read(reader);
+            List<GameDTO> games = Read(reader);
 
             reader.Close();
 
@@ -178,12 +187,12 @@ namespace DataLayer.TableDataGateways
             return games;
         }
 
-        public List<Game> selectGamesByDeveloper(string developer, DatabaseProxy pDb = null)
+        public List<GameDTO> selectGamesByDeveloper(string developer, DatabaseProxy pDb = null)
         {
             DatabaseConnection db;
             if (pDb == null)
             {
-                db = new DatabaseConnection();
+                db = DatabaseConnection.Instance;
                 db.Connect();
             }
             else
@@ -191,11 +200,11 @@ namespace DataLayer.TableDataGateways
                 db = (DatabaseConnection)pDb;
             }
 
-            var command = db.CreateCommand(SQL_SELECT_GAMES_BY_DEVELOPER_HEADER);
+            SqlCommand command = db.CreateCommand(SQL_SELECT_GAMES_BY_DEVELOPER_HEADER);
             command.Parameters.AddWithValue(":developer", developer);
-            OracleDataReader reader = db.Select(command);
+            SqlDataReader reader = db.Select(command);
 
-            List<Game> games = ReadHeader(reader);
+            List<GameDTO> games = ReadHeader(reader);
 
             reader.Close();
 
@@ -207,12 +216,12 @@ namespace DataLayer.TableDataGateways
             return games;
         }
 
-        public List<Game> selectGamesWithCategories(DatabaseProxy pDb = null)
+        public List<GameDTO> selectGamesWithCategories(DatabaseProxy pDb = null)
         {
             DatabaseConnection db;
             if (pDb == null)
             {
-                db = new DatabaseConnection();
+                db = DatabaseConnection.Instance;
                 db.Connect();
             }
             else
@@ -220,10 +229,10 @@ namespace DataLayer.TableDataGateways
                 db = (DatabaseConnection)pDb;
             }
 
-            var command = db.CreateCommand(SQL_SELECT_GAMES_WITH_CATEGORIES);
-            OracleDataReader reader = db.Select(command);
+            SqlCommand command = db.CreateCommand(SQL_SELECT_GAMES_WITH_CATEGORIES);
+            SqlDataReader reader = db.Select(command);
 
-            List<Game> games = ReadWithCategories(reader);
+            List<GameDTO> games = ReadWithCategories(reader);
 
             reader.Close();
 
@@ -235,9 +244,9 @@ namespace DataLayer.TableDataGateways
             return games;
         }
 
-        public static List<Game> ReadWithCategories(OracleDataReader reader)
+        public static List<GameDTO> ReadWithCategories(SqlDataReader reader)
         {
-            var categoryDict = new Dictionary<int, Game>();
+            var categoryDict = new Dictionary<int, GameDTO>();
 
             while (reader.Read())
             {
@@ -245,15 +254,15 @@ namespace DataLayer.TableDataGateways
 
                 if (!categoryDict.ContainsKey(gameId))
                 {
-                    categoryDict.Add(gameId, new Game { Game_id = gameId, Name = reader["name"].ToString(), Developer = reader["developer"].ToString() });
+                    categoryDict.Add(gameId, new GameDTO { GameId = gameId, Name = reader["name"].ToString(), Developer = reader["developer"].ToString() });
                 }
 
                 if (categoryDict.TryGetValue(gameId, out var game))
                 {
                     int i = 2;
-                    game.Categories.Add(new Category
+                    game.Categories.Add(new CategoryDTO
                     {
-                        Category_id = reader.GetInt32(++i),
+                        CategoryId = reader.GetInt32(++i),
                         Name = reader.GetString(++i)
                     });
                 }
@@ -262,28 +271,27 @@ namespace DataLayer.TableDataGateways
             return categoryDict.Select(c => c.Value).ToList();
         }
 
-        private static void PrepareCommand(var command, Game game)
+        private static void PrepareCommand(SqlCommand command, GameDTO game)
         {
-            command.BindByName = true;
-            command.Parameters.AddWithValue(":game_id", game.Game_id);
+            command.Parameters.AddWithValue(":game_id", game.GameId);
             command.Parameters.AddWithValue(":name", game.Name);
             command.Parameters.AddWithValue(":description", game.Description);
             command.Parameters.AddWithValue(":developer", game.Developer);
             command.Parameters.AddWithValue(":rating", game.Rating);
-            command.Parameters.AddWithValue(":release_date", game.Release_date == null ? DBNull.Value : (object)game.Release_date);
-            command.Parameters.AddWithValue(":average_user_review", game.Average_user_review == null ? DBNull.Value : (object)game.Average_user_review);
-            command.Parameters.AddWithValue(":average_reviewer_score", game.Average_reviewer_score == null ? DBNull.Value : (object)game.Average_reviewer_score);
+            command.Parameters.AddWithValue(":release_date", game.ReleaseDate == null ? DBNull.Value : (object)game.ReleaseDate);
+            command.Parameters.AddWithValue(":average_user_review", game.AverageUserScore == null ? DBNull.Value : (object)game.AverageUserScore);
+            command.Parameters.AddWithValue(":average_reviewer_score", game.AverageReviewerScore == null ? DBNull.Value : (object)game.AverageReviewerScore);
         }
 
-        private static List<Game> ReadHeader(OracleDataReader reader)
+        private static List<GameDTO> ReadHeader(SqlDataReader reader)
         {
-            List<Game> games = new List<Game>();
+            List<GameDTO> games = new List<GameDTO>();
 
             while (reader.Read())
             {
                 int i = -1;
-                Game game = new Game();
-                game.Game_id = reader.GetInt32(++i);
+                GameDTO game = new GameDTO();
+                game.GameId = reader.GetInt32(++i);
                 game.Name = reader.GetString(++i);
                 game.Developer = reader.GetString(++i);
                 
@@ -291,30 +299,30 @@ namespace DataLayer.TableDataGateways
             }
             return games;
         }
-        private static List<Game> Read(OracleDataReader reader)
+        private static List<GameDTO> Read(SqlDataReader reader)
         {
-            List<Game> games = new List<Game>();
+            List<GameDTO> games = new List<GameDTO>();
 
             while (reader.Read())
             {
                 int i = -1;
-                Game game = new Game();
-                game.Game_id = reader.GetInt32(++i);
+                GameDTO game = new GameDTO();
+                game.GameId = reader.GetInt32(++i);
                 game.Name = reader.GetString(++i);
                 game.Description = reader.GetString(++i);
                 game.Developer = reader.GetString(++i);
                 game.Rating = reader.GetString(++i);
                 if (!reader.IsDBNull(++i))
                 {
-                    game.Release_date = reader.GetDateTime(i);
+                    game.ReleaseDate = reader.GetDateTime(i);
                 }
                 if (!reader.IsDBNull(++i))
                 {
-                    game.Average_user_review = reader.GetInt32(i);
+                    game.AverageUserScore = reader.GetInt32(i);
                 }
                 if (!reader.IsDBNull(++i))
                 {
-                    game.Average_reviewer_score = reader.GetInt32(i);
+                    game.AverageReviewerScore = reader.GetInt32(i);
                 }
 
                 games.Add(game);

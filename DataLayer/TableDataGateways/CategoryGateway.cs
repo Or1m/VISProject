@@ -1,59 +1,63 @@
 ﻿using DTO;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 
 namespace DataLayer.TableDataGateways
 {
     public class CategoryDTOGateway
     {
-        public static string SQL_INSERT_NEW = "INSERT INTO CategoryDTO (name) VALUES (:name)";
+        public static string SQL_INSERT_NEW      = "INSERT INTO Category (name) VALUES (:name)";
 
-        public static string SQL_DELETE_ID = "DELETE FROM CategoryDTO WHERE CategoryDTO_id=:CategoryDTO_id";
+        public static string SQL_DELETE_ID       = "DELETE FROM Category WHERE Category_id=:Category_id";
 
-        public static string SQL_UPDATE = "UPDATE CategoryDTO SET name=:name WHERE CategoryDTO_id=:CategoryDTO_id";
+        public static string SQL_UPDATE          = "UPDATE Category SET name=:name WHERE Category_id=:Category_id";
 
-        public static string SQL_SELECT_ALL = "SELECT CategoryDTO_id, name from CategoryDTO";
+        public static string SQL_SELECT_ALL      = "SELECT Category_id, name from Category";
 
-        public static string SQL_SELECT_BY_ID = "SELECT CategoryDTO_id, name from CategoryDTO WHERE CategoryDTO_id=:CategoryDTO_id";
+        public static string SQL_SELECT_BY_ID    = "SELECT Category_id, name from Category WHERE Category_id=:Category_id";
 
-        public static string SQL_SELECT_BY_NAME = "SELECT CategoryDTO_id, name from CategoryDTO WHERE name=:name";
+        public static string SQL_SELECT_BY_NAME  = "SELECT Category_id, name from Category WHERE name=:name";
 
-        public static string SQL_SELECT_FOR_GAME = "SELECT CategoryDTO_id, name from CategoryDTO c JOIN game_CategoryDTO gc ON c.CategoryDTO_id = gc.CategoryDTO_CategoryDTO_id WHERE game_game_id=:game_id";
+        public static string SQL_SELECT_FOR_GAME = "SELECT Category_id, name from Category c JOIN game_Category gc ON c.Category_id = gc.Category_Category_id WHERE game_game_id=:game_id";
 
         // Methods
         public int insertNew(string name)
         {
-            var db = DatabaseConnection.Instance;
+            DatabaseConnection db = DatabaseConnection.Instance;
             db.Connect();
 
-            var command = db.CreateCommand(SQL_INSERT_NEW);
+            SqlCommand command = db.CreateCommand(SQL_INSERT_NEW);
             command.Parameters.AddWithValue(":name", name);
             int ret = db.ExecuteNonQuery(command);
+
             db.Close();
             return ret;
         }
 
         public int deleteById(int id)
         {
-            var db = DatabaseConnection.Instance;
+            DatabaseConnection db = DatabaseConnection.Instance;
             db.Connect();
 
-            var command = db.CreateCommand(SQL_DELETE_ID);
-            command.Parameters.AddWithValue(":CategoryDTO_id", id);
+            SqlCommand command = db.CreateCommand(SQL_DELETE_ID);
+            command.Parameters.AddWithValue(":Category_id", id);
             int ret = db.ExecuteNonQuery(command);
+
             db.Close();
             return ret;
         }
 
         public int update(int id, string name)
         {
-            var db = DatabaseConnection.Instance;
+            DatabaseConnection db = DatabaseConnection.Instance;
             db.Connect();
 
-            var command = db.CreateCommand(SQL_UPDATE);
+            SqlCommand command = db.CreateCommand(SQL_UPDATE);
             command.Parameters.AddWithValue(":name", name);
-            command.Parameters.AddWithValue(":CategoryDTO_id", id);
+            command.Parameters.AddWithValue(":Category_id", id);
             int ret = db.ExecuteNonQuery(command);
+
             db.Close();
             return ret;
         }
@@ -71,8 +75,8 @@ namespace DataLayer.TableDataGateways
                 db = (DatabaseConnection)pDb;
             }
 
-            var command = db.CreateCommand(SQL_SELECT_ALL);
-            OracleDataReader reader = db.Select(command);
+            SqlCommand command = db.CreateCommand(SQL_SELECT_ALL);
+            SqlDataReader reader = db.Select(command);
 
             List<CategoryDTO> categories = Read(reader);
 
@@ -99,9 +103,9 @@ namespace DataLayer.TableDataGateways
                 db = (DatabaseConnection)pDb;
             }
 
-            var command = db.CreateCommand(SQL_SELECT_FOR_GAME);
+            SqlCommand command = db.CreateCommand(SQL_SELECT_FOR_GAME);
             command.Parameters.AddWithValue(":game_id", gameId);
-            OracleDataReader reader = db.Select(command);
+            SqlDataReader reader = db.Select(command);
 
             List<CategoryDTO> categories = Read(reader);
 
@@ -128,9 +132,9 @@ namespace DataLayer.TableDataGateways
                 db = (DatabaseConnection)pDb;
             }
 
-            var command = db.CreateCommand(SQL_SELECT_BY_ID);
+            SqlCommand command = db.CreateCommand(SQL_SELECT_BY_ID);
             command.Parameters.AddWithValue(":CategoryDTO_id", id);
-            OracleDataReader reader = db.Select(command);
+            SqlDataReader reader = db.Select(command);
 
             List<CategoryDTO> categories = Read(reader);
 
@@ -156,9 +160,9 @@ namespace DataLayer.TableDataGateways
                 db = (DatabaseConnection)pDb;
             }
 
-            var command = db.CreateCommand(SQL_SELECT_BY_NAME);
+            SqlCommand command = db.CreateCommand(SQL_SELECT_BY_NAME);
             command.Parameters.AddWithValue(":name", name);
-            OracleDataReader reader = db.Select(command);
+            SqlDataReader reader = db.Select(command);
 
             List<CategoryDTO> categories = Read(reader);
 
@@ -174,7 +178,7 @@ namespace DataLayer.TableDataGateways
             
         }
 
-        private static List<CategoryDTO> Read(OracleDataReader reader)
+        private static List<CategoryDTO> Read(SqlDataReader reader)
         {
             List<CategoryDTO> categories = new List<CategoryDTO>();
 

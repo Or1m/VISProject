@@ -1,23 +1,25 @@
-﻿using System.Collections.Generic;
+﻿using DTO;
+using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 
 namespace DataLayer.TableDataGateways
 {
-    class DailyStatisticsGateway
+    class DailyStatisticsDTOGateway
     {
-        public static string SQL_SELECT_ALL = "SELECT id, \"date\", number_of_reviews, type FROM DailyStatistics";
+        public static string SQL_SELECT_ALL     = "SELECT id, \"date\", number_of_reviews, type FROM DailyStatistics";
 
-        public static string SQL_SELECT_BY_ID = "SELECT id, \"date\", number_of_reviews, type FROM DailyStatistics WHERE id=:id";
+        public static string SQL_SELECT_BY_ID   = "SELECT id, \"date\", number_of_reviews, type FROM DailyStatistics WHERE id=:id";
 
         public static string SQL_SELECT_BY_DATE = "SELECT id, \"date\", number_of_reviews, type FROM DailyStatistics WHERE \"date\"=:datee";
 
         // Methods
-        public List<DailyStatistics> selectStatistics(DatabaseProxy pDb = null)
+        public List<DailyStatisticsDTO> selectStatistics(DatabaseProxy pDb = null)
         {
             DatabaseConnection db;
             if (pDb == null)
             {
-                db = new DatabaseConnection();
+                db = DatabaseConnection.Instance;
                 db.Connect();
             }
             else
@@ -25,10 +27,10 @@ namespace DataLayer.TableDataGateways
                 db = (DatabaseConnection)pDb;
             }
 
-            var command = db.CreateCommand(SQL_SELECT_ALL);
-            OracleDataReader reader = db.Select(command);
+            SqlCommand command = db.CreateCommand(SQL_SELECT_ALL);
+            SqlDataReader reader = db.Select(command);
 
-            List<DailyStatistics> statistics = Read(reader);
+            List<DailyStatisticsDTO> statistics = Read(reader);
 
             reader.Close();
 
@@ -40,12 +42,12 @@ namespace DataLayer.TableDataGateways
             return statistics;
         }
 
-        public DailyStatistics selectStatisticById(int id, DatabaseProxy pDb = null)
+        public DailyStatisticsDTO selectStatisticById(int id, DatabaseProxy pDb = null)
         {
             DatabaseConnection db;
             if (pDb == null)
             {
-                db = new DatabaseConnection();
+                db = DatabaseConnection.Instance;
                 db.Connect();
             }
             else
@@ -53,11 +55,11 @@ namespace DataLayer.TableDataGateways
                 db = (DatabaseConnection)pDb;
             }
 
-            var command = db.CreateCommand(SQL_SELECT_BY_ID);
+            SqlCommand command = db.CreateCommand(SQL_SELECT_BY_ID);
             command.Parameters.AddWithValue(":id", id);
-            OracleDataReader reader = db.Select(command);
+            SqlDataReader reader = db.Select(command);
 
-            List<DailyStatistics> statistics = Read(reader);
+            List<DailyStatisticsDTO> statistics = Read(reader);
 
             reader.Close();
 
@@ -72,17 +74,17 @@ namespace DataLayer.TableDataGateways
                 return null;
         }
 
-        private static List<DailyStatistics> Read(OracleDataReader reader)
+        private static List<DailyStatisticsDTO> Read(SqlDataReader reader)
         {
-            List<DailyStatistics> statistics = new List<DailyStatistics>();
+            List<DailyStatisticsDTO> statistics = new List<DailyStatisticsDTO>();
 
             while (reader.Read())
             {
                 int i = -1;
-                DailyStatistics statistic = new DailyStatistics();
+                DailyStatisticsDTO statistic = new DailyStatisticsDTO();
                 statistic.Id = reader.GetInt32(++i);
                 statistic.Date = reader.GetDateTime(++i);
-                statistic.number_of_reviews = reader.GetInt32(++i);
+                statistic.NumberOfReviews = reader.GetInt32(++i);
                 statistic.Type = reader.GetString(++i);
 
                 statistics.Add(statistic);

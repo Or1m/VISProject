@@ -1,4 +1,9 @@
-﻿
+﻿using DTO;
+using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Linq;
+
 namespace DataLayer.TableDataGateways
 {
     public class ReviewerGateway
@@ -23,49 +28,52 @@ namespace DataLayer.TableDataGateways
             "FROM Reviewer r JOIN Favorit_reviewer fr ON r.reviewer_id = fr.reviewer_reviewer_id WHERE user_user_id=:user_id";
 
         // Methods
-        public int registerNewReviewer(Reviewer reviewer)
+        public int registerNewReviewer(ReviewerDTO reviewer)
         {
-            var db = DatabaseConnection.Instance;
+            DatabaseConnection db = DatabaseConnection.Instance;
             db.Connect();
 
-            var command = db.CreateCommand(SQL_REGISTER_NEW);
+            SqlCommand command = db.CreateCommand(SQL_REGISTER_NEW);
             PrepareCommand(command, reviewer);
             int ret = db.ExecuteNonQuery(command);
+
             db.Close();
             return ret;
         }
         
-        public int updateReviewer(Reviewer reviewer)
+        public int updateReviewer(ReviewerDTO reviewer)
         {
-            var db = DatabaseConnection.Instance;
+            DatabaseConnection db = DatabaseConnection.Instance;
             db.Connect();
 
-            var command = db.CreateCommand(SQL_UPDATE);
+            SqlCommand command = db.CreateCommand(SQL_UPDATE);
             PrepareCommand(command, reviewer);
             int ret = db.ExecuteNonQuery(command);
+
             db.Close();
             return ret;
         }
 
         public int deleteReviewerById(int id)
         {
-            var db = DatabaseConnection.Instance;
+            DatabaseConnection db = DatabaseConnection.Instance;
             db.Connect();
 
-            var command = db.CreateCommand(SQL_DELETE_ID);
+            SqlCommand command = db.CreateCommand(SQL_DELETE_ID);
 
             command.Parameters.AddWithValue(":reviewer_id", id);
             int ret = db.ExecuteNonQuery(command);
+
             db.Close();
             return ret;
         }
 
-        public List<Reviewer> selectReviewers(DatabaseProxy pDb = null)
+        public List<ReviewerDTO> selectReviewers(DatabaseProxy pDb = null)
         {
             DatabaseConnection db;
             if (pDb == null)
             {
-                db = new DatabaseConnection();
+                db = DatabaseConnection.Instance;
                 db.Connect();
             }
             else
@@ -73,10 +81,10 @@ namespace DataLayer.TableDataGateways
                 db = (DatabaseConnection)pDb;
             }
 
-            var command = db.CreateCommand(SQL_SELECT_ALL_REVIEWERS_HEADER);
-            OracleDataReader reader = db.Select(command);
+            SqlCommand command = db.CreateCommand(SQL_SELECT_ALL_REVIEWERS_HEADER);
+            SqlDataReader reader = db.Select(command);
 
-            List<Reviewer> reviewers = ReadHeader(reader);
+            List<ReviewerDTO> reviewers = ReadHeader(reader);
 
             reader.Close();
 
@@ -88,12 +96,12 @@ namespace DataLayer.TableDataGateways
             return reviewers;
         }
 
-        public List<Reviewer> selectFavoritReviewers(int userId, DatabaseProxy pDb = null)
+        public List<ReviewerDTO> selectFavoritReviewers(int userId, DatabaseProxy pDb = null)
         {
             DatabaseConnection db;
             if (pDb == null)
             {
-                db = new DatabaseConnection();
+                db = DatabaseConnection.Instance;
                 db.Connect();
             }
             else
@@ -101,11 +109,11 @@ namespace DataLayer.TableDataGateways
                 db = (DatabaseConnection)pDb;
             }
 
-            var command = db.CreateCommand(SQL_SELECT_FAVORIT_REVIEWERS_FOR_USER);
+            SqlCommand command = db.CreateCommand(SQL_SELECT_FAVORIT_REVIEWERS_FOR_USER);
             command.Parameters.AddWithValue(":user_id", userId);
-            OracleDataReader reader = db.Select(command);
+            SqlDataReader reader = db.Select(command);
 
-            List<Reviewer> reviewers = ReadHeader(reader);
+            List<ReviewerDTO> reviewers = ReadHeader(reader);
 
             reader.Close();
 
@@ -117,12 +125,12 @@ namespace DataLayer.TableDataGateways
             return reviewers;
         }
 
-        public Reviewer selectReviewer(int id, DatabaseProxy pDb = null)
+        public ReviewerDTO selectReviewer(int id, DatabaseProxy pDb = null)
         {
             DatabaseConnection db;
             if (pDb == null)
             {
-                db = new DatabaseConnection();
+                db = DatabaseConnection.Instance;
                 db.Connect();
             }
             else
@@ -130,11 +138,11 @@ namespace DataLayer.TableDataGateways
                 db = (DatabaseConnection)pDb;
             }
 
-            var command = db.CreateCommand(SQL_SELECT_REVIEWER);
+            SqlCommand command = db.CreateCommand(SQL_SELECT_REVIEWER);
             command.Parameters.AddWithValue(":reviewer_id", id);
-            OracleDataReader reader = db.Select(command);
+            SqlDataReader reader = db.Select(command);
 
-            List<Reviewer> reviewers = Read(reader);
+            List<ReviewerDTO> reviewers = Read(reader);
 
             reader.Close();
 
@@ -146,12 +154,12 @@ namespace DataLayer.TableDataGateways
             return reviewers.ElementAt(0);
         }
 
-        public Reviewer selectReviewerByIdWithCategory(int id, DatabaseProxy pDb = null)
+        public ReviewerDTO selectReviewerByIdWithCategory(int id, DatabaseProxy pDb = null)
         {
             DatabaseConnection db;
             if (pDb == null)
             {
-                db = new DatabaseConnection();
+                db = DatabaseConnection.Instance;
                 db.Connect();
             }
             else
@@ -159,11 +167,11 @@ namespace DataLayer.TableDataGateways
                 db = (DatabaseConnection)pDb;
             }
 
-            var command = db.CreateCommand(SQL_SELECT_REVIEWER_WITH_CATEGORY);
+            SqlCommand command = db.CreateCommand(SQL_SELECT_REVIEWER_WITH_CATEGORY);
             command.Parameters.AddWithValue(":reviewer_id", id);
-            OracleDataReader reader = db.Select(command);
+            SqlDataReader reader = db.Select(command);
 
-            List<Reviewer> reviewers = Read(reader, true);
+            List<ReviewerDTO> reviewers = Read(reader, true);
 
             reader.Close();
 
@@ -175,31 +183,30 @@ namespace DataLayer.TableDataGateways
             return reviewers.ElementAt(0);
         }
 
-        private static void PrepareCommand(var command, Reviewer reviewer)
+        private static void PrepareCommand(SqlCommand command, ReviewerDTO reviewer)
         {
-            command.BindByName = true;
-            command.Parameters.AddWithValue(":reviewer_id", reviewer.Reviewer_id);
-            command.Parameters.AddWithValue(":first_name", reviewer.First_name);
-            command.Parameters.AddWithValue(":last_name", reviewer.Last_name);
+            command.Parameters.AddWithValue(":reviewer_id", reviewer.ReviewerId);
+            command.Parameters.AddWithValue(":first_name", reviewer.FirstName);
+            command.Parameters.AddWithValue(":last_name", reviewer.LastName);
             command.Parameters.AddWithValue(":gender", reviewer.Gender);
             command.Parameters.AddWithValue(":country", reviewer.Country);
             command.Parameters.AddWithValue(":work", reviewer.Work);
-            command.Parameters.AddWithValue(":date_of_birth", reviewer.Date_of_birth);
-            command.Parameters.AddWithValue(":registration_date", reviewer.Registration_date);
-            command.Parameters.AddWithValue(":favorit_category_id", reviewer.Favorit_category_id == null ? DBNull.Value : (object)reviewer.Favorit_category_id);
+            command.Parameters.AddWithValue(":date_of_birth", reviewer.DateOfBirth);
+            command.Parameters.AddWithValue(":registration_date", reviewer.RegistrationDate);
+            command.Parameters.AddWithValue(":favorit_category_id", reviewer.FavoriteCategoryId == null ? DBNull.Value : (object)reviewer.FavoriteCategoryId);
         }
 
-        private static List<Reviewer> ReadHeader(OracleDataReader reader, bool withFavoritCategory = false)
+        private static List<ReviewerDTO> ReadHeader(SqlDataReader reader, bool withFavoritCategory = false)
         {
-            List<Reviewer> Reviewers = new List<Reviewer>();
+            List<ReviewerDTO> Reviewers = new List<ReviewerDTO>();
 
             while (reader.Read())
             {
                 int i = -1;
-                Reviewer reviewer = new Reviewer();
-                reviewer.Reviewer_id = reader.GetInt32(++i);
-                reviewer.First_name = reader.GetString(++i);
-                reviewer.Last_name = reader.GetString(++i);
+                ReviewerDTO reviewer = new ReviewerDTO();
+                reviewer.ReviewerId = reader.GetInt32(++i);
+                reviewer.FirstName = reader.GetString(++i);
+                reviewer.LastName = reader.GetString(++i);
                 reviewer.Country = reader.GetString(++i);
                 reviewer.Work = reader.GetString(++i);
                 Reviewers.Add(reviewer);
@@ -207,26 +214,26 @@ namespace DataLayer.TableDataGateways
             return Reviewers;
         }
 
-        private static List<Reviewer> Read(OracleDataReader reader, bool withFavoritCategory = false)
+        private static List<ReviewerDTO> Read(SqlDataReader reader, bool withFavoritCategory = false)
         {
-            List<Reviewer> Reviewers = new List<Reviewer>();
+            List<ReviewerDTO> Reviewers = new List<ReviewerDTO>();
             bool hasFavorit = false;
 
             while (reader.Read())
             {
                 int i = -1;
-                Reviewer reviewer = new Reviewer();
-                reviewer.Reviewer_id = reader.GetInt32(++i);
-                reviewer.First_name = reader.GetString(++i);
-                reviewer.Last_name = reader.GetString(++i);
+                ReviewerDTO reviewer = new ReviewerDTO();
+                reviewer.ReviewerId = reader.GetInt32(++i);
+                reviewer.FirstName = reader.GetString(++i);
+                reviewer.LastName = reader.GetString(++i);
                 reviewer.Gender = reader.GetString(++i)[0];
                 reviewer.Country = reader.GetString(++i);
                 reviewer.Work = reader.GetString(++i);
-                reviewer.Date_of_birth = reader.GetDateTime(++i);
-                reviewer.Registration_date = reader.GetDateTime(++i);
+                reviewer.DateOfBirth = reader.GetDateTime(++i);
+                reviewer.RegistrationDate = reader.GetDateTime(++i);
                 if (!reader.IsDBNull(++i))
                 {
-                    reviewer.Favorit_category_id = reader.GetInt32(i);
+                    reviewer.FavoriteCategoryId = reader.GetInt32(i);
                     hasFavorit = true;
                 }
                 if (!reader.IsDBNull(++i))
@@ -235,10 +242,10 @@ namespace DataLayer.TableDataGateways
                 }
                 if (withFavoritCategory && hasFavorit)
                 {
-                    Category category = new Category();
-                    category.Category_id = (int)reviewer.Favorit_category_id;
+                    CategoryDTO category = new CategoryDTO();
+                    category.CategoryId = (int)reviewer.FavoriteCategoryId;
                     category.Name = reader.GetString(++i);
-                    reviewer.Favorit_category = category;
+                    reviewer.FavoriteCategory = category;
                 }
 
                 Reviewers.Add(reviewer);

@@ -12,8 +12,8 @@ namespace DTO
         public string Work { get; set; }
         public DateTime DateOfBirth { get; set; }
         public DateTime RegistrationDate { get; set; }
-        public int? FavoritCategoryId { get; set; }
-        public CategoryDTO FavoritCategory { get; set; }
+        public int? FavoriteCategoryId { get; set; }
+        public CategoryDTO FavoriteCategory { get; set; }
         public int? Deleted { get; set; }
     }
 }

@@ -1,4 +1,9 @@
 ﻿
+using DTO;
+using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Linq;
+
 namespace DataLayer.TableDataGateways
 {
     public class ReviewerReviewGateway
@@ -20,12 +25,12 @@ namespace DataLayer.TableDataGateways
 
 
         // Methods
-        public int insertNew(Reviewer_review review)
+        public int insertNew(ReviewerReviewDTO review)
         {
-            var db = DatabaseConnection.Instance;
+            DatabaseConnection db = DatabaseConnection.Instance;
             db.Connect();
 
-            var command = db.CreateCommand(SQL_INSERT_NEW);
+            SqlCommand command = db.CreateCommand(SQL_INSERT_NEW);
             PrepareCommand(command, review);
             int ret = db.ExecuteNonQuery(command);
             db.Close();
@@ -34,10 +39,10 @@ namespace DataLayer.TableDataGateways
 
         public int delete(int reviewerId, int gameId, int order)
         {
-            var db = DatabaseConnection.Instance;
+            DatabaseConnection db = DatabaseConnection.Instance;
             db.Connect();
 
-            var command = db.CreateCommand(SQL_DELETE);
+            SqlCommand command = db.CreateCommand(SQL_DELETE);
 
             command.Parameters.AddWithValue(":reviewer_reviewer_id", reviewerId);
             command.Parameters.AddWithValue(":game_game_id", gameId);
@@ -48,12 +53,12 @@ namespace DataLayer.TableDataGateways
             return ret;
         }
 
-        public Reviewer_review selectReview(int reviewerId, int gameId, int order, DatabaseProxy pDb = null)
+        public ReviewerReviewDTO selectReview(int reviewerId, int gameId, int order, DatabaseProxy pDb = null)
         {
             DatabaseConnection db;
             if (pDb == null)
             {
-                db = new DatabaseConnection();
+                db = DatabaseConnection.Instance;
                 db.Connect();
             }
             else
@@ -61,14 +66,14 @@ namespace DataLayer.TableDataGateways
                 db = (DatabaseConnection)pDb;
             }
 
-            var command = db.CreateCommand(SQL_SELECT_REVIEW);
+            SqlCommand command = db.CreateCommand(SQL_SELECT_REVIEW);
             command.Parameters.AddWithValue(":reviewer_reviewer_id", reviewerId);
             command.Parameters.AddWithValue(":game_game_id", gameId);
             command.Parameters.AddWithValue(":order_of_review", order);
 
-            OracleDataReader reader = db.Select(command);
+            SqlDataReader reader = db.Select(command);
 
-            List<Reviewer_review> Reviewer_reviews = Read(reader);
+            List<ReviewerReviewDTO> Reviewer_reviews = Read(reader);
 
             reader.Close();
 
@@ -80,12 +85,12 @@ namespace DataLayer.TableDataGateways
             return Reviewer_reviews.ElementAt(0);
         }
 
-        public List<Reviewer_review> selectReviews(DatabaseProxy pDb = null)
+        public List<ReviewerReviewDTO> selectReviews(DatabaseProxy pDb = null)
         {
             DatabaseConnection db;
             if (pDb == null)
             {
-                db = new DatabaseConnection();
+                db = DatabaseConnection.Instance;
                 db.Connect();
             }
             else
@@ -93,10 +98,10 @@ namespace DataLayer.TableDataGateways
                 db = (DatabaseConnection)pDb;
             }
 
-            var command = db.CreateCommand(SQL_SELECT_ALL);
-            OracleDataReader reader = db.Select(command);
+            SqlCommand command = db.CreateCommand(SQL_SELECT_ALL);
+            SqlDataReader reader = db.Select(command);
 
-            List<Reviewer_review> Reviewer_reviews = Read(reader);
+            List<ReviewerReviewDTO> Reviewer_reviews = Read(reader);
 
             reader.Close();
 
@@ -108,12 +113,12 @@ namespace DataLayer.TableDataGateways
             return Reviewer_reviews;
         }
 
-        public List<Reviewer_review> selectReviewsForReviewer(int reviewerId, DatabaseProxy pDb = null)
+        public List<ReviewerReviewDTO> selectReviewsForReviewer(int reviewerId, DatabaseProxy pDb = null)
         {
             DatabaseConnection db;
             if (pDb == null)
             {
-                db = new DatabaseConnection();
+                db = DatabaseConnection.Instance;
                 db.Connect();
             }
             else
@@ -121,11 +126,11 @@ namespace DataLayer.TableDataGateways
                 db = (DatabaseConnection)pDb;
             }
 
-            var command = db.CreateCommand(SQL_SELECT_ALL_BY_REVIEWER);
+            SqlCommand command = db.CreateCommand(SQL_SELECT_ALL_BY_REVIEWER);
             command.Parameters.AddWithValue(":reviewer_reviewer_id", reviewerId);
-            OracleDataReader reader = db.Select(command);
+            SqlDataReader reader = db.Select(command);
 
-            List<Reviewer_review> Reviewer_reviews = Read(reader);
+            List<ReviewerReviewDTO> Reviewer_reviews = Read(reader);
 
             reader.Close();
 
@@ -137,12 +142,12 @@ namespace DataLayer.TableDataGateways
             return Reviewer_reviews;
         }
 
-        public List<Reviewer_review> selectReviewsForGame(int gameId, DatabaseProxy pDb = null)
+        public List<ReviewerReviewDTO> selectReviewsForGame(int gameId, DatabaseProxy pDb = null)
         {
             DatabaseConnection db;
             if (pDb == null)
             {
-                db = new DatabaseConnection();
+                db = DatabaseConnection.Instance;
                 db.Connect();
             }
             else
@@ -150,11 +155,11 @@ namespace DataLayer.TableDataGateways
                 db = (DatabaseConnection)pDb;
             }
 
-            var command = db.CreateCommand(SQL_SELECT_ALL_BY_GAME);
+            SqlCommand command = db.CreateCommand(SQL_SELECT_ALL_BY_GAME);
             command.Parameters.AddWithValue(":game_game_id", gameId);
-            OracleDataReader reader = db.Select(command);
+            SqlDataReader reader = db.Select(command);
 
-            List<Reviewer_review> Reviewer_reviews = Read(reader);
+            List<ReviewerReviewDTO> Reviewer_reviews = Read(reader);
 
             reader.Close();
 
@@ -166,33 +171,32 @@ namespace DataLayer.TableDataGateways
             return Reviewer_reviews;
         }
 
-        private static void PrepareCommand(var command, Reviewer_review Review)
+        private static void PrepareCommand(SqlCommand command, ReviewerReviewDTO review)
         {
-            command.BindByName = true;
-            command.Parameters.AddWithValue(":title", Review.Title);
-            command.Parameters.AddWithValue(":text_of_review", Review.Text_of_review);
-            command.Parameters.AddWithValue(":score", Review.Score);
-            command.Parameters.AddWithValue(":reviewer_reviewer_id", Review.ReviewerId);
-            command.Parameters.AddWithValue(":game_game_id", Review.GameId);
-            command.Parameters.AddWithValue(":datee", Review.Date);
-            command.Parameters.AddWithValue(":order_of_review", Review.Order_of_review);
+            command.Parameters.AddWithValue(":title", review.Title);
+            command.Parameters.AddWithValue(":text_of_review", review.TextOfReview);
+            command.Parameters.AddWithValue(":score", review.Score);
+            command.Parameters.AddWithValue(":reviewer_reviewer_id", review.ReviewerId);
+            command.Parameters.AddWithValue(":game_game_id", review.GameId);
+            command.Parameters.AddWithValue(":datee", review.Date);
+            command.Parameters.AddWithValue(":order_of_review", review.OrderOfReview);
         }
 
-        private static List<Reviewer_review> Read(OracleDataReader reader)
+        private static List<ReviewerReviewDTO> Read(SqlDataReader reader)
         {
-            List<Reviewer_review> Reviewer_reviews = new List<Reviewer_review>();
+            List<ReviewerReviewDTO> Reviewer_reviews = new List<ReviewerReviewDTO>();
 
             while (reader.Read())
             {
                 int i = -1;
-                Reviewer_review reviewer_review = new Reviewer_review();
+                ReviewerReviewDTO reviewer_review = new ReviewerReviewDTO();
                 reviewer_review.Title = reader.GetString(++i);
-                reviewer_review.Text_of_review = reader.GetString(++i);
+                reviewer_review.TextOfReview = reader.GetString(++i);
                 reviewer_review.Score = reader.GetInt32(++i);
                 reviewer_review.ReviewerId = reader.GetInt32(++i);
                 reviewer_review.GameId = reader.GetInt32(++i);
                 reviewer_review.Date = reader.GetDateTime(++i);
-                reviewer_review.Order_of_review = reader.GetInt32(++i);
+                reviewer_review.OrderOfReview = reader.GetInt32(++i);
 
                 Reviewer_reviews.Add(reviewer_review);
             }
