@@ -1,52 +1,36 @@
 ﻿using BusinessLayer.BusinessObjects.BaseObjects;
-using BusinessLayer.BusinessObjects.Behaviour;
 using DTO;
 using System;
 using System.Collections.Generic;
 
 namespace BusinessLayer.BusinessObjects
 {
-    public class User : Actor, Persistable<UserDTO>
+    public class User : Actor
     {
         public string Nick { get; set; }
-        public Category FavoriteCategory { get; set; }
-
-        public int? Deleted { get; set; }
         
-
         public List<Game> FavoriteGames { get; set; }
         public List<Reviewer> FavoriteReviewers { get; set; }
 
-        // Constructors
-        public User() { }
 
-        public User(string nick, char gender, string country, DateTime date_of_birth, DateTime registration_date, string first_name, string last_name, int? favorit_category_id = null, int? deleted = null, Category favorit_category = null)
+        #region Constructors
+        public User() : base() { }
+        public User(string nick, string firstName, string lastName, char gender, string country, DateTime dateOfBirth, DateTime registrationDate, Category favoriteCategory = null)
+            : base(firstName, lastName, gender, country, dateOfBirth, registrationDate, favoriteCategory)
         {
             Nick = nick;
-            Gender = gender;
-            Country = country;
-            DateOfBirth = date_of_birth;
-            RegistrationDate = registration_date;
-            FirstName = first_name;
-            LastName = last_name;
-            FavoriteCategoryId = favorit_category_id;
-            Deleted = deleted;
-            FavoriteCategory = favorit_category;
         }
+        public User(UserDTO DTO, Category favoriteCategory = null)
+            : this(DTO.Nick, DTO.FirstName, DTO.LastName, DTO.Gender, DTO.Country, DTO.DateOfBirth, DTO.RegistrationDate, favoriteCategory) { }
+        #endregion
 
         public override string ToString()
         {
-            return Nick + " " + Gender + " " + Country + " " + DateOfBirth.Date + " " + RegistrationDate.Date + " " + FirstName + " " + LastName + " " + FavoriteCategoryId + " " + Deleted;
+            return Nick + " " + Gender + " " + Country + " " + DateOfBirth.Date + " " + RegistrationDate.Date + " " + FirstName + " " + LastName + " ";
         } 
-
         public string ToStringHeader()
         {
             return Nick + ", " + Country;
-        }
-
-        public UserDTO ToDTO()
-        {
-            throw new NotImplementedException();
         }
     }
 }

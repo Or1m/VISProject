@@ -1,19 +1,10 @@
-﻿using System;
+﻿using DTO.BaseDTOObjects;
+using System;
 
 namespace DTO
 {
-    public class ReviewerDTO
+    public class ReviewerDTO : ActorDTO
     {
-        public int ReviewerId { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public char Gender { get; set; }
-        public string Country { get; set; }
         public string Work { get; set; }
-        public DateTime DateOfBirth { get; set; }
-        public DateTime RegistrationDate { get; set; }
-        public int? FavoriteCategoryId { get; set; }
-        public CategoryDTO FavoriteCategory { get; set; }
-        public int? Deleted { get; set; }
     }
 }

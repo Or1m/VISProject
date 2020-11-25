@@ -6,7 +6,6 @@ namespace BusinessLayer.BusinessObjects.BaseObjects
 {
     public class Review : Persistable<ReviewDTO>
     {
-        public int Id { get; set; }
         public string Title { get; set; }
         public int Score { get; set; }
 
@@ -36,6 +35,7 @@ namespace BusinessLayer.BusinessObjects.BaseObjects
         #endregion
 
         #region DTO
+        public int Id { get; set; }
         public bool IsPersisted { get; set; }
 
         public ReviewDTO ToDTO()

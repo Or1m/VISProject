@@ -5,39 +5,29 @@ using System;
 
 namespace BusinessLayer.BusinessObjects
 {
-    public class Reviewer : Actor, Persistable<ReviewerDTO>
+    public class Reviewer : Actor
     {
         public string Work { get; set; }
-        
-        
+
+
+        #region Constructors
+        public Reviewer() : base() { }
+        public Reviewer(string firstName, string lastName, char gender, string country, string work, DateTime dateOfBirth, DateTime registrationDate, Category favoriteCategory = null)
+            : base(firstName, lastName, gender, country, dateOfBirth, registrationDate, favoriteCategory) 
+        {
+            Work = work;
+        }
+        public Reviewer(ReviewerDTO DTO, Category favoriteCategory = null)
+            : this(DTO.FirstName, DTO.LastName, DTO.Gender, DTO.Country, DTO.Work, DTO.DateOfBirth, DTO.RegistrationDate, favoriteCategory) { }
+        #endregion
 
         public override string ToString()
         {
-            return FirstName + " " + LastName + " " + Gender + " " + Work + " " + Country + " " + DateOfBirth.Date + " " + RegistrationDate.Date + " " + FavoriteCategoryId + " " + Deleted;
+            return FirstName + " " + LastName + " " + Gender + " " + Work + " " + Country + " " + DateOfBirth.Date + " " + RegistrationDate.Date + " ";
         }
         public string ToStringHeader()
         {
             return FirstName + " " + LastName + " [ " + Work + " ]" + ", " + Country;
-        }
-
-        public ReviewerDTO ToDTO()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Reviewer() { }
-        public Reviewer(string first_name, string last_name, char gender, string country, string work, DateTime date_of_birth, DateTime registration_date, int? favorit_category_id = null, Category favorit_category = null, int ? deleted = null)
-        {
-            FirstName = first_name;
-            LastName = last_name;
-            Gender = gender;
-            Country = country;
-            Work = work;
-            DateOfBirth = date_of_birth;
-            RegistrationDate = registration_date;
-            FavoriteCategoryId = favorit_category_id;
-            FavoriteCategory = favorit_category;
-            Deleted = deleted;
         }
     }
 }

@@ -11,7 +11,6 @@ namespace BusinessLayer.BusinessObjects
         {
             return Title + " " + TextOfReview + " " + Score + " " + Date.Date; 
         }
-
         public string ToStringHeader()
         {
             return Title + " " + Score + " " + Date.Date;
