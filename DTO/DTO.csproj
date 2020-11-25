@@ -41,6 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseDTOObjects\ActorDTO.cs" />
+    <Compile Include="BaseDTOObjects\ReviewDTO.cs" />
     <Compile Include="CategoryDTO.cs" />
     <Compile Include="DailyStatisticsDTO.cs" />
     <Compile Include="FavoriteGameDTO.cs" />

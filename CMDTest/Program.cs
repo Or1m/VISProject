@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataLayer;
+using System;
 
 namespace CMDTest
 {
@@ -6,7 +7,7 @@ namespace CMDTest
     {
         static void Main(string[] args)
         {
-            Console.WriteLine(DataLayer.DatabaseConnection.Instance.Connect());
+            Console.WriteLine(DatabaseConnection.Instance.Connect());
 
             Console.ReadKey();
         }

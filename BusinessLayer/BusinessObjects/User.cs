@@ -1,24 +1,18 @@
-﻿using System;
+﻿using BusinessLayer.BusinessObjects.BaseObjects;
+using BusinessLayer.BusinessObjects.Behaviour;
+using DTO;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BusinessLayer.BusinessObjects
 {
-    public class User
+    public class User : Actor, Persistable<UserDTO>
     {
-        public int UserId { get; set; }
         public string Nick { get; set; }
-        public char Gender { get; set; }
-        public string Country { get; set; }
-        public DateTime DateOfBirth { get; set; }
-        public DateTime RegistrationDate { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public int? FavoriteCategoryId { get; set; }
-        public int? Deleted { get; set; }
         public Category FavoriteCategory { get; set; }
+
+        public int? Deleted { get; set; }
+        
 
         public List<Game> FavoriteGames { get; set; }
         public List<Reviewer> FavoriteReviewers { get; set; }
@@ -48,6 +42,11 @@ namespace BusinessLayer.BusinessObjects
         public string ToStringHeader()
         {
             return Nick + ", " + Country;
+        }
+
+        public UserDTO ToDTO()
+        {
+            throw new NotImplementedException();
         }
     }
 }

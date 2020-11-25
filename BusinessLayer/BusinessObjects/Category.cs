@@ -1,9 +1,17 @@
-﻿namespace BusinessLayer.BusinessObjects
+﻿using BusinessLayer.BusinessObjects.Behaviour;
+using DTO;
+
+namespace BusinessLayer.BusinessObjects
 {
-    public class Category
+    public class Category : Persistable<CategoryDTO>
     {
         public int CategoryId { get; set; }
         public string Name { get; set; }
+
+        public CategoryDTO ToDTO()
+        {
+            throw new System.NotImplementedException();
+        }
 
         public override string ToString()
         {

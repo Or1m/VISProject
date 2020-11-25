@@ -1,9 +1,11 @@
-﻿using System;
+﻿using BusinessLayer.BusinessObjects.Behaviour;
+using DTO;
+using System;
 using System.Collections.Generic;
 
 namespace BusinessLayer.BusinessObjects
 {
-    public class Game
+    public class Game : Persistable<GameDTO>
     {
         public int GameId { get; set; }
         public string Name { get; set; }
@@ -41,6 +43,11 @@ namespace BusinessLayer.BusinessObjects
         public string ToStringHeader()
         {
             return Name + ", " +  Developer;
+        }
+
+        public GameDTO ToDTO()
+        {
+            throw new NotImplementedException();
         }
     }
 }

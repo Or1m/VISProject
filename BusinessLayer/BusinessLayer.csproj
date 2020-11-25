@@ -41,22 +41,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusinessObjects\BaseObjects\Actor.cs" />
+    <Compile Include="BusinessObjects\BaseObjects\Review.cs" />
     <Compile Include="BusinessObjects\Category.cs" />
     <Compile Include="BusinessObjects\DailyStatistics.cs" />
-    <Compile Include="BusinessObjects\FavoriteGame.cs" />
-    <Compile Include="BusinessObjects\FavoriteReviewer.cs" />
+    <Compile Include="BusinessObjects\_Legacy\FavoriteGame.cs" />
+    <Compile Include="BusinessObjects\_Legacy\FavoriteReviewer.cs" />
     <Compile Include="BusinessObjects\Game.cs" />
-    <Compile Include="BusinessObjects\GameCategory.cs" />
+    <Compile Include="BusinessObjects\_Legacy\GameCategory.cs" />
+    <Compile Include="BusinessObjects\Behaviour\Persistable.cs" />
     <Compile Include="BusinessObjects\Reviewer.cs" />
-    <Compile Include="BusinessObjects\Reviewer_review.cs" />
+    <Compile Include="BusinessObjects\ReviewerReview.cs" />
     <Compile Include="BusinessObjects\User.cs" />
-    <Compile Include="BusinessObjects\User_review.cs" />
+    <Compile Include="BusinessObjects\UserReview.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataLayer\DataLayer.csproj">
       <Project>{d397bb4f-9b76-4ba9-bc76-da836251d329}</Project>
       <Name>DataLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DTO\DTO.csproj">
+      <Project>{efcc6743-c7c3-4537-b393-e7dc903a94a0}</Project>
+      <Name>DTO</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

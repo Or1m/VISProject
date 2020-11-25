@@ -1,20 +1,15 @@
-﻿using System;
+﻿using BusinessLayer.BusinessObjects.BaseObjects;
+using BusinessLayer.BusinessObjects.Behaviour;
+using DTO;
+using System;
 
 namespace BusinessLayer.BusinessObjects
 {
-    public class Reviewer
+    public class Reviewer : Actor, Persistable<ReviewerDTO>
     {
-        public int Reviewer_id { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public char Gender { get; set; }
-        public string Country { get; set; }
         public string Work { get; set; }
-        public DateTime DateOfBirth { get; set; }
-        public DateTime RegistrationDate { get; set; }
-        public int? FavoriteCategoryId { get; set; }
-        public Category FavoriteCategory { get; set; }
-        public int? Deleted { get; set; }
+        
+        
 
         public override string ToString()
         {
@@ -23,6 +18,11 @@ namespace BusinessLayer.BusinessObjects
         public string ToStringHeader()
         {
             return FirstName + " " + LastName + " [ " + Work + " ]" + ", " + Country;
+        }
+
+        public ReviewerDTO ToDTO()
+        {
+            throw new NotImplementedException();
         }
 
         public Reviewer() { }
