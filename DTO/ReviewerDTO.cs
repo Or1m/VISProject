@@ -1,5 +1,4 @@
 ﻿using DTO.BaseDTOObjects;
-using System;
 
 namespace DTO
 {

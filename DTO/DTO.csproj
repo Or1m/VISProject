@@ -44,11 +44,11 @@
     <Compile Include="BaseDTOObjects\ActorDTO.cs" />
     <Compile Include="BaseDTOObjects\ReviewDTO.cs" />
     <Compile Include="CategoryDTO.cs" />
-    <Compile Include="DailyStatisticsDTO.cs" />
-    <Compile Include="FavoriteGameDTO.cs" />
-    <Compile Include="FavoriteReviewerDTO.cs" />
+    <Compile Include="_Legacy\DailyStatisticsDTO.cs" />
+    <Compile Include="_Legacy\FavoriteGameDTO.cs" />
+    <Compile Include="_Legacy\FavoriteReviewerDTO.cs" />
     <Compile Include="GameDTO.cs" />
-    <Compile Include="GameCategoryDTO.cs" />
+    <Compile Include="_Legacy\GameCategoryDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReviewerDTO.cs" />
     <Compile Include="ReviewerReviewDTO.cs" />
