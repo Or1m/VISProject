@@ -185,15 +185,15 @@ namespace DataLayer.TableDataGateways
 
         private static void PrepareCommand(SqlCommand command, ReviewerDTO reviewer)
         {
-            command.Parameters.AddWithValue(":reviewer_id", reviewer.ReviewerId);
-            command.Parameters.AddWithValue(":first_name", reviewer.FirstName);
-            command.Parameters.AddWithValue(":last_name", reviewer.LastName);
-            command.Parameters.AddWithValue(":gender", reviewer.Gender);
-            command.Parameters.AddWithValue(":country", reviewer.Country);
-            command.Parameters.AddWithValue(":work", reviewer.Work);
-            command.Parameters.AddWithValue(":date_of_birth", reviewer.DateOfBirth);
-            command.Parameters.AddWithValue(":registration_date", reviewer.RegistrationDate);
-            command.Parameters.AddWithValue(":favorit_category_id", reviewer.FavoriteCategoryId == null ? DBNull.Value : (object)reviewer.FavoriteCategoryId);
+            //command.Parameters.AddWithValue(":reviewer_id", reviewer.ReviewerId);
+            //command.Parameters.AddWithValue(":first_name", reviewer.FirstName);
+            //command.Parameters.AddWithValue(":last_name", reviewer.LastName);
+            //command.Parameters.AddWithValue(":gender", reviewer.Gender);
+            //command.Parameters.AddWithValue(":country", reviewer.Country);
+            //command.Parameters.AddWithValue(":work", reviewer.Work);
+            //command.Parameters.AddWithValue(":date_of_birth", reviewer.DateOfBirth);
+            //command.Parameters.AddWithValue(":registration_date", reviewer.RegistrationDate);
+            //command.Parameters.AddWithValue(":favorit_category_id", reviewer.FavoriteCategoryId == null ? DBNull.Value : (object)reviewer.FavoriteCategoryId);
         }
 
         private static List<ReviewerDTO> ReadHeader(SqlDataReader reader, bool withFavoritCategory = false)
@@ -203,13 +203,13 @@ namespace DataLayer.TableDataGateways
             while (reader.Read())
             {
                 int i = -1;
-                ReviewerDTO reviewer = new ReviewerDTO();
-                reviewer.ReviewerId = reader.GetInt32(++i);
-                reviewer.FirstName = reader.GetString(++i);
-                reviewer.LastName = reader.GetString(++i);
-                reviewer.Country = reader.GetString(++i);
-                reviewer.Work = reader.GetString(++i);
-                Reviewers.Add(reviewer);
+                //ReviewerDTO reviewer = new ReviewerDTO();
+                //reviewer.ReviewerId = reader.GetInt32(++i);
+                //reviewer.FirstName = reader.GetString(++i);
+                //reviewer.LastName = reader.GetString(++i);
+                //reviewer.Country = reader.GetString(++i);
+                //reviewer.Work = reader.GetString(++i);
+                //Reviewers.Add(reviewer);
             }
             return Reviewers;
         }
@@ -221,34 +221,34 @@ namespace DataLayer.TableDataGateways
 
             while (reader.Read())
             {
-                int i = -1;
-                ReviewerDTO reviewer = new ReviewerDTO();
-                reviewer.ReviewerId = reader.GetInt32(++i);
-                reviewer.FirstName = reader.GetString(++i);
-                reviewer.LastName = reader.GetString(++i);
-                reviewer.Gender = reader.GetString(++i)[0];
-                reviewer.Country = reader.GetString(++i);
-                reviewer.Work = reader.GetString(++i);
-                reviewer.DateOfBirth = reader.GetDateTime(++i);
-                reviewer.RegistrationDate = reader.GetDateTime(++i);
-                if (!reader.IsDBNull(++i))
-                {
-                    reviewer.FavoriteCategoryId = reader.GetInt32(i);
-                    hasFavorit = true;
-                }
-                if (!reader.IsDBNull(++i))
-                {
-                    reviewer.Deleted = reader.GetInt32(i);
-                }
-                if (withFavoritCategory && hasFavorit)
-                {
-                    CategoryDTO category = new CategoryDTO();
-                    category.CategoryId = (int)reviewer.FavoriteCategoryId;
-                    category.Name = reader.GetString(++i);
-                    reviewer.FavoriteCategory = category;
-                }
+                //int i = -1;
+                //ReviewerDTO reviewer = new ReviewerDTO();
+                //reviewer.ReviewerId = reader.GetInt32(++i);
+                //reviewer.FirstName = reader.GetString(++i);
+                //reviewer.LastName = reader.GetString(++i);
+                //reviewer.Gender = reader.GetString(++i)[0];
+                //reviewer.Country = reader.GetString(++i);
+                //reviewer.Work = reader.GetString(++i);
+                //reviewer.DateOfBirth = reader.GetDateTime(++i);
+                //reviewer.RegistrationDate = reader.GetDateTime(++i);
+                //if (!reader.IsDBNull(++i))
+                //{
+                //    reviewer.FavoriteCategoryId = reader.GetInt32(i);
+                //    hasFavorit = true;
+                //}
+                //if (!reader.IsDBNull(++i))
+                //{
+                //    reviewer.Deleted = reader.GetInt32(i);
+                //}
+                //if (withFavoritCategory && hasFavorit)
+                //{
+                //    CategoryDTO category = new CategoryDTO();
+                //    category.CategoryId = (int)reviewer.FavoriteCategoryId;
+                //    category.Name = reader.GetString(++i);
+                //    reviewer.FavoriteCategory = category;
+                //}
 
-                Reviewers.Add(reviewer);
+                //Reviewers.Add(reviewer);
             }
             return Reviewers;
         }

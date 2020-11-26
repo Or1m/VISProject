@@ -254,7 +254,7 @@ namespace DataLayer.TableDataGateways
 
                 if (!categoryDict.ContainsKey(gameId))
                 {
-                    categoryDict.Add(gameId, new GameDTO { GameId = gameId, Name = reader["name"].ToString(), Developer = reader["developer"].ToString() });
+                    //categoryDict.Add(gameId, new GameDTO { GameId = gameId, Name = reader["name"].ToString(), Developer = reader["developer"].ToString() });
                 }
 
                 if (categoryDict.TryGetValue(gameId, out var game))
@@ -273,14 +273,14 @@ namespace DataLayer.TableDataGateways
 
         private static void PrepareCommand(SqlCommand command, GameDTO game)
         {
-            command.Parameters.AddWithValue(":game_id", game.GameId);
-            command.Parameters.AddWithValue(":name", game.Name);
-            command.Parameters.AddWithValue(":description", game.Description);
-            command.Parameters.AddWithValue(":developer", game.Developer);
-            command.Parameters.AddWithValue(":rating", game.Rating);
-            command.Parameters.AddWithValue(":release_date", game.ReleaseDate == null ? DBNull.Value : (object)game.ReleaseDate);
-            command.Parameters.AddWithValue(":average_user_review", game.AverageUserScore == null ? DBNull.Value : (object)game.AverageUserScore);
-            command.Parameters.AddWithValue(":average_reviewer_score", game.AverageReviewerScore == null ? DBNull.Value : (object)game.AverageReviewerScore);
+            //command.Parameters.AddWithValue(":game_id", game.GameId);
+            //command.Parameters.AddWithValue(":name", game.Name);
+            //command.Parameters.AddWithValue(":description", game.Description);
+            //command.Parameters.AddWithValue(":developer", game.Developer);
+            //command.Parameters.AddWithValue(":rating", game.Rating);
+            //command.Parameters.AddWithValue(":release_date", game.ReleaseDate == null ? DBNull.Value : (object)game.ReleaseDate);
+            //command.Parameters.AddWithValue(":average_user_review", game.AverageUserScore == null ? DBNull.Value : (object)game.AverageUserScore);
+            //command.Parameters.AddWithValue(":average_reviewer_score", game.AverageReviewerScore == null ? DBNull.Value : (object)game.AverageReviewerScore);
         }
 
         private static List<GameDTO> ReadHeader(SqlDataReader reader)
@@ -289,13 +289,13 @@ namespace DataLayer.TableDataGateways
 
             while (reader.Read())
             {
-                int i = -1;
-                GameDTO game = new GameDTO();
-                game.GameId = reader.GetInt32(++i);
-                game.Name = reader.GetString(++i);
-                game.Developer = reader.GetString(++i);
+                //int i = -1;
+                //GameDTO game = new GameDTO();
+                //game.GameId = reader.GetInt32(++i);
+                //game.Name = reader.GetString(++i);
+                //game.Developer = reader.GetString(++i);
                 
-                games.Add(game);
+                //games.Add(game);
             }
             return games;
         }
@@ -307,7 +307,7 @@ namespace DataLayer.TableDataGateways
             {
                 int i = -1;
                 GameDTO game = new GameDTO();
-                game.GameId = reader.GetInt32(++i);
+                //game.GameId = reader.GetInt32(++i);
                 game.Name = reader.GetString(++i);
                 game.Description = reader.GetString(++i);
                 game.Developer = reader.GetString(++i);

@@ -221,16 +221,16 @@ namespace DataLayer.TableDataGateways
 
         private static void PrepareCommand(SqlCommand command, UserDTO user)
         {
-            command.Parameters.AddWithValue(":user_id", user.UserId);
-            command.Parameters.AddWithValue(":nick", user.Nick);
-            command.Parameters.AddWithValue(":gender", user.Gender);
-            command.Parameters.AddWithValue(":country", user.Country);
-            command.Parameters.AddWithValue(":date_of_birth", user.DateOfBirth);
-            command.Parameters.AddWithValue(":registration_date", user.RegistrationDate);
-            command.Parameters.AddWithValue(":first_name", user.FirstName);
-            command.Parameters.AddWithValue(":last_name", user.LastName);
-            command.Parameters.AddWithValue(":favorit_category_id", user.FavoriteCategoryId == null ? DBNull.Value : (object)user.FavoriteCategoryId);
-            command.Parameters.AddWithValue(":deleted", user.Deleted == null ? DBNull.Value : (object)user.Deleted);
+            //command.Parameters.AddWithValue(":user_id", user.UserId);
+            //command.Parameters.AddWithValue(":nick", user.Nick);
+            //command.Parameters.AddWithValue(":gender", user.Gender);
+            //command.Parameters.AddWithValue(":country", user.Country);
+            //command.Parameters.AddWithValue(":date_of_birth", user.DateOfBirth);
+            //command.Parameters.AddWithValue(":registration_date", user.RegistrationDate);
+            //command.Parameters.AddWithValue(":first_name", user.FirstName);
+            //command.Parameters.AddWithValue(":last_name", user.LastName);
+            //command.Parameters.AddWithValue(":favorit_category_id", user.FavoriteCategoryId == null ? DBNull.Value : (object)user.FavoriteCategoryId);
+            //command.Parameters.AddWithValue(":deleted", user.Deleted == null ? DBNull.Value : (object)user.Deleted);
         }
 
         private static List<UserDTO> ReadHeader(SqlDataReader reader, bool withFavoritCategory = false)
@@ -239,13 +239,13 @@ namespace DataLayer.TableDataGateways
 
             while (reader.Read())
             {
-                int i = -1;
-                UserDTO user = new UserDTO();
-                user.UserId = reader.GetInt32(++i);
-                user.Nick = reader.GetString(++i);
-                user.Country = reader.GetString(++i);
+                //int i = -1;
+                //UserDTO user = new UserDTO();
+                //user.UserId = reader.GetInt32(++i);
+                //user.Nick = reader.GetString(++i);
+                //user.Country = reader.GetString(++i);
 
-                users.Add(user);
+                //users.Add(user);
             }
             return users;
         }
@@ -257,35 +257,35 @@ namespace DataLayer.TableDataGateways
 
             while (reader.Read())
             {
-                int i = -1;
-                UserDTO user = new UserDTO();
-                user.UserId = reader.GetInt32(++i);
-                user.Nick = reader.GetString(++i);
-                user.Gender = reader.GetString(++i)[0];
-                user.Country = reader.GetString(++i);
-                user.DateOfBirth = reader.GetDateTime(++i);
-                user.RegistrationDate = reader.GetDateTime(++i);
-                user.FirstName = reader.GetString(++i);
-                user.LastName = reader.GetString(++i);
-                if (!reader.IsDBNull(++i))
-                {
-                    user.FavoriteCategoryId = reader.GetInt32(i);
-                    hasFavorit = true;
-                }
-                if (!reader.IsDBNull(++i))
-                {
-                    user.Deleted = reader.GetInt32(i);
-                }
+                //int i = -1;
+                //UserDTO user = new UserDTO();
+                //user.UserId = reader.GetInt32(++i);
+                //user.Nick = reader.GetString(++i);
+                //user.Gender = reader.GetString(++i)[0];
+                //user.Country = reader.GetString(++i);
+                //user.DateOfBirth = reader.GetDateTime(++i);
+                //user.RegistrationDate = reader.GetDateTime(++i);
+                //user.FirstName = reader.GetString(++i);
+                //user.LastName = reader.GetString(++i);
+                //if (!reader.IsDBNull(++i))
+                //{
+                //    user.FavoriteCategoryId = reader.GetInt32(i);
+                //    hasFavorit = true;
+                //}
+                //if (!reader.IsDBNull(++i))
+                //{
+                //    user.Deleted = reader.GetInt32(i);
+                //}
 
-                if(withFavoritCategory && hasFavorit)
-                {
-                    CategoryDTO category = new CategoryDTO();
-                    category.CategoryId = (int)user.FavoriteCategoryId;
-                    category.Name = reader.GetString(++i);
-                    user.FavoriteCategory = category;
-                }
+                //if(withFavoritCategory && hasFavorit)
+                //{
+                //    CategoryDTO category = new CategoryDTO();
+                //    category.CategoryId = (int)user.FavoriteCategoryId;
+                //    category.Name = reader.GetString(++i);
+                //    user.FavoriteCategory = category;
+                //}
 
-                users.Add(user);
+                //users.Add(user);
             }
             return users;
         }

@@ -170,12 +170,12 @@ namespace DataLayer.TableDataGateways
 
         private static void PrepareCommand(SqlCommand command, UserReviewDTO review)
         {
-            command.Parameters.AddWithValue(":title", review.Title);
-            command.Parameters.AddWithValue(":score", review.Score);
-            command.Parameters.AddWithValue(":user_user_id", review.UserId);
-            command.Parameters.AddWithValue(":game_game_id", review.GameId);
-            command.Parameters.AddWithValue(":datee", review.Date);
-            command.Parameters.AddWithValue(":order_of_review", review.OrderOfReview);
+            //command.Parameters.AddWithValue(":title", review.Title);
+            //command.Parameters.AddWithValue(":score", review.Score);
+            //command.Parameters.AddWithValue(":user_user_id", review.UserId);
+            //command.Parameters.AddWithValue(":game_game_id", review.GameId);
+            //command.Parameters.AddWithValue(":datee", review.Date);
+            //command.Parameters.AddWithValue(":order_of_review", review.OrderOfReview);
         }
 
         private static List<UserReviewDTO> Read(SqlDataReader reader)
@@ -185,15 +185,15 @@ namespace DataLayer.TableDataGateways
             while (reader.Read())
             {
                 int i = -1;
-                UserReviewDTO User_review = new UserReviewDTO();
-                User_review.Title = reader.GetString(++i);
-                User_review.Score = reader.GetInt32(++i);
-                User_review.UserId = reader.GetInt32(++i);
-                User_review.GameId = reader.GetInt32(++i);
-                User_review.Date = reader.GetDateTime(++i);
-                User_review.OrderOfReview = reader.GetInt32(++i);
+                //UserReviewDTO User_review = new UserReviewDTO();
+                //User_review.Title = reader.GetString(++i);
+                //User_review.Score = reader.GetInt32(++i);
+                //User_review.UserId = reader.GetInt32(++i);
+                //User_review.GameId = reader.GetInt32(++i);
+                //User_review.Date = reader.GetDateTime(++i);
+                //User_review.OrderOfReview = reader.GetInt32(++i);
 
-                User_reviews.Add(User_review);
+                //User_reviews.Add(User_review);
             }
             return User_reviews;
         }

@@ -173,13 +173,13 @@ namespace DataLayer.TableDataGateways
 
         private static void PrepareCommand(SqlCommand command, ReviewerReviewDTO review)
         {
-            command.Parameters.AddWithValue(":title", review.Title);
-            command.Parameters.AddWithValue(":text_of_review", review.TextOfReview);
-            command.Parameters.AddWithValue(":score", review.Score);
-            command.Parameters.AddWithValue(":reviewer_reviewer_id", review.ReviewerId);
-            command.Parameters.AddWithValue(":game_game_id", review.GameId);
-            command.Parameters.AddWithValue(":datee", review.Date);
-            command.Parameters.AddWithValue(":order_of_review", review.OrderOfReview);
+            //command.Parameters.AddWithValue(":title", review.Title);
+            //command.Parameters.AddWithValue(":text_of_review", review.TextOfReview);
+            //command.Parameters.AddWithValue(":score", review.Score);
+            //command.Parameters.AddWithValue(":reviewer_reviewer_id", review.ReviewerId);
+            //command.Parameters.AddWithValue(":game_game_id", review.GameId);
+            //command.Parameters.AddWithValue(":datee", review.Date);
+            //command.Parameters.AddWithValue(":order_of_review", review.OrderOfReview);
         }
 
         private static List<ReviewerReviewDTO> Read(SqlDataReader reader)
@@ -188,17 +188,17 @@ namespace DataLayer.TableDataGateways
 
             while (reader.Read())
             {
-                int i = -1;
-                ReviewerReviewDTO reviewer_review = new ReviewerReviewDTO();
-                reviewer_review.Title = reader.GetString(++i);
-                reviewer_review.TextOfReview = reader.GetString(++i);
-                reviewer_review.Score = reader.GetInt32(++i);
-                reviewer_review.ReviewerId = reader.GetInt32(++i);
-                reviewer_review.GameId = reader.GetInt32(++i);
-                reviewer_review.Date = reader.GetDateTime(++i);
-                reviewer_review.OrderOfReview = reader.GetInt32(++i);
+                //int i = -1;
+                //ReviewerReviewDTO reviewer_review = new ReviewerReviewDTO();
+                //reviewer_review.Title = reader.GetString(++i);
+                //reviewer_review.TextOfReview = reader.GetString(++i);
+                //reviewer_review.Score = reader.GetInt32(++i);
+                //reviewer_review.ReviewerId = reader.GetInt32(++i);
+                //reviewer_review.GameId = reader.GetInt32(++i);
+                //reviewer_review.Date = reader.GetDateTime(++i);
+                //reviewer_review.OrderOfReview = reader.GetInt32(++i);
 
-                Reviewer_reviews.Add(reviewer_review);
+                //Reviewer_reviews.Add(reviewer_review);
             }
             return Reviewer_reviews;
         }

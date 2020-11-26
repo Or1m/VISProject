@@ -4,7 +4,7 @@ using System;
 
 namespace BusinessLayer.BusinessObjects
 {
-    public class DailyStatistics : Persistable<DailyStatisticsDTO>
+    public class DailyStatistics// : Persistable<DailyStatisticsDTO>
     {
         public int Id { get; set; }
         public DateTime Date { get; set; }
