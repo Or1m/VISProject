@@ -1,6 +1,6 @@
 ﻿namespace DesktopApp
 {
-    partial class NewReview
+    partial class AddReviewForm
     {
         /// <summary>
         /// Required designer variable.

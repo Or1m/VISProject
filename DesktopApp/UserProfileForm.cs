@@ -12,10 +12,10 @@ using System.Windows.Forms;
 
 namespace DesktopApp
 {
-    public partial class UserProfile : Form
+    public partial class UserProfileForm : Form
     {
         //User user;
-        public UserProfile()
+        public UserProfileForm()
         {
             InitializeComponent();
         }

@@ -11,16 +11,16 @@ using System.Windows.Forms;
 
 namespace DesktopApp
 {
-    public partial class NewReview : Form
+    public partial class AddReviewForm : Form
     {
         int userId;
         int gameId;
-        public NewReview()
+        public AddReviewForm()
         {
             InitializeComponent();
         }
 
-        public NewReview(int uId, int gId)
+        public AddReviewForm(int uId, int gId)
         {
             InitializeComponent();
 
