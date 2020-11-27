@@ -35,20 +35,27 @@ namespace DataLayer
         private DatabaseConnection()
         {
             connection = new SqlConnection();
+
+            // Connection string je v konfiguraèním souboru xxxx.dll.config
+            Connection.ConnectionString = Properties.Settings.Default.ConnectionString;
         }
 
 
         // Service methods
         public override bool Connect()
         {
-            if (Connection.State != ConnectionState.Open)
-            {
-                // Connection string je v konfiguraèním souboru xxxx.dll.config
-                Connection.ConnectionString = Properties.Settings.Default.ConnectionString;
-                Connection.Open();
-            }
+            if (Connection.State == ConnectionState.Open)
+                return true;
 
-            return true;
+            try
+            {
+                Connection.Open();
+                return true;
+            } 
+            catch
+            {
+                return false;
+            }
         }
 
         public override bool Connect(string connectionString)

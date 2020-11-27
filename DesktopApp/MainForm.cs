@@ -12,11 +12,13 @@ namespace DesktopApp
 {
     public partial class MainForm : Form
     {
-        //List<Game> games = new List<Game>();
-        //User user;
+        private bool isDatabaseConnected;
+
         public MainForm()
         {
             InitializeComponent();
+
+            isDatabaseConnected = false;
 
             buttLogin.Enabled = false;
             button1.Visible = false;
@@ -24,46 +26,38 @@ namespace DesktopApp
 
         private void ButtConnect_Click(object sender, EventArgs e)
         {
-            //Database db = new Database();
-            //bool connected = false;
-            //try
-            //{
-            //    connected = db.Connect();
-            //}
-            //catch(Exception ex)
-            //{
-            //    Console.WriteLine(ex.Message);
-            //    labelConnect.ForeColor = Color.Red;
-            //    labelConnect.Text = "Error";
-            //}
-
-            //if(connected)
-            //{
-            //    labelConnect.ForeColor = Color.Green;
-            //    labelConnect.Text = "Connected";
-
-            //    refreshGames();
-            //}
+            isDatabaseConnected = PresentationLayer.Routines.SetUpConnection();
+            if (!isDatabaseConnected)
+            {
+                labelConnect.ForeColor = Color.Red;
+                labelConnect.Text = "An error occur";
+            }
+            else
+            {
+                labelConnect.ForeColor = Color.Green;
+                labelConnect.Text = "Connected";
+                UpdateGames();
+            }
         }
 
-        private void refreshGames()
+        private void UpdateGames()
         {
+            //PresentationLayer.Routines.UpdateGames();
             //GameTable gameTable = new GameTable();
             //games = gameTable.selectGamesWithCategories();
             //dataGridGames.DataSource = games;
 
+            //for (int i = 0; i < dataGridGames.Rows.Count; i++)
+            //{
+            //    string cat = "";
+            //    foreach (Category c in games[i].Categories)
+            //    {
+            //        cat += c.ToStringHeader() + ", ";
+            //    }
+            //    cat = cat.Remove(cat.Length - 2);
 
-            for (int i = 0; i < dataGridGames.Rows.Count; i++)
-            {
-                string cat = "";
-                //foreach (Category c in games[i].Categories)
-                //{
-                //    cat += c.ToStringHeader() + ", ";
-                //}
-                cat = cat.Remove(cat.Length - 2);
-
-                dataGridGames.Rows[i].Cells["Categories"].Value = cat;
-            }
+            //    dataGridGames.Rows[i].Cells["Categories"].Value = cat;
+            //}
         }
 
         private void DataGridGames_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
