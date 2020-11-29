@@ -108,7 +108,7 @@ namespace DataLayer
                 }
                 finally
                 {
-                    command.Dispose();
+                    command.Dispose(); // TODO Odchytit ci funguje
                     Close();
                 }
 
@@ -131,11 +131,6 @@ namespace DataLayer
                 catch (Exception e)
                 {
                     throw e;
-                }
-                finally
-                {
-                    command.Dispose();
-                    Close();
                 }
 
                 return sqlReader;

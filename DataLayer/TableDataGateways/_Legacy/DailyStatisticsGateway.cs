@@ -14,65 +14,65 @@ namespace DataLayer.TableDataGateways
         public static string SQL_SELECT_BY_DATE = "SELECT id, \"date\", number_of_reviews, type FROM DailyStatistics WHERE \"date\"=:datee";
 
         // Methods
-        public List<DailyStatisticsDTO> selectStatistics(IDatabaseConnection pDb = null)
-        {
-            DatabaseConnection db;
-            if (pDb == null)
-            {
-                db = DatabaseConnection.Instance;
-                db.Connect();
-            }
-            else
-            {
-                db = (DatabaseConnection)pDb;
-            }
+        //public List<DailyStatisticsDTO> selectStatistics(IDatabaseConnection pDb = null)
+        //{
+        //    DatabaseConnection db;
+        //    if (pDb == null)
+        //    {
+        //        db = DatabaseConnection.Instance;
+        //        db.Connect();
+        //    }
+        //    else
+        //    {
+        //        db = (DatabaseConnection)pDb;
+        //    }
 
-            SqlCommand command = db.CreateCommand(SQL_SELECT_ALL);
-            SqlDataReader reader = db.Select(command);
+        //    SqlCommand command = db.CreateCommand(SQL_SELECT_ALL);
+        //    SqlDataReader reader = db.Select(command);
 
-            List<DailyStatisticsDTO> statistics = Read(reader);
+        //    List<DailyStatisticsDTO> statistics = Read(reader);
 
-            reader.Close();
+        //    reader.Close();
 
-            if (pDb == null)
-            {
-                db.Close();
-            }
+        //    if (pDb == null)
+        //    {
+        //        db.Close();
+        //    }
 
-            return statistics;
-        }
+        //    return statistics;
+        //}
 
-        public DailyStatisticsDTO selectStatisticById(int id, IDatabaseConnection pDb = null)
-        {
-            DatabaseConnection db;
-            if (pDb == null)
-            {
-                db = DatabaseConnection.Instance;
-                db.Connect();
-            }
-            else
-            {
-                db = (DatabaseConnection)pDb;
-            }
+        //public DailyStatisticsDTO selectStatisticById(int id)
+        //{
+        //    DatabaseConnection db;
+        //    if (pDb == null)
+        //    {
+        //        db = DatabaseConnection.Instance;
+        //        db.Connect();
+        //    }
+        //    else
+        //    {
+        //        db = (DatabaseConnection)pDb;
+        //    }
 
-            SqlCommand command = db.CreateCommand(SQL_SELECT_BY_ID);
-            command.Parameters.AddWithValue(":id", id);
-            SqlDataReader reader = db.Select(command);
+        //    SqlCommand command = db.CreateCommand(SQL_SELECT_BY_ID);
+        //    command.Parameters.AddWithValue(":id", id);
+        //    SqlDataReader reader = db.Select(command);
 
-            List<DailyStatisticsDTO> statistics = Read(reader);
+        //    List<DailyStatisticsDTO> statistics = Read(reader);
 
-            reader.Close();
+        //    reader.Close();
 
-            if (pDb == null)
-            {
-                db.Close();
-            }
+        //    if (pDb == null)
+        //    {
+        //        db.Close();
+        //    }
 
-            if (statistics.Count() != 0)
-                return statistics.ElementAt(0);
-            else
-                return null;
-        }
+        //    if (statistics.Count() != 0)
+        //        return statistics.ElementAt(0);
+        //    else
+        //        return null;
+        //}
 
         private static List<DailyStatisticsDTO> Read(SqlDataReader reader)
         {

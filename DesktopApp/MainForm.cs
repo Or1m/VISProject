@@ -14,6 +14,8 @@ namespace DesktopApp
 {
     public partial class MainForm : Form
     {
+        private List<Game> games;
+
         public MainForm()
         {
             InitializeComponent();
@@ -63,8 +65,7 @@ namespace DesktopApp
                 DataGridViewRow selectedRow = dataGridGames.Rows[selectedrowindex];
                 int gameIndex = int.Parse(selectedRow.Cells["gameId"].Value.ToString());
 
-                //FormGame fg = new FormGame(gameIndex, games[selectedrowindex].Categories, user);
-                //fg.Show();
+                new FormGame(gameIndex, games[selectedrowindex].Categories, null).Show();
             }
         }
 

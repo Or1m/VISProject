@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BusinessLayer.BusinessObjects;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -20,20 +21,19 @@ namespace DesktopApp
             InitializeComponent();
         }
 
-        //    public FormGame(int gameIndex, List<Category> categories, User u)
-        //    {
-        //        InitializeComponent();
+        public FormGame(int gameIndex, List<Category> categories, User u) : this()
+        {
 
-        //        GameTable gameTable = new GameTable();
-        //        game = gameTable.selectGame(gameIndex);
+            //GameTable gameTable = new GameTable();
+            //game = gameTable.selectGame(gameIndex);
 
-        //        this.Text = game.Name;
-        //        game.Categories = categories;
+            //this.Text = game.Name;
+            //game.Categories = categories;
 
-        //        user = u;
-        //    }
+            //user = u;
+        }
 
-            private void FormGame_Load(object sender, EventArgs e)
+        private void FormGame_Load(object sender, EventArgs e)
             {
         //        if (user is null)
         //        {

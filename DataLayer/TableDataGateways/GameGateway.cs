@@ -123,6 +123,8 @@ namespace DataLayer.TableDataGateways
             SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_SELECT_GAMES_WITH_CATEGORIES);
             SqlDataReader reader = DatabaseConnection.Instance.Select(command);
 
+            command.Dispose();
+
             return ReadWithCategories(reader);
         }
         #endregion
@@ -132,24 +134,35 @@ namespace DataLayer.TableDataGateways
         {
             var categoryDict = new Dictionary<int, GameDTO>();
 
-            while (reader.Read())
+            try
             {
-                int gameId = int.Parse(reader["game_id"].ToString());
-
-                if (!categoryDict.ContainsKey(gameId))
+                if (reader.HasRows)
                 {
-                    categoryDict.Add(gameId, new GameDTO { Id = gameId, Name = reader["name"].ToString(), Developer = reader["developer"].ToString() });
-                }
-
-                if (categoryDict.TryGetValue(gameId, out var game))
-                {
-                    int i = 2;
-                    game.Categories.Add(new CategoryDTO
+                    while (reader.Read())
                     {
-                        CategoryId = reader.GetInt32(++i),
-                        Name = reader.GetString(++i)
-                    });
+                        int gameId = int.Parse(reader["game_id"].ToString());
+
+                        if (!categoryDict.ContainsKey(gameId))
+                        {
+                            categoryDict.Add(gameId, new GameDTO { Id = gameId, Name = reader["name"].ToString(), Developer = reader["developer"].ToString() });
+                        }
+
+                        if (categoryDict.TryGetValue(gameId, out var game))
+                        {
+                            int i = 2;
+                            game.Categories.Add(new CategoryDTO
+                            {
+                                CategoryId = reader.GetInt32(++i),
+                                Name = reader.GetString(++i)
+                            });
+                        }
+                    }
                 }
+            }
+            finally
+            {
+                reader.Close();
+                DatabaseConnection.Instance.Close();
             }
 
             return categoryDict.Select(c => c.Value).ToList();
