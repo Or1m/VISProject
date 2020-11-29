@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BusinessLayer.BusinessObjects;
+using BusinessLayer.Controllers;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,13 +14,9 @@ namespace DesktopApp
 {
     public partial class MainForm : Form
     {
-        private bool isDatabaseConnected;
-
         public MainForm()
         {
             InitializeComponent();
-
-            isDatabaseConnected = false;
 
             buttLogin.Enabled = false;
             button1.Visible = false;
@@ -26,8 +24,8 @@ namespace DesktopApp
 
         private void ButtConnect_Click(object sender, EventArgs e)
         {
-            isDatabaseConnected = PresentationLayer.Routines.SetUpConnection();
-            if (!isDatabaseConnected)
+            
+            if (!BusinessLayer.Routines.IsConnected())
             {
                 labelConnect.ForeColor = Color.Red;
                 labelConnect.Text = "An error occur";
@@ -42,22 +40,20 @@ namespace DesktopApp
 
         private void UpdateGames()
         {
-            //PresentationLayer.Routines.UpdateGames();
-            //GameTable gameTable = new GameTable();
-            //games = gameTable.selectGamesWithCategories();
-            //dataGridGames.DataSource = games;
+            List<Game> games = GamesManager.Instance.LoadGamesWithCategories();
+            dataGridGames.DataSource = games;
 
-            //for (int i = 0; i < dataGridGames.Rows.Count; i++)
-            //{
-            //    string cat = "";
-            //    foreach (Category c in games[i].Categories)
-            //    {
-            //        cat += c.ToStringHeader() + ", ";
-            //    }
-            //    cat = cat.Remove(cat.Length - 2);
+            for (int i = 0; i < dataGridGames.Rows.Count; i++)
+            {
+                string cat = "";
+                foreach (Category c in games[i].Categories)
+                {
+                    cat += c.ToStringHeader() + ", ";
+                }
+                cat = cat.Remove(cat.Length - 2);
 
-            //    dataGridGames.Rows[i].Cells["Categories"].Value = cat;
-            //}
+                dataGridGames.Rows[i].Cells["Categories"].Value = cat;
+            }
         }
 
         private void DataGridGames_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)

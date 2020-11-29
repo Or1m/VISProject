@@ -66,9 +66,9 @@
       <Project>{efcc6743-c7c3-4537-b393-e7dc903a94a0}</Project>
       <Name>DTO</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PresentationLayer\PresentationLayer.csproj">
+    <ProjectReference Include="..\PresentationLayer\PresentationLayerHelper.csproj">
       <Project>{a4ee9b00-e7cb-484b-a107-8985b5340100}</Project>
-      <Name>PresentationLayer</Name>
+      <Name>PresentationLayerHelper</Name>
     </ProjectReference>
     <ProjectReference Include="..\WebApp\WebApp.csproj">
       <Project>{206a112c-8871-40a8-909a-a91a5ca87e33}</Project>

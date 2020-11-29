@@ -8,11 +8,5 @@ namespace PresentationLayer
 {
     public static class Routines
     {
-        public static bool SetUpConnection()
-        {
-            return BusinessLayer.Routines.SetUpConnection();
-        }
-
-        public static 
     }
 }

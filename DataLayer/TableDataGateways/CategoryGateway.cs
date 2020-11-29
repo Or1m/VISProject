@@ -62,7 +62,7 @@ namespace DataLayer.TableDataGateways
             return ret;
         }
 
-        public List<CategoryDTO> selectCategories(DatabaseProxy pDb = null)
+        public List<CategoryDTO> selectCategories(IDatabaseProxy pDb = null)
         {
             DatabaseConnection db;
             if (pDb == null)
@@ -90,7 +90,7 @@ namespace DataLayer.TableDataGateways
             return categories;
         }
 
-        public List<CategoryDTO> selectCategoriesForGame(int gameId, DatabaseProxy pDb = null)
+        public List<CategoryDTO> selectCategoriesForGame(int gameId, IDatabaseProxy pDb = null)
         {
             DatabaseConnection db;
             if (pDb == null)
@@ -119,7 +119,7 @@ namespace DataLayer.TableDataGateways
             return categories;
         }
 
-        public CategoryDTO selectCategoryDTO(int id, DatabaseProxy pDb = null)
+        public CategoryDTO selectCategoryDTO(int id, IDatabaseProxy pDb = null)
         {
             DatabaseConnection db;
             if (pDb == null)
@@ -147,7 +147,7 @@ namespace DataLayer.TableDataGateways
 
             return categories.ElementAt(0);
         }
-        public List<CategoryDTO> selectCategoryDTOByName(string name, DatabaseProxy pDb = null)
+        public List<CategoryDTO> selectCategoryDTOByName(string name, IDatabaseProxy pDb = null)
         {
             DatabaseConnection db;
             if (pDb == null)

@@ -72,7 +72,7 @@ namespace DataLayer.TableDataGateways
             return ret;
         }
 
-        public List<UserDTO> selectUsers(DatabaseProxy pDb = null)
+        public List<UserDTO> selectUsers(IDatabaseProxy pDb = null)
         {
             DatabaseConnection db;
             if (pDb == null)
@@ -100,7 +100,7 @@ namespace DataLayer.TableDataGateways
             return users;
         }
 
-        public UserDTO selectUserById(int id, DatabaseProxy pDb = null)
+        public UserDTO selectUserById(int id, IDatabaseProxy pDb = null)
         {
             DatabaseConnection db;
             if (pDb == null)
@@ -129,7 +129,7 @@ namespace DataLayer.TableDataGateways
             return users.ElementAt(0);
         }
 
-        public UserDTO selectUserByNick(string nick, DatabaseProxy pDb = null)
+        public UserDTO selectUserByNick(string nick, IDatabaseProxy pDb = null)
         {
             DatabaseConnection db;
             if (pDb == null)
@@ -158,7 +158,7 @@ namespace DataLayer.TableDataGateways
             return users.ElementAt(0);
         }
 
-        public UserDTO selectUserByIdWithCategory(int id, DatabaseProxy pDb = null)
+        public UserDTO selectUserByIdWithCategory(int id, IDatabaseProxy pDb = null)
         {
             DatabaseConnection db;
             if (pDb == null)
@@ -187,7 +187,7 @@ namespace DataLayer.TableDataGateways
             return users.ElementAt(0);
         }
 
-        public UserDTO selectUserByNickWithCategory(string nick, DatabaseProxy pDb = null)
+        public UserDTO selectUserByNickWithCategory(string nick, IDatabaseProxy pDb = null)
         {
             DatabaseConnection db;
             if (pDb == null)

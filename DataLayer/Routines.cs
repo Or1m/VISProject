@@ -8,9 +8,5 @@ namespace DataLayer
 {
     public static class Routines
     {
-        public static bool SetUpConnection()
-        {
-            return DatabaseConnection.Instance.Connect();
-        }
     }
 }

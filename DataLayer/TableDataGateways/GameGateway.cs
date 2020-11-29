@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace DataLayer.TableDataGateways
 {
-    public class GameTable
+    public class GameGateway : BaseGateway
     {
         public static string SQL_INSERT_NEW = "INSERT INTO Game (name, description, developer, rating, release_date, average_user_review, average_reviewer_score) "
             + " VALUES (:name, :description, :developer, :rating, :release_date, :average_user_review, :average_reviewer_score)";
@@ -30,6 +30,21 @@ namespace DataLayer.TableDataGateways
 
         static string SQL_SELECT_GAMES_WITH_CATEGORIES = "SELECT g.game_id, g.name, g.developer, c.category_id, c.name FROM Game g " +
             "JOIN game_category gc ON g.game_id = gc.game_game_id JOIN category c ON c.category_id = gc.category_category_id";
+
+
+
+        private static readonly object lockObj = new object();
+        private static GameGateway instance;
+
+        public static GameGateway Instance {
+            get {
+                lock (lockObj)
+                {
+                    return instance ?? (instance = new GameGateway());
+                }
+            }
+        }
+
 
         // Methods
         public int insertNewGame(GameDTO game)
@@ -72,7 +87,7 @@ namespace DataLayer.TableDataGateways
             return ret;
         }
 
-        public List<GameDTO> selectGames(DatabaseProxy pDb = null)
+        public List<GameDTO> selectGames(IDatabaseProxy pDb = null)
         {
             DatabaseConnection db;
             if (pDb == null)
@@ -100,7 +115,7 @@ namespace DataLayer.TableDataGateways
             return games;
         }
 
-        public List<GameDTO> selectFavoritGames(int userId, DatabaseProxy pDb = null)
+        public List<GameDTO> selectFavoritGames(int userId, IDatabaseProxy pDb = null)
         {
             DatabaseConnection db;
             if (pDb == null)
@@ -129,7 +144,7 @@ namespace DataLayer.TableDataGateways
             return games;
         }
 
-        public GameDTO selectGame(int id, DatabaseProxy pDb = null)
+        public GameDTO selectGame(int id, IDatabaseProxy pDb = null)
         {
             DatabaseConnection db;
             if (pDb == null)
@@ -158,7 +173,7 @@ namespace DataLayer.TableDataGateways
             return games.ElementAt(0);
         }
 
-        public List<GameDTO> selectGamesByName(string name, DatabaseProxy pDb = null)
+        public List<GameDTO> selectGamesByName(string name, IDatabaseProxy pDb = null)
         {
             DatabaseConnection db;
             if (pDb == null)
@@ -187,7 +202,7 @@ namespace DataLayer.TableDataGateways
             return games;
         }
 
-        public List<GameDTO> selectGamesByDeveloper(string developer, DatabaseProxy pDb = null)
+        public List<GameDTO> selectGamesByDeveloper(string developer, IDatabaseProxy pDb = null)
         {
             DatabaseConnection db;
             if (pDb == null)
@@ -216,32 +231,22 @@ namespace DataLayer.TableDataGateways
             return games;
         }
 
-        public List<GameDTO> selectGamesWithCategories(DatabaseProxy pDb = null)
+        public List<GameDTO> SelectGamesWithCategories()
         {
-            DatabaseConnection db;
-            if (pDb == null)
+            if(DatabaseConnection.Instance.Connect())
             {
-                db = DatabaseConnection.Instance;
-                db.Connect();
+                SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_SELECT_GAMES_WITH_CATEGORIES);
+                SqlDataReader reader = DatabaseConnection.Instance.Select(command);
+
+                List<GameDTO> games = ReadWithCategories(reader);
+
+                reader.Close();
+                DatabaseConnection.Instance.Close();
+
+                return games;
             }
             else
-            {
-                db = (DatabaseConnection)pDb;
-            }
-
-            SqlCommand command = db.CreateCommand(SQL_SELECT_GAMES_WITH_CATEGORIES);
-            SqlDataReader reader = db.Select(command);
-
-            List<GameDTO> games = ReadWithCategories(reader);
-
-            reader.Close();
-
-            if (pDb == null)
-            {
-                db.Close();
-            }
-
-            return games;
+                throw new Exception("Database is not connected");
         }
 
         public static List<GameDTO> ReadWithCategories(SqlDataReader reader)
@@ -254,7 +259,7 @@ namespace DataLayer.TableDataGateways
 
                 if (!categoryDict.ContainsKey(gameId))
                 {
-                    //categoryDict.Add(gameId, new GameDTO { GameId = gameId, Name = reader["name"].ToString(), Developer = reader["developer"].ToString() });
+                    categoryDict.Add(gameId, new GameDTO { Id = gameId, Name = reader["name"].ToString(), Developer = reader["developer"].ToString() });
                 }
 
                 if (categoryDict.TryGetValue(gameId, out var game))
@@ -287,16 +292,16 @@ namespace DataLayer.TableDataGateways
         {
             List<GameDTO> games = new List<GameDTO>();
 
-            while (reader.Read())
-            {
-                //int i = -1;
-                //GameDTO game = new GameDTO();
-                //game.GameId = reader.GetInt32(++i);
-                //game.Name = reader.GetString(++i);
-                //game.Developer = reader.GetString(++i);
-                
-                //games.Add(game);
-            }
+            //while (reader.Read())
+            //{
+            //    int i = -1;
+            //    GameDTO game = new GameDTO();
+            //    game.Id = reader.GetInt32(++i);
+            //    game.Name = reader.GetString(++i);
+            //    game.Developer = reader.GetString(++i);
+
+            //    games.Add(game);
+            //}
             return games;
         }
         private static List<GameDTO> Read(SqlDataReader reader)

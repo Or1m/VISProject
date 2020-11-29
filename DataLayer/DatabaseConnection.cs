@@ -4,7 +4,7 @@ using System.Data.SqlClient;
 
 namespace DataLayer
 {
-    public class DatabaseConnection : DatabaseProxy
+    public class DatabaseConnection : IDatabaseProxy
     {
         private SqlConnection connection;
         private SqlTransaction sqlTransaction;
@@ -42,7 +42,7 @@ namespace DataLayer
 
 
         // Service methods
-        public override bool Connect()
+        public bool Connect()
         {
             if (Connection.State == ConnectionState.Open)
                 return true;
@@ -58,7 +58,7 @@ namespace DataLayer
             }
         }
 
-        public override bool Connect(string connectionString)
+        public  bool Connect(string connectionString)
         {
             if (Connection.State != ConnectionState.Open)
             {
@@ -69,23 +69,23 @@ namespace DataLayer
             return true;
         }
 
-        public override void Close()
+        public  void Close()
         {
             Connection.Close();
         }
 
-        public override void BeginTransaction()
+        public  void BeginTransaction()
         {
             SqlTransaction = Connection.BeginTransaction(IsolationLevel.Serializable);
         }
 
-        public override void EndTransaction()
+        public  void EndTransaction()
         {
             SqlTransaction.Commit();
             Close();
         }
 
-        public override void Rollback()
+        public  void Rollback()
         {
             SqlTransaction.Rollback();
         }

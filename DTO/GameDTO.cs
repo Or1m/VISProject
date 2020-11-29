@@ -15,5 +15,11 @@ namespace DTO
         public float? AverageReviewerScore { get; set; }
 
         public List<CategoryDTO> Categories { get; set; }
+
+
+        public GameDTO()
+        {
+            Categories = new List<CategoryDTO>();
+        }
     }
 }

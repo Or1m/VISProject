@@ -34,7 +34,13 @@ namespace BusinessLayer.BusinessObjects
             AverageReviewerScore = averageReviewerScore;
         }
         public Game(GameDTO DTO) 
-            : this(DTO.Name, DTO.Description, DTO.Developer, DTO.Rating, DTO.ReleaseDate, DTO.AverageUserScore, DTO.AverageReviewerScore) { }
+            : this(DTO.Name, DTO.Description, DTO.Developer, DTO.Rating, DTO.ReleaseDate, DTO.AverageUserScore, DTO.AverageReviewerScore) 
+        {
+            foreach(var catDTO in DTO.Categories)
+            {
+                Categories.Add(new Category(catDTO));
+            }
+        }
         #endregion
 
         public override string ToString()

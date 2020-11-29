@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace DataLayer.TableDataGateways
 {
-    public class UserReviewGateway
+    public class UserReviewGateway : BaseGateway
     {
         public static string SQL_INSERT_NEW = "INSERT INTO User_review (title, score, user_user_id, game_game_id, \"date\", order_of_review) "
             + " VALUES (:title, :score, :user_user_id, :game_game_id, :datee, :order_of_review)";
@@ -22,16 +22,12 @@ namespace DataLayer.TableDataGateways
         public static string SQL_SELECT_ALL_BY_GAME = "SELECT title, score, user_user_id, game_game_id, \"date\", order_of_review FROM User_review WHERE game_game_id=:game_game_id";
 
         // Methods
-        public int insertNew(UserReviewDTO review)
+        public int Insert(UserReviewDTO review)
         {
-            DatabaseConnection db = DatabaseConnection.Instance;
-            db.Connect();
-
-            SqlCommand command = db.CreateCommand(SQL_INSERT_NEW);
+            SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_INSERT_NEW);
             PrepareCommand(command, review);
-            int ret = db.ExecuteNonQuery(command);
-            db.Close();
-            return ret;
+
+            return ExecuteNonQuery(command);
         }
 
         public int delete(int userId, int gameId, int order)
@@ -50,7 +46,7 @@ namespace DataLayer.TableDataGateways
             return ret;
         }
 
-        public UserReviewDTO selectReview(int userId, int gameId, int order, DatabaseProxy pDb = null)
+        public UserReviewDTO selectReview(int userId, int gameId, int order, IDatabaseProxy pDb = null)
         {
             DatabaseConnection db;
             if (pDb == null)
@@ -82,7 +78,7 @@ namespace DataLayer.TableDataGateways
             return User_reviews.ElementAt(0);
         }
 
-        public List<UserReviewDTO> selectReviews(DatabaseProxy pDb = null)
+        public List<UserReviewDTO> selectReviews(IDatabaseProxy pDb = null)
         {
             DatabaseConnection db;
             if (pDb == null)
@@ -110,7 +106,7 @@ namespace DataLayer.TableDataGateways
             return User_reviews;
         }
 
-        public List<UserReviewDTO> selectReviewsForUser(int userId, DatabaseProxy pDb = null)
+        public List<UserReviewDTO> selectReviewsForUser(int userId, IDatabaseProxy pDb = null)
         {
             DatabaseConnection db;
             if (pDb == null)
@@ -139,7 +135,7 @@ namespace DataLayer.TableDataGateways
             return User_reviews;
         }
 
-        public List<UserReviewDTO> selectReviewsForGame(int gameId, DatabaseProxy pDb = null)
+        public List<UserReviewDTO> selectReviewsForGame(int gameId, IDatabaseProxy pDb = null)
         {
             DatabaseConnection db;
             if (pDb == null)

@@ -104,9 +104,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PresentationLayer\PresentationLayer.csproj">
+    <ProjectReference Include="..\BusinessLayer\BusinessLayer.csproj">
+      <Project>{27cf5b9f-2e45-41aa-a441-80338fec999f}</Project>
+      <Name>BusinessLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PresentationLayer\PresentationLayerHelper.csproj">
       <Project>{a4ee9b00-e7cb-484b-a107-8985b5340100}</Project>
-      <Name>PresentationLayer</Name>
+      <Name>PresentationLayerHelper</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
