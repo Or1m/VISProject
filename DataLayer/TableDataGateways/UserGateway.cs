@@ -33,23 +33,37 @@ namespace DataLayer.TableDataGateways
             "FROM \"User\" u JOIN category on category_id = favorit_category_id WHERE nick=:nick";
         #endregion
 
+        private static readonly object lockObj = new object();
+        private static UserGateway instance;
+
+        public static UserGateway Instance {
+            get {
+                lock (lockObj)
+                {
+                    return instance ?? (instance = new UserGateway());
+                }
+            }
+        }
+
+        private UserGateway() { }
+
 
         #region Non Query Methods
-        public int InsertNewUser(UserDTO user)
+        public int Insert(UserDTO user)
         {
             SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_REGISTER_NEW);
             PrepareCommand(command, user);
             return DatabaseConnection.Instance.ExecuteNonQuery(command);
         }
 
-        public int UpdateUser(UserDTO user)
+        public int Update(UserDTO user)
         {
             SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_UPDATE);
             PrepareCommand(command, user);
             return DatabaseConnection.Instance.ExecuteNonQuery(command);
         }
 
-        public int DeleteUserById(int id)
+        public int DeleteById(int id)
         {
             SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_DELETE_ID);
             command.Parameters.AddWithValue(":user_id", id);

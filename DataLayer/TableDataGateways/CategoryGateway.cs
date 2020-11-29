@@ -5,6 +5,7 @@ using System.Linq;
 
 namespace DataLayer.TableDataGateways
 {
+    #region SQL Commands
     public class CategoryDTOGateway
     {
         public static string SQL_INSERT_NEW      = "INSERT INTO Category (name) VALUES (:name)";
@@ -20,178 +21,95 @@ namespace DataLayer.TableDataGateways
         public static string SQL_SELECT_BY_NAME  = "SELECT Category_id, name from Category WHERE name=:name";
 
         public static string SQL_SELECT_FOR_GAME = "SELECT Category_id, name from Category c JOIN game_Category gc ON c.Category_id = gc.Category_Category_id WHERE game_game_id=:game_id";
+        #endregion
 
-        // Methods
-        public int insertNew(string name)
+        #region Non Query Methods
+        public int Insert(string name)
         {
-            DatabaseConnection db = DatabaseConnection.Instance;
-            db.Connect();
-
-            SqlCommand command = db.CreateCommand(SQL_INSERT_NEW);
+            SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_INSERT_NEW);
             command.Parameters.AddWithValue(":name", name);
-            int ret = db.ExecuteNonQuery(command);
-
-            db.Close();
-            return ret;
+            return DatabaseConnection.Instance.ExecuteNonQuery(command);
         }
 
-        public int deleteById(int id)
+        public int DeleteById(int id)
         {
-            DatabaseConnection db = DatabaseConnection.Instance;
-            db.Connect();
-
-            SqlCommand command = db.CreateCommand(SQL_DELETE_ID);
+            SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_DELETE_ID);
             command.Parameters.AddWithValue(":Category_id", id);
-            int ret = db.ExecuteNonQuery(command);
-
-            db.Close();
-            return ret;
+            return DatabaseConnection.Instance.ExecuteNonQuery(command);
         }
 
-        public int update(int id, string name)
+        public int Update(int id, string name)
         {
-            DatabaseConnection db = DatabaseConnection.Instance;
-            db.Connect();
-
-            SqlCommand command = db.CreateCommand(SQL_UPDATE);
+            SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_UPDATE);
             command.Parameters.AddWithValue(":name", name);
             command.Parameters.AddWithValue(":Category_id", id);
-            int ret = db.ExecuteNonQuery(command);
+            return DatabaseConnection.Instance.ExecuteNonQuery(command);
+        }
+        #endregion
 
-            db.Close();
-            return ret;
+        #region Query Methods
+        public List<CategoryDTO> SelectCategories()
+        {
+            SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_SELECT_ALL);
+            SqlDataReader reader = DatabaseConnection.Instance.Select(command);
+
+            return Read(reader);
         }
 
-        public List<CategoryDTO> selectCategories(IDatabaseConnection pDb = null)
+        public List<CategoryDTO> SelectCategoriesForGame(int gameId)
         {
-            DatabaseConnection db;
-            if (pDb == null)
-            {
-                db = DatabaseConnection.Instance;
-                db.Connect();
-            }
-            else
-            {
-                db = (DatabaseConnection)pDb;
-            }
-
-            SqlCommand command = db.CreateCommand(SQL_SELECT_ALL);
-            SqlDataReader reader = db.Select(command);
-
-            List<CategoryDTO> categories = Read(reader);
-
-            reader.Close();
-
-            if (pDb == null)
-            {
-                db.Close();
-            }
-
-            return categories;
-        }
-
-        public List<CategoryDTO> selectCategoriesForGame(int gameId, IDatabaseConnection pDb = null)
-        {
-            DatabaseConnection db;
-            if (pDb == null)
-            {
-                db = DatabaseConnection.Instance;
-                db.Connect();
-            }
-            else
-            {
-                db = (DatabaseConnection)pDb;
-            }
-
-            SqlCommand command = db.CreateCommand(SQL_SELECT_FOR_GAME);
+            SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_SELECT_FOR_GAME);
             command.Parameters.AddWithValue(":game_id", gameId);
-            SqlDataReader reader = db.Select(command);
+            SqlDataReader reader = DatabaseConnection.Instance.Select(command);
 
-            List<CategoryDTO> categories = Read(reader);
-
-            reader.Close();
-
-            if (pDb == null)
-            {
-                db.Close();
-            }
-
-            return categories;
+            return Read(reader);
         }
 
-        public CategoryDTO selectCategoryDTO(int id, IDatabaseConnection pDb = null)
+        public CategoryDTO SelectCategoryDTO(int id)
         {
-            DatabaseConnection db;
-            if (pDb == null)
-            {
-                db = DatabaseConnection.Instance;
-                db.Connect();
-            }
-            else
-            {
-                db = (DatabaseConnection)pDb;
-            }
-
-            SqlCommand command = db.CreateCommand(SQL_SELECT_BY_ID);
+            SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_SELECT_BY_ID);
             command.Parameters.AddWithValue(":CategoryDTO_id", id);
-            SqlDataReader reader = db.Select(command);
+            SqlDataReader reader = DatabaseConnection.Instance.Select(command);
 
-            List<CategoryDTO> categories = Read(reader);
-
-            reader.Close();
-
-            if (pDb == null)
-            {
-                db.Close();
-            }
-
-            return categories.ElementAt(0);
+            return Read(reader).ElementAt(0);
         }
-        public List<CategoryDTO> selectCategoryDTOByName(string name, IDatabaseConnection pDb = null)
+        public List<CategoryDTO> selectCategoryDTOByName(string name)
         {
-            DatabaseConnection db;
-            if (pDb == null)
-            {
-                db = DatabaseConnection.Instance;
-                db.Connect();
-            }
-            else
-            {
-                db = (DatabaseConnection)pDb;
-            }
-
-            SqlCommand command = db.CreateCommand(SQL_SELECT_BY_NAME);
+            SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_SELECT_BY_NAME);
             command.Parameters.AddWithValue(":name", name);
-            SqlDataReader reader = db.Select(command);
+            SqlDataReader reader = DatabaseConnection.Instance.Select(command);
 
-            List<CategoryDTO> categories = Read(reader);
-
-            reader.Close();
-
-            if (pDb == null)
-            {
-                db.Close();
-            }
-
-            
-            return categories;
-            
+            return Read(reader);
         }
+        #endregion
 
+        #region Helpers
         private static List<CategoryDTO> Read(SqlDataReader reader)
         {
             List<CategoryDTO> categories = new List<CategoryDTO>();
 
-            while (reader.Read())
+            try
             {
-                int i = -1;
-                CategoryDTO CategoryDTO = new CategoryDTO();
-                CategoryDTO.CategoryId = reader.GetInt32(++i);
-                CategoryDTO.Name = reader.GetString(++i);
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        int i = -1;
+                        CategoryDTO CategoryDTO = new CategoryDTO();
+                        CategoryDTO.CategoryId = reader.GetInt32(++i);
+                        CategoryDTO.Name = reader.GetString(++i);
 
-                categories.Add(CategoryDTO);
+                        categories.Add(CategoryDTO);
+                    }
+                }
             }
+            finally
+            {
+                reader.Close();
+            }
+
             return categories;
         }
+        #endregion
     }
 }

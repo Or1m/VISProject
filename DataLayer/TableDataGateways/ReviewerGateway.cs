@@ -29,230 +29,173 @@ namespace DataLayer.TableDataGateways
             "FROM Reviewer r JOIN Favorit_reviewer fr ON r.reviewer_id = fr.reviewer_reviewer_id WHERE user_user_id=:user_id";
         #endregion
 
+        private static readonly object lockObj = new object();
+        private static ReviewerGateway instance;
+
+        public static ReviewerGateway Instance {
+            get {
+                lock (lockObj)
+                {
+                    return instance ?? (instance = new ReviewerGateway());
+                }
+            }
+        }
+
+        private ReviewerGateway() { }
+
         #region Non Query Methods
-        public int InsertNewReviewer(ReviewerDTO reviewer)
+        public int Insert(ReviewerDTO reviewer)
         {
-            DatabaseConnection db = DatabaseConnection.Instance;
-            db.Connect();
-
-            SqlCommand command = db.CreateCommand(SQL_REGISTER_NEW);
+            SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_REGISTER_NEW);
             PrepareCommand(command, reviewer);
-            int ret = db.ExecuteNonQuery(command);
-
-            db.Close();
-            return ret;
+            return DatabaseConnection.Instance.ExecuteNonQuery(command);
         }
         
-        public int updateReviewer(ReviewerDTO reviewer)
+        public int Update(ReviewerDTO reviewer)
         {
-            DatabaseConnection db = DatabaseConnection.Instance;
-            db.Connect();
-
-            SqlCommand command = db.CreateCommand(SQL_UPDATE);
+            SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_UPDATE);
             PrepareCommand(command, reviewer);
-            int ret = db.ExecuteNonQuery(command);
-
-            db.Close();
-            return ret;
+            return DatabaseConnection.Instance.ExecuteNonQuery(command);
         }
 
-        public int deleteReviewerById(int id)
+        public int DeleteById(int id)
         {
-            DatabaseConnection db = DatabaseConnection.Instance;
-            db.Connect();
-
-            SqlCommand command = db.CreateCommand(SQL_DELETE_ID);
-
+            SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_DELETE_ID);
             command.Parameters.AddWithValue(":reviewer_id", id);
-            int ret = db.ExecuteNonQuery(command);
 
-            db.Close();
-            return ret;
+            return DatabaseConnection.Instance.ExecuteNonQuery(command);
+        }
+        #endregion
+
+        #region Query Methods
+        public List<ReviewerDTO> SelectReviewers()
+        {
+            SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_SELECT_ALL_REVIEWERS_HEADER);
+            SqlDataReader reader = DatabaseConnection.Instance.Select(command);
+
+            return ReadHeader(reader);
         }
 
-        public List<ReviewerDTO> selectReviewers(IDatabaseConnection pDb = null)
+        public List<ReviewerDTO> SelectFavoriteReviewers(int userId)
         {
-            DatabaseConnection db;
-            if (pDb == null)
-            {
-                db = DatabaseConnection.Instance;
-                db.Connect();
-            }
-            else
-            {
-                db = (DatabaseConnection)pDb;
-            }
-
-            SqlCommand command = db.CreateCommand(SQL_SELECT_ALL_REVIEWERS_HEADER);
-            SqlDataReader reader = db.Select(command);
-
-            List<ReviewerDTO> reviewers = ReadHeader(reader);
-
-            reader.Close();
-
-            if (pDb == null)
-            {
-                db.Close();
-            }
-
-            return reviewers;
-        }
-
-        public List<ReviewerDTO> selectFavoritReviewers(int userId, IDatabaseConnection pDb = null)
-        {
-            DatabaseConnection db;
-            if (pDb == null)
-            {
-                db = DatabaseConnection.Instance;
-                db.Connect();
-            }
-            else
-            {
-                db = (DatabaseConnection)pDb;
-            }
-
-            SqlCommand command = db.CreateCommand(SQL_SELECT_FAVORIT_REVIEWERS_FOR_USER);
+            SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_SELECT_FAVORIT_REVIEWERS_FOR_USER);
             command.Parameters.AddWithValue(":user_id", userId);
-            SqlDataReader reader = db.Select(command);
+            SqlDataReader reader = DatabaseConnection.Instance.Select(command);
 
-            List<ReviewerDTO> reviewers = ReadHeader(reader);
-
-            reader.Close();
-
-            if (pDb == null)
-            {
-                db.Close();
-            }
-
-            return reviewers;
+            return ReadHeader(reader);
         }
 
-        public ReviewerDTO selectReviewer(int id, IDatabaseConnection pDb = null)
+        public ReviewerDTO SelectReviewer(int id)
         {
-            DatabaseConnection db;
-            if (pDb == null)
-            {
-                db = DatabaseConnection.Instance;
-                db.Connect();
-            }
-            else
-            {
-                db = (DatabaseConnection)pDb;
-            }
-
-            SqlCommand command = db.CreateCommand(SQL_SELECT_REVIEWER);
+            SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_SELECT_REVIEWER);
             command.Parameters.AddWithValue(":reviewer_id", id);
-            SqlDataReader reader = db.Select(command);
+            SqlDataReader reader = DatabaseConnection.Instance.Select(command);
 
-            List<ReviewerDTO> reviewers = Read(reader);
-
-            reader.Close();
-
-            if (pDb == null)
-            {
-                db.Close();
-            }
-
-            return reviewers.ElementAt(0);
+            return Read(reader).ElementAt(0);
         }
 
-        public ReviewerDTO selectReviewerByIdWithCategory(int id, IDatabaseConnection pDb = null)
+        public ReviewerDTO SelectReviewerByIdWithCategory(int id)
         {
-            DatabaseConnection db;
-            if (pDb == null)
-            {
-                db = DatabaseConnection.Instance;
-                db.Connect();
-            }
-            else
-            {
-                db = (DatabaseConnection)pDb;
-            }
-
-            SqlCommand command = db.CreateCommand(SQL_SELECT_REVIEWER_WITH_CATEGORY);
+            SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_SELECT_REVIEWER_WITH_CATEGORY);
             command.Parameters.AddWithValue(":reviewer_id", id);
-            SqlDataReader reader = db.Select(command);
+            SqlDataReader reader = DatabaseConnection.Instance.Select(command);
 
-            List<ReviewerDTO> reviewers = Read(reader, true);
-
-            reader.Close();
-
-            if (pDb == null)
-            {
-                db.Close();
-            }
-
-            return reviewers.ElementAt(0);
+            return Read(reader, true).ElementAt(0);
         }
+        #endregion
 
+        #region Helpers
         private static void PrepareCommand(SqlCommand command, ReviewerDTO reviewer)
         {
-            //command.Parameters.AddWithValue(":reviewer_id", reviewer.ReviewerId);
-            //command.Parameters.AddWithValue(":first_name", reviewer.FirstName);
-            //command.Parameters.AddWithValue(":last_name", reviewer.LastName);
-            //command.Parameters.AddWithValue(":gender", reviewer.Gender);
-            //command.Parameters.AddWithValue(":country", reviewer.Country);
-            //command.Parameters.AddWithValue(":work", reviewer.Work);
-            //command.Parameters.AddWithValue(":date_of_birth", reviewer.DateOfBirth);
-            //command.Parameters.AddWithValue(":registration_date", reviewer.RegistrationDate);
-            //command.Parameters.AddWithValue(":favorit_category_id", reviewer.FavoriteCategoryId == null ? DBNull.Value : (object)reviewer.FavoriteCategoryId);
+            command.Parameters.AddWithValue(":reviewer_id", reviewer.Id);
+            command.Parameters.AddWithValue(":first_name", reviewer.FirstName);
+            command.Parameters.AddWithValue(":last_name", reviewer.LastName);
+            command.Parameters.AddWithValue(":gender", reviewer.Gender);
+            command.Parameters.AddWithValue(":country", reviewer.Country);
+            command.Parameters.AddWithValue(":work", reviewer.Work);
+            command.Parameters.AddWithValue(":date_of_birth", reviewer.DateOfBirth);
+            command.Parameters.AddWithValue(":registration_date", reviewer.RegistrationDate);
+            command.Parameters.AddWithValue(":favorit_category_id", reviewer.FavoriteCategory == null ? DBNull.Value : (object)reviewer.FavoriteCategory.CategoryId);
         }
 
         private static List<ReviewerDTO> ReadHeader(SqlDataReader reader, bool withFavoritCategory = false)
         {
             List<ReviewerDTO> Reviewers = new List<ReviewerDTO>();
 
-            while (reader.Read())
+            try
             {
-                int i = -1;
-                //ReviewerDTO reviewer = new ReviewerDTO();
-                //reviewer.ReviewerId = reader.GetInt32(++i);
-                //reviewer.FirstName = reader.GetString(++i);
-                //reviewer.LastName = reader.GetString(++i);
-                //reviewer.Country = reader.GetString(++i);
-                //reviewer.Work = reader.GetString(++i);
-                //Reviewers.Add(reviewer);
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        int i = -1;
+                        ReviewerDTO reviewer = new ReviewerDTO();
+                        reviewer.Id = reader.GetInt32(++i);
+                        reviewer.FirstName = reader.GetString(++i);
+                        reviewer.LastName = reader.GetString(++i);
+                        reviewer.Country = reader.GetString(++i);
+                        reviewer.Work = reader.GetString(++i);
+                        Reviewers.Add(reviewer);
+                    }
+                }
             }
+            finally
+            {
+                reader.Close();
+            }
+
             return Reviewers;
         }
 
         private static List<ReviewerDTO> Read(SqlDataReader reader, bool withFavoritCategory = false)
         {
             List<ReviewerDTO> Reviewers = new List<ReviewerDTO>();
-            bool hasFavorit = false;
+            bool hasFavorite = false;
 
-            while (reader.Read())
+            try
             {
-                //int i = -1;
-                //ReviewerDTO reviewer = new ReviewerDTO();
-                //reviewer.ReviewerId = reader.GetInt32(++i);
-                //reviewer.FirstName = reader.GetString(++i);
-                //reviewer.LastName = reader.GetString(++i);
-                //reviewer.Gender = reader.GetString(++i)[0];
-                //reviewer.Country = reader.GetString(++i);
-                //reviewer.Work = reader.GetString(++i);
-                //reviewer.DateOfBirth = reader.GetDateTime(++i);
-                //reviewer.RegistrationDate = reader.GetDateTime(++i);
-                //if (!reader.IsDBNull(++i))
-                //{
-                //    reviewer.FavoriteCategoryId = reader.GetInt32(i);
-                //    hasFavorit = true;
-                //}
-                //if (!reader.IsDBNull(++i))
-                //{
-                //    reviewer.Deleted = reader.GetInt32(i);
-                //}
-                //if (withFavoritCategory && hasFavorit)
-                //{
-                //    CategoryDTO category = new CategoryDTO();
-                //    category.CategoryId = (int)reviewer.FavoriteCategoryId;
-                //    category.Name = reader.GetString(++i);
-                //    reviewer.FavoriteCategory = category;
-                //}
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        int i = -1;
+                        ReviewerDTO reviewer = new ReviewerDTO();
+                        reviewer.Id = reader.GetInt32(++i);
+                        reviewer.FirstName = reader.GetString(++i);
+                        reviewer.LastName = reader.GetString(++i);
+                        reviewer.Gender = reader.GetString(++i)[0];
+                        reviewer.Country = reader.GetString(++i);
+                        reviewer.Work = reader.GetString(++i);
+                        reviewer.DateOfBirth = reader.GetDateTime(++i);
+                        reviewer.RegistrationDate = reader.GetDateTime(++i);
+                        if (!reader.IsDBNull(++i))
+                        {
+                            reviewer.FavoriteCategory.CategoryId = reader.GetInt32(i);
+                            hasFavorite = true;
+                        }
+                        if (!reader.IsDBNull(++i))
+                        {
+                            reviewer.IsDeleted = reader.GetInt32(i) != 0 ? true : false;
+                        }
+                        if (withFavoritCategory && hasFavorite)
+                        {
+                            CategoryDTO category = new CategoryDTO();
+                            category.CategoryId = reviewer.FavoriteCategory.CategoryId;
+                            category.Name = reader.GetString(++i);
+                            reviewer.FavoriteCategory = category;
+                        }
 
-                //Reviewers.Add(reviewer);
+                        Reviewers.Add(reviewer);
+                    }
+                }
             }
+            finally
+            {
+                reader.Close();
+            }
+
             return Reviewers;
         }
+        #endregion
     }
 }

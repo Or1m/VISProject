@@ -25,8 +25,22 @@ namespace DataLayer.TableDataGateways
         public static string SQL_SELECT_ALL_BY_GAME = "SELECT title, text_of_review, score, reviewer_reviewer_id, game_game_id, \"date\", order_of_review FROM Reviewer_review WHERE game_game_id=:game_game_id";
         #endregion
 
+        private static readonly object lockObj = new object();
+        private static ReviewerReviewGateway instance;
+
+        public static ReviewerReviewGateway Instance {
+            get {
+                lock (lockObj)
+                {
+                    return instance ?? (instance = new ReviewerReviewGateway());
+                }
+            }
+        }
+
+        private ReviewerReviewGateway() { }
+
         #region Non Query Methods
-        public int InsertNew(ReviewerReviewDTO review)
+        public int Insert(ReviewerReviewDTO review)
         {
             SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_INSERT_NEW);
             PrepareCommand(command, review);
@@ -34,13 +48,11 @@ namespace DataLayer.TableDataGateways
             return DatabaseConnection.Instance.ExecuteNonQuery(command);
         }
 
-        public int Delete(int reviewerId, int gameId, int order)
+        public int Delete(int reviewerReviewId)
         {
             SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_DELETE);
 
-            command.Parameters.AddWithValue(":reviewer_reviewer_id", reviewerId);
-            command.Parameters.AddWithValue(":game_game_id", gameId);
-            command.Parameters.AddWithValue(":order_of_review", order);
+            command.Parameters.AddWithValue(":reviewer_review_id", reviewerReviewId);
 
             return DatabaseConnection.Instance.ExecuteNonQuery(command);
         }

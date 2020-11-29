@@ -23,6 +23,20 @@ namespace DataLayer.TableDataGateways
         public static string SQL_SELECT_ALL_BY_GAME = "SELECT title, score, user_user_id, game_game_id, \"date\", order_of_review FROM User_review WHERE game_game_id=:game_game_id";
         #endregion
 
+        private static readonly object lockObj = new object();
+        private static UserReviewGateway instance;
+
+        public static UserReviewGateway Instance {
+            get {
+                lock (lockObj)
+                {
+                    return instance ?? (instance = new UserReviewGateway());
+                }
+            }
+        }
+
+        private UserReviewGateway() { }
+
         #region Non Query Methods
         public int Insert(UserReviewDTO review)
         {
