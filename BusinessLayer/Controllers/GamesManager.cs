@@ -37,11 +37,14 @@ namespace BusinessLayer.Controllers
             var gamesDTO = GameGateway.Instance.SelectGamesWithCategories();
 
             foreach(var DTO in gamesDTO)
-            {
                 Games.Add(new Game(DTO));
-            }
 
             return Games;
+        }
+
+        public Game LoadGame(int gameIndex)
+        {
+            return new Game(GameGateway.Instance.SelectGame(gameIndex));
         }
     }
 }

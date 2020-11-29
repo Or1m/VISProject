@@ -42,7 +42,7 @@ namespace DesktopApp
 
         private void UpdateGames()
         {
-            List<Game> games = GamesManager.Instance.LoadGamesHeadersWithCategories();
+            games = GamesManager.Instance.LoadGamesHeadersWithCategories();
             dataGridGames.DataSource = games;
 
             for (int i = 0; i < dataGridGames.Rows.Count; i++)
@@ -63,7 +63,7 @@ namespace DesktopApp
             {
                 int selectedrowindex = dataGridGames.SelectedCells[0].RowIndex;
                 DataGridViewRow selectedRow = dataGridGames.Rows[selectedrowindex];
-                int gameIndex = int.Parse(selectedRow.Cells["gameId"].Value.ToString());
+                int gameIndex = int.Parse(selectedRow.Cells["Id"].Value.ToString());
 
                 new FormGame(gameIndex, games[selectedrowindex].Categories, null).Show();
             }

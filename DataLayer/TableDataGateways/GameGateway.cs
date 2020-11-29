@@ -20,7 +20,7 @@ namespace DataLayer.TableDataGateways
 
         public static string SQL_SELECT_ALL_HEADERS = "SELECT game_id, name, developer from Game";
 
-        public static string SQL_SELECT_GAME_BY_ID = "SELECT game_id, name, description, developer, rating, release_date, average_user_review, average_reviewer_score from Game where game_id=:game_id";
+        public static string SQL_SELECT_GAME_BY_ID = "SELECT game_id, name, description, developer, rating, release_date, average_user_review, average_reviewer_score from Game where game_id=@game_id";
 
         public static string SQL_SELECT_GAMES_BY_NAME = "SELECT game_id, name, description, developer, rating, release_date, average_user_review, average_reviewer_score from Game where name=:name";
 
@@ -94,7 +94,7 @@ namespace DataLayer.TableDataGateways
         public GameDTO SelectGame(int id)
         {
             SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_SELECT_GAME_BY_ID);
-            command.Parameters.AddWithValue(":game_id", id);
+            command.Parameters.AddWithValue("@game_id", id);
             SqlDataReader reader = DatabaseConnection.Instance.Select(command);
 
             return Read(reader).ElementAt(0);
