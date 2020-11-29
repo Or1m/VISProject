@@ -1,6 +1,6 @@
-namespace DataLayer
+namespace DataLayer.Behaviour
 {
-    public interface IDatabaseProxy
+    interface IDatabaseConnection
     {
         bool Connect();
         bool Connect(string connectionString);

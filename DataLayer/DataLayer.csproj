@@ -42,19 +42,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DatabaseConnection.cs" />
-    <Compile Include="IDatabaseProxy.cs" />
+    <Compile Include="Behaviour\IDatabaseConnection.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Routines.cs" />
-    <Compile Include="TableDataGateways\BaseGateway.cs" />
     <Compile Include="TableDataGateways\CategoryGateway.cs" />
-    <Compile Include="TableDataGateways\DailyStatisticsGateway.cs" />
-    <Compile Include="TableDataGateways\FavoriteGameGateway.cs" />
-    <Compile Include="TableDataGateways\FavoriteReviewerGateway.cs" />
-    <Compile Include="TableDataGateways\GameCategoryGateway.cs" />
+    <Compile Include="TableDataGateways\_Legacy\DailyStatisticsGateway.cs" />
+    <Compile Include="TableDataGateways\_Legacy\FavoriteGameGateway.cs" />
+    <Compile Include="TableDataGateways\_Legacy\FavoriteReviewerGateway.cs" />
+    <Compile Include="TableDataGateways\_Legacy\GameCategoryGateway.cs" />
     <Compile Include="TableDataGateways\GameGateway.cs" />
     <Compile Include="TableDataGateways\ReviewerReviewGateway.cs" />
     <Compile Include="TableDataGateways\ReviewerGateway.cs" />

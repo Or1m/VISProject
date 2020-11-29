@@ -14,7 +14,7 @@ namespace DataLayer.TableDataGateways
         public static string SQL_SELECT_BY_DATE = "SELECT id, \"date\", number_of_reviews, type FROM DailyStatistics WHERE \"date\"=:datee";
 
         // Methods
-        public List<DailyStatisticsDTO> selectStatistics(IDatabaseProxy pDb = null)
+        public List<DailyStatisticsDTO> selectStatistics(IDatabaseConnection pDb = null)
         {
             DatabaseConnection db;
             if (pDb == null)
@@ -42,7 +42,7 @@ namespace DataLayer.TableDataGateways
             return statistics;
         }
 
-        public DailyStatisticsDTO selectStatisticById(int id, IDatabaseProxy pDb = null)
+        public DailyStatisticsDTO selectStatisticById(int id, IDatabaseConnection pDb = null)
         {
             DatabaseConnection db;
             if (pDb == null)

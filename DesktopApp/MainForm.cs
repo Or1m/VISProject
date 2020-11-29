@@ -40,16 +40,15 @@ namespace DesktopApp
 
         private void UpdateGames()
         {
-            List<Game> games = GamesManager.Instance.LoadGamesWithCategories();
+            List<Game> games = GamesManager.Instance.LoadGamesHeadersWithCategories();
             dataGridGames.DataSource = games;
 
             for (int i = 0; i < dataGridGames.Rows.Count; i++)
             {
-                string cat = "";
+                string cat = string.Empty;
                 foreach (Category c in games[i].Categories)
-                {
                     cat += c.ToStringHeader() + ", ";
-                }
+
                 cat = cat.Remove(cat.Length - 2);
 
                 dataGridGames.Rows[i].Cells["Categories"].Value = cat;

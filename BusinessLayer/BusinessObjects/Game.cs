@@ -23,8 +23,9 @@ namespace BusinessLayer.BusinessObjects
         {
             Categories = new List<Category>();
         }
-        public Game(string name, string description, string developer, string rating, DateTime? releaseDate = null, float? averageUserScore = null, float? averageReviewerScore = null) : this()
+        public Game(int id, string name, string description, string developer, string rating, DateTime? releaseDate = null, float? averageUserScore = null, float? averageReviewerScore = null) : this()
         {
+            Id = id;
             Name = name;
             Description = description;
             Developer = developer;
@@ -34,7 +35,7 @@ namespace BusinessLayer.BusinessObjects
             AverageReviewerScore = averageReviewerScore;
         }
         public Game(GameDTO DTO) 
-            : this(DTO.Name, DTO.Description, DTO.Developer, DTO.Rating, DTO.ReleaseDate, DTO.AverageUserScore, DTO.AverageReviewerScore) 
+            : this(DTO.Id, DTO.Name, DTO.Description, DTO.Developer, DTO.Rating, DTO.ReleaseDate, DTO.AverageUserScore, DTO.AverageReviewerScore) 
         {
             foreach(var catDTO in DTO.Categories)
             {

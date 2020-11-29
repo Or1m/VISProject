@@ -32,7 +32,7 @@ namespace BusinessLayer.Controllers
         }
 
 
-        public List<Game> LoadGamesWithCategories()
+        public List<Game> LoadGamesHeadersWithCategories()
         {
             var gamesDTO = GameGateway.Instance.SelectGamesWithCategories();
 

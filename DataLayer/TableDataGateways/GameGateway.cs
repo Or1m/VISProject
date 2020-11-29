@@ -1,5 +1,4 @@
-﻿
-using DTO;
+﻿using DTO;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -7,8 +6,9 @@ using System.Linq;
 
 namespace DataLayer.TableDataGateways
 {
-    public class GameGateway : BaseGateway
+    public class GameGateway
     {
+        #region SQL Commands
         public static string SQL_INSERT_NEW = "INSERT INTO Game (name, description, developer, rating, release_date, average_user_review, average_reviewer_score) "
             + " VALUES (:name, :description, :developer, :rating, :release_date, :average_user_review, :average_reviewer_score)";
 
@@ -26,12 +26,11 @@ namespace DataLayer.TableDataGateways
 
         public static string SQL_SELECT_GAMES_BY_DEVELOPER_HEADER = "SELECT game_id, name, developer from Game where developer=:developer";
 
-        public static string SQL_SELECT_FAVORIT_GAMES_FOR_USER = "SELECT game_id, name, developer FROM Game g JOIN Favorit_game fg ON g.game_id = fg.game_game_id WHERE user_user_id=:user_id";
+        public static string SQL_SELECT_FAVORITE_GAMES_FOR_USER = "SELECT game_id, name, developer FROM Game g JOIN Favorit_game fg ON g.game_id = fg.game_game_id WHERE user_user_id=:user_id";
 
         static string SQL_SELECT_GAMES_WITH_CATEGORIES = "SELECT g.game_id, g.name, g.developer, c.category_id, c.name FROM Game g " +
             "JOIN game_category gc ON g.game_id = gc.game_game_id JOIN category c ON c.category_id = gc.category_category_id";
-
-
+        #endregion
 
         private static readonly object lockObj = new object();
         private static GameGateway instance;
@@ -87,7 +86,7 @@ namespace DataLayer.TableDataGateways
             return ret;
         }
 
-        public List<GameDTO> selectGames(IDatabaseProxy pDb = null)
+        public List<GameDTO> selectGames(IDatabaseConnection pDb = null)
         {
             DatabaseConnection db;
             if (pDb == null)
@@ -115,7 +114,7 @@ namespace DataLayer.TableDataGateways
             return games;
         }
 
-        public List<GameDTO> selectFavoritGames(int userId, IDatabaseProxy pDb = null)
+        public List<GameDTO> selectFavoritGames(int userId, IDatabaseConnection pDb = null)
         {
             DatabaseConnection db;
             if (pDb == null)
@@ -128,7 +127,7 @@ namespace DataLayer.TableDataGateways
                 db = (DatabaseConnection)pDb;
             }
 
-            SqlCommand command = db.CreateCommand(SQL_SELECT_FAVORIT_GAMES_FOR_USER);
+            SqlCommand command = db.CreateCommand(SQL_SELECT_FAVORITE_GAMES_FOR_USER);
             command.Parameters.AddWithValue(":user_id", userId);
             SqlDataReader reader = db.Select(command);
 
@@ -144,7 +143,7 @@ namespace DataLayer.TableDataGateways
             return games;
         }
 
-        public GameDTO selectGame(int id, IDatabaseProxy pDb = null)
+        public GameDTO selectGame(int id, IDatabaseConnection pDb = null)
         {
             DatabaseConnection db;
             if (pDb == null)
@@ -173,7 +172,7 @@ namespace DataLayer.TableDataGateways
             return games.ElementAt(0);
         }
 
-        public List<GameDTO> selectGamesByName(string name, IDatabaseProxy pDb = null)
+        public List<GameDTO> selectGamesByName(string name, IDatabaseConnection pDb = null)
         {
             DatabaseConnection db;
             if (pDb == null)
@@ -202,7 +201,7 @@ namespace DataLayer.TableDataGateways
             return games;
         }
 
-        public List<GameDTO> selectGamesByDeveloper(string developer, IDatabaseProxy pDb = null)
+        public List<GameDTO> selectGamesByDeveloper(string developer, IDatabaseConnection pDb = null)
         {
             DatabaseConnection db;
             if (pDb == null)

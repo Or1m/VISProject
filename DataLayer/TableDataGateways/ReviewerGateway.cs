@@ -68,7 +68,7 @@ namespace DataLayer.TableDataGateways
             return ret;
         }
 
-        public List<ReviewerDTO> selectReviewers(IDatabaseProxy pDb = null)
+        public List<ReviewerDTO> selectReviewers(IDatabaseConnection pDb = null)
         {
             DatabaseConnection db;
             if (pDb == null)
@@ -96,7 +96,7 @@ namespace DataLayer.TableDataGateways
             return reviewers;
         }
 
-        public List<ReviewerDTO> selectFavoritReviewers(int userId, IDatabaseProxy pDb = null)
+        public List<ReviewerDTO> selectFavoritReviewers(int userId, IDatabaseConnection pDb = null)
         {
             DatabaseConnection db;
             if (pDb == null)
@@ -125,7 +125,7 @@ namespace DataLayer.TableDataGateways
             return reviewers;
         }
 
-        public ReviewerDTO selectReviewer(int id, IDatabaseProxy pDb = null)
+        public ReviewerDTO selectReviewer(int id, IDatabaseConnection pDb = null)
         {
             DatabaseConnection db;
             if (pDb == null)
@@ -154,7 +154,7 @@ namespace DataLayer.TableDataGateways
             return reviewers.ElementAt(0);
         }
 
-        public ReviewerDTO selectReviewerByIdWithCategory(int id, IDatabaseProxy pDb = null)
+        public ReviewerDTO selectReviewerByIdWithCategory(int id, IDatabaseConnection pDb = null)
         {
             DatabaseConnection db;
             if (pDb == null)

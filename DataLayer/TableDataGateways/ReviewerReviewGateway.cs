@@ -53,7 +53,7 @@ namespace DataLayer.TableDataGateways
             return ret;
         }
 
-        public ReviewerReviewDTO selectReview(int reviewerId, int gameId, int order, IDatabaseProxy pDb = null)
+        public ReviewerReviewDTO selectReview(int reviewerId, int gameId, int order, IDatabaseConnection pDb = null)
         {
             DatabaseConnection db;
             if (pDb == null)
@@ -85,7 +85,7 @@ namespace DataLayer.TableDataGateways
             return Reviewer_reviews.ElementAt(0);
         }
 
-        public List<ReviewerReviewDTO> selectReviews(IDatabaseProxy pDb = null)
+        public List<ReviewerReviewDTO> selectReviews(IDatabaseConnection pDb = null)
         {
             DatabaseConnection db;
             if (pDb == null)
@@ -113,7 +113,7 @@ namespace DataLayer.TableDataGateways
             return Reviewer_reviews;
         }
 
-        public List<ReviewerReviewDTO> selectReviewsForReviewer(int reviewerId, IDatabaseProxy pDb = null)
+        public List<ReviewerReviewDTO> selectReviewsForReviewer(int reviewerId, IDatabaseConnection pDb = null)
         {
             DatabaseConnection db;
             if (pDb == null)
@@ -142,7 +142,7 @@ namespace DataLayer.TableDataGateways
             return Reviewer_reviews;
         }
 
-        public List<ReviewerReviewDTO> selectReviewsForGame(int gameId, IDatabaseProxy pDb = null)
+        public List<ReviewerReviewDTO> selectReviewsForGame(int gameId, IDatabaseConnection pDb = null)
         {
             DatabaseConnection db;
             if (pDb == null)

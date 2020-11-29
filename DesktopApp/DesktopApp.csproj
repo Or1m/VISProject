@@ -90,6 +90,7 @@
     <EmbeddedResource Include="UserProfileForm.resx">
       <DependentUpon>UserProfileForm.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="BusinessLayer.BusinessObjects.Game.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

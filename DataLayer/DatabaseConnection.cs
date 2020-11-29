@@ -1,10 +1,11 @@
+using DataLayer.Behaviour;
 using System;
 using System.Data;
 using System.Data.SqlClient;
 
 namespace DataLayer
 {
-    public class DatabaseConnection : IDatabaseProxy
+    public class DatabaseConnection : IDatabaseConnection
     {
         private SqlConnection connection;
         private SqlTransaction sqlTransaction;
@@ -94,16 +95,53 @@ namespace DataLayer
         // Database manipulation methods
         public int ExecuteNonQuery(SqlCommand command)
         {
-            int rowNumber = 0;
-            try
+            if (Connect())
             {
-                rowNumber = command.ExecuteNonQuery();
+                int rowNumber = 0;
+                try
+                {
+                    rowNumber = command.ExecuteNonQuery();
+                }
+                catch (Exception e)
+                {
+                    throw e;
+                }
+                finally
+                {
+                    command.Dispose();
+                    Close();
+                }
+
+                return rowNumber;
             }
-            catch (Exception e)
+            else
+                throw new Exception("Database is not connected");
+        }
+
+        public SqlDataReader Select(SqlCommand command)
+        {
+            SqlDataReader sqlReader;
+
+            if (Connect())
             {
-                throw e;
+                try
+                {
+                    sqlReader = command.ExecuteReader();
+                }
+                catch (Exception e)
+                {
+                    throw e;
+                }
+                finally
+                {
+                    command.Dispose();
+                    Close();
+                }
+
+                return sqlReader;
             }
-            return rowNumber;
+            else
+                throw new Exception("Database is not connected");
         }
 
         public SqlCommand CreateCommand(string strCommand)
@@ -115,12 +153,6 @@ namespace DataLayer
                 command.Transaction = SqlTransaction;
             }
             return command;
-        }
-
-        public SqlDataReader Select(SqlCommand command)
-        {
-            SqlDataReader sqlReader = command.ExecuteReader();
-            return sqlReader;
         }
     }
 }
