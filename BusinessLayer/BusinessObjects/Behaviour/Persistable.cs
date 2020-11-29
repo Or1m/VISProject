@@ -1,10 +1,10 @@
 ﻿namespace BusinessLayer.BusinessObjects.Behaviour
 {
-    interface Persistable<T>
+    public abstract class Persistable<T>
     {
-        int Id { get; set; }
-        bool IsPersisted { get; set; }
+        public int Id { get; set; }
+        public bool IsPersisted { get; set; }
 
-        T ToDTO();
+        public abstract T ToDTO();
     }
 }

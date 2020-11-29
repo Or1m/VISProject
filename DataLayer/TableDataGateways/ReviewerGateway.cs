@@ -8,6 +8,7 @@ namespace DataLayer.TableDataGateways
 {
     public class ReviewerGateway
     {
+        #region SQL Commands
         public static string SQL_REGISTER_NEW = "INSERT INTO Reviewer (first_name, last_name, gender, country, work, date_of_birth, registration_date, favorit_category_id) "
             + " VALUES (:first_name, :last_name, :gender, :country, :work, :date_of_birth, :registration_date, :favorit_category_id)";
 
@@ -26,9 +27,10 @@ namespace DataLayer.TableDataGateways
 
         public static string SQL_SELECT_FAVORIT_REVIEWERS_FOR_USER = "SELECT reviewer_id, first_name, last_name, country, work " +
             "FROM Reviewer r JOIN Favorit_reviewer fr ON r.reviewer_id = fr.reviewer_reviewer_id WHERE user_user_id=:user_id";
+        #endregion
 
-        // Methods
-        public int registerNewReviewer(ReviewerDTO reviewer)
+        #region Non Query Methods
+        public int InsertNewReviewer(ReviewerDTO reviewer)
         {
             DatabaseConnection db = DatabaseConnection.Instance;
             db.Connect();

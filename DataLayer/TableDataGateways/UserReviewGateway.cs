@@ -27,18 +27,12 @@ namespace DataLayer.TableDataGateways
         public int Insert(UserReviewDTO review)
         {
             SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_INSERT_NEW);
-
-            command.Parameters.AddWithValue(":title", review.Title);
-            command.Parameters.AddWithValue(":score", review.Score);
-            command.Parameters.AddWithValue(":user_user_id", review.Id);
-            command.Parameters.AddWithValue(":game_game_id", review.Id);
-            command.Parameters.AddWithValue(":datee", review.Date);
-            command.Parameters.AddWithValue(":order_of_review", review.OrderOfReview);
+            PrepareCommand(command, review);
 
             return DatabaseConnection.Instance.ExecuteNonQuery(command);
         }
 
-        public int delete(int userReviewId)
+        public int Delete(int userReviewId)
         {
             SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_DELETE);
 
@@ -49,7 +43,7 @@ namespace DataLayer.TableDataGateways
         #endregion
 
         #region Query Methods
-        public UserReviewDTO selectReview(int userReviewId)
+        public UserReviewDTO SelectReview(int userReviewId)
         {
             SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_SELECT_REVIEW);
             command.Parameters.AddWithValue(":user_review_id", userReviewId);
@@ -59,7 +53,7 @@ namespace DataLayer.TableDataGateways
             return Read(reader).ElementAt(0);
         }
 
-        public List<UserReviewDTO> selectReviews()
+        public List<UserReviewDTO> SelectReviews()
         {
             SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_SELECT_ALL);
             SqlDataReader reader = DatabaseConnection.Instance.Select(command);
@@ -67,7 +61,7 @@ namespace DataLayer.TableDataGateways
             return Read(reader);
         }
 
-        public List<UserReviewDTO> selectReviewsForUser(int userId)
+        public List<UserReviewDTO> SelectReviewsForUser(int userId)
         {
             SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_SELECT_ALL_BY_USER);
             command.Parameters.AddWithValue(":user_user_id", userId);
@@ -76,7 +70,7 @@ namespace DataLayer.TableDataGateways
             return Read(reader);
         }
 
-        public List<UserReviewDTO> selectReviewsForGame(int gameId)
+        public List<UserReviewDTO> SelectReviewsForGame(int gameId)
         {
             SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_SELECT_ALL_BY_GAME);
             command.Parameters.AddWithValue(":game_game_id", gameId);
@@ -116,6 +110,16 @@ namespace DataLayer.TableDataGateways
             }
             
             return UserReviews;
+        }
+
+        private static void PrepareCommand(SqlCommand command, UserReviewDTO review)
+        {
+            command.Parameters.AddWithValue(":title", review.Title);
+            command.Parameters.AddWithValue(":score", review.Score);
+            command.Parameters.AddWithValue(":user_user_id", review.Id);
+            command.Parameters.AddWithValue(":game_game_id", review.Id);
+            command.Parameters.AddWithValue(":datee", review.Date);
+            command.Parameters.AddWithValue(":order_of_review", review.OrderOfReview);
         }
         #endregion
     }

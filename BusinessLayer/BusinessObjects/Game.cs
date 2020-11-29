@@ -54,9 +54,7 @@ namespace BusinessLayer.BusinessObjects
         }
 
         #region DTO
-        public int Id { get; set; }
-        public bool IsPersisted { get; set; }
-        public GameDTO ToDTO()
+        public override GameDTO ToDTO()
         {
             throw new NotImplementedException();
         }

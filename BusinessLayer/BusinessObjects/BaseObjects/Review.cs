@@ -35,10 +35,7 @@ namespace BusinessLayer.BusinessObjects.BaseObjects
         #endregion
 
         #region DTO
-        public int Id { get; set; }
-        public bool IsPersisted { get; set; }
-
-        public ReviewDTO ToDTO()
+        public override ReviewDTO ToDTO()
         {
             throw new NotImplementedException();
         }

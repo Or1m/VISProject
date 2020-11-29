@@ -8,6 +8,7 @@ namespace DataLayer.TableDataGateways
 {
     public class UserGateway
     {
+        #region SQL Commands
         public static string SQL_REGISTER_NEW = "INSERT INTO \"User\" (nick, gender, country, date_of_birth, registration_date, first_name, last_name, favorit_category_id) "
             + " VALUES (:nick, :gender, :country, :date_of_birth,:registration_date, :first_name, :last_name, :favorit_category_id)";
 
@@ -30,264 +31,173 @@ namespace DataLayer.TableDataGateways
 
         public static string SQL_SELECT_USER_BY_NICK_WITH_CATEGORY = "SELECT u.user_id, u.nick, u.gender, u.country, u.date_of_birth, u.registration_date, u.first_name, u.last_name, u.favorit_category_id, u.deleted, name " +
             "FROM \"User\" u JOIN category on category_id = favorit_category_id WHERE nick=:nick";
+        #endregion
 
-        // Methods
-        public int registerNewUser(UserDTO user)
+
+        #region Non Query Methods
+        public int InsertNewUser(UserDTO user)
         {
-            DatabaseConnection db = DatabaseConnection.Instance;
-            db.Connect();
-
-            SqlCommand command = db.CreateCommand(SQL_REGISTER_NEW);
+            SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_REGISTER_NEW);
             PrepareCommand(command, user);
-            int ret = db.ExecuteNonQuery(command);
-
-            db.Close();
-            return ret;
+            return DatabaseConnection.Instance.ExecuteNonQuery(command);
         }
 
-        public int updateUser(UserDTO user)
+        public int UpdateUser(UserDTO user)
         {
-            DatabaseConnection db = DatabaseConnection.Instance;
-            db.Connect();
-
-            SqlCommand command = db.CreateCommand(SQL_UPDATE);
+            SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_UPDATE);
             PrepareCommand(command, user);
-            int ret = db.ExecuteNonQuery(command);
-
-            db.Close();
-            return ret;
+            return DatabaseConnection.Instance.ExecuteNonQuery(command);
         }
 
-        public int deleteUserById(int id)
+        public int DeleteUserById(int id)
         {
-            DatabaseConnection db = DatabaseConnection.Instance;
-            db.Connect();
-
-            SqlCommand command = db.CreateCommand(SQL_DELETE_ID);
-
+            SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_DELETE_ID);
             command.Parameters.AddWithValue(":user_id", id);
-            int ret = db.ExecuteNonQuery(command);
+            return DatabaseConnection.Instance.ExecuteNonQuery(command);
+        }
+        #endregion
 
-            db.Close();
-            return ret;
+        #region Query Methods
+        public List<UserDTO> SelectUsers()
+        {
+            SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_SELECT_ALL_USERS_HEADER);
+            SqlDataReader reader = DatabaseConnection.Instance.Select(command);
+
+            return ReadHeader(reader);
         }
 
-        public List<UserDTO> selectUsers(IDatabaseConnection pDb = null)
+        public UserDTO SelectUserById(int id)
         {
-            DatabaseConnection db;
-            if (pDb == null)
-            {
-                db = DatabaseConnection.Instance;
-                db.Connect();
-            }
-            else
-            {
-                db = (DatabaseConnection)pDb;
-            }
-
-            SqlCommand command = db.CreateCommand(SQL_SELECT_ALL_USERS_HEADER);
-            SqlDataReader reader = db.Select(command);
-
-            List<UserDTO> users = ReadHeader(reader);
-
-            reader.Close();
-
-            if (pDb == null)
-            {
-                db.Close();
-            }
-
-            return users;
-        }
-
-        public UserDTO selectUserById(int id, IDatabaseConnection pDb = null)
-        {
-            DatabaseConnection db;
-            if (pDb == null)
-            {
-                db = DatabaseConnection.Instance;
-                db.Connect();
-            }
-            else
-            {
-                db = (DatabaseConnection)pDb;
-            }
-
-            SqlCommand command = db.CreateCommand(SQL_SELECT_USER_BY_ID);
+            SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_SELECT_USER_BY_ID);
             command.Parameters.AddWithValue(":user_id", id);
-            SqlDataReader reader = db.Select(command);
+            SqlDataReader reader = DatabaseConnection.Instance.Select(command);
 
-            List<UserDTO> users = Read(reader);
-
-            reader.Close();
-
-            if (pDb == null)
-            {
-                db.Close();
-            }
-
-            return users.ElementAt(0);
+            return Read(reader).ElementAt(0);
         }
 
-        public UserDTO selectUserByNick(string nick, IDatabaseConnection pDb = null)
+        public UserDTO SelectUserByNick(string nick)
         {
-            DatabaseConnection db;
-            if (pDb == null)
-            {
-                db = DatabaseConnection.Instance;
-                db.Connect();
-            }
-            else
-            {
-                db = (DatabaseConnection)pDb;
-            }
-
-            SqlCommand command = db.CreateCommand(SQL_SELECT_USER_BY_NICK);
+            SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_SELECT_USER_BY_NICK);
             command.Parameters.AddWithValue(":nick", nick);
-            SqlDataReader reader = db.Select(command);
+            SqlDataReader reader = DatabaseConnection.Instance.Select(command);
 
-            List<UserDTO> users = Read(reader);
-
-            reader.Close();
-
-            if (pDb == null)
-            {
-                db.Close();
-            }
-
-            return users.ElementAt(0);
+            return Read(reader).ElementAt(0);
         }
 
-        public UserDTO selectUserByIdWithCategory(int id, IDatabaseConnection pDb = null)
+        public UserDTO SelectUserByIdWithCategory(int id)
         {
-            DatabaseConnection db;
-            if (pDb == null)
-            {
-                db = DatabaseConnection.Instance;
-                db.Connect();
-            }
-            else
-            {
-                db = (DatabaseConnection)pDb;
-            }
-
-            SqlCommand command = db.CreateCommand(SQL_SELECT_USER_BY_ID_WITH_CATEGORY);
+            SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_SELECT_USER_BY_ID_WITH_CATEGORY);
             command.Parameters.AddWithValue(":user_id", id);
-            SqlDataReader reader = db.Select(command);
+            SqlDataReader reader = DatabaseConnection.Instance.Select(command);
+
+            return Read(reader, true).ElementAt(0);
+        }
+
+        public UserDTO SelectUserByNickWithCategory(string nick)
+        {
+            SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_SELECT_USER_BY_NICK_WITH_CATEGORY);
+            command.Parameters.AddWithValue(":nick", nick);
+            SqlDataReader reader = DatabaseConnection.Instance.Select(command);
 
             List<UserDTO> users = Read(reader, true);
 
-            reader.Close();
-
-            if (pDb == null)
-            {
-                db.Close();
-            }
-
-            return users.ElementAt(0);
+            return users.Count > 0 ? users.ElementAt(0) : null;
         }
+        #endregion
 
-        public UserDTO selectUserByNickWithCategory(string nick, IDatabaseConnection pDb = null)
-        {
-            DatabaseConnection db;
-            if (pDb == null)
-            {
-                db = DatabaseConnection.Instance;
-                db.Connect();
-            }
-            else
-            {
-                db = (DatabaseConnection)pDb;
-            }
-
-            SqlCommand command = db.CreateCommand(SQL_SELECT_USER_BY_NICK_WITH_CATEGORY);
-            command.Parameters.AddWithValue(":nick", nick);
-            SqlDataReader reader = db.Select(command);
-
-            List<UserDTO> users = Read(reader, true);
-
-            reader.Close();
-
-            if (pDb == null)
-            {
-                db.Close();
-            }
-
-            if (users.Count > 0)
-                return users.ElementAt(0);
-            else
-                return null;
-        }
-
+        #region Helpers
         private static void PrepareCommand(SqlCommand command, UserDTO user)
         {
-            //command.Parameters.AddWithValue(":user_id", user.UserId);
-            //command.Parameters.AddWithValue(":nick", user.Nick);
-            //command.Parameters.AddWithValue(":gender", user.Gender);
-            //command.Parameters.AddWithValue(":country", user.Country);
-            //command.Parameters.AddWithValue(":date_of_birth", user.DateOfBirth);
-            //command.Parameters.AddWithValue(":registration_date", user.RegistrationDate);
-            //command.Parameters.AddWithValue(":first_name", user.FirstName);
-            //command.Parameters.AddWithValue(":last_name", user.LastName);
-            //command.Parameters.AddWithValue(":favorit_category_id", user.FavoriteCategoryId == null ? DBNull.Value : (object)user.FavoriteCategoryId);
-            //command.Parameters.AddWithValue(":deleted", user.Deleted == null ? DBNull.Value : (object)user.Deleted);
+            command.Parameters.AddWithValue(":user_id", user.Id);
+            command.Parameters.AddWithValue(":nick", user.Nick);
+            command.Parameters.AddWithValue(":gender", user.Gender);
+            command.Parameters.AddWithValue(":country", user.Country);
+            command.Parameters.AddWithValue(":date_of_birth", user.DateOfBirth);
+            command.Parameters.AddWithValue(":registration_date", user.RegistrationDate);
+            command.Parameters.AddWithValue(":first_name", user.FirstName);
+            command.Parameters.AddWithValue(":last_name", user.LastName);
+            command.Parameters.AddWithValue(":favorite_category_id", user.FavoriteCategory == null ? DBNull.Value : (object)user.FavoriteCategory.CategoryId);
+            command.Parameters.AddWithValue(":deleted", user.IsDeleted == null ? DBNull.Value : (object)user.IsDeleted);
         }
 
         private static List<UserDTO> ReadHeader(SqlDataReader reader, bool withFavoritCategory = false)
         {
             List<UserDTO> users = new List<UserDTO>();
 
-            while (reader.Read())
+            try
             {
-                //int i = -1;
-                //UserDTO user = new UserDTO();
-                //user.UserId = reader.GetInt32(++i);
-                //user.Nick = reader.GetString(++i);
-                //user.Country = reader.GetString(++i);
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        int i = -1;
+                        UserDTO user = new UserDTO();
+                        user.Id = reader.GetInt32(++i);
+                        user.Nick = reader.GetString(++i);
+                        user.Country = reader.GetString(++i);
 
-                //users.Add(user);
+                        users.Add(user);
+                    }
+                }
             }
+            finally
+            {
+                reader.Close();
+            }
+
             return users;
         }
 
         private static List<UserDTO> Read(SqlDataReader reader, bool withFavoritCategory = false)
         {
             List<UserDTO> users = new List<UserDTO>();
-            bool hasFavorit = false;
+            bool hasFavorite = false;
 
-            while (reader.Read())
+            try
             {
-                //int i = -1;
-                //UserDTO user = new UserDTO();
-                //user.UserId = reader.GetInt32(++i);
-                //user.Nick = reader.GetString(++i);
-                //user.Gender = reader.GetString(++i)[0];
-                //user.Country = reader.GetString(++i);
-                //user.DateOfBirth = reader.GetDateTime(++i);
-                //user.RegistrationDate = reader.GetDateTime(++i);
-                //user.FirstName = reader.GetString(++i);
-                //user.LastName = reader.GetString(++i);
-                //if (!reader.IsDBNull(++i))
-                //{
-                //    user.FavoriteCategoryId = reader.GetInt32(i);
-                //    hasFavorit = true;
-                //}
-                //if (!reader.IsDBNull(++i))
-                //{
-                //    user.Deleted = reader.GetInt32(i);
-                //}
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        int i = -1;
+                        UserDTO user = new UserDTO();
+                        user.Id = reader.GetInt32(++i);
+                        user.Nick = reader.GetString(++i);
+                        user.Gender = reader.GetString(++i)[0];
+                        user.Country = reader.GetString(++i);
+                        user.DateOfBirth = reader.GetDateTime(++i);
+                        user.RegistrationDate = reader.GetDateTime(++i);
+                        user.FirstName = reader.GetString(++i);
+                        user.LastName = reader.GetString(++i);
+                        if (!reader.IsDBNull(++i))
+                        {
+                            user.FavoriteCategory.CategoryId = reader.GetInt32(i);
+                            hasFavorite = true;
+                        }
+                        if (!reader.IsDBNull(++i))
+                        {
+                            user.IsDeleted = reader.GetInt32(i) != 0 ? true : false;
+                        }
 
-                //if(withFavoritCategory && hasFavorit)
-                //{
-                //    CategoryDTO category = new CategoryDTO();
-                //    category.CategoryId = (int)user.FavoriteCategoryId;
-                //    category.Name = reader.GetString(++i);
-                //    user.FavoriteCategory = category;
-                //}
+                        if (withFavoritCategory && hasFavorite)
+                        {
+                            CategoryDTO category = new CategoryDTO();
+                            category.CategoryId = user.FavoriteCategory.CategoryId;
+                            category.Name = reader.GetString(++i);
+                            user.FavoriteCategory = category;
+                        }
 
-                //users.Add(user);
+                        users.Add(user);
+                    }
+                }
             }
+            finally
+            {
+                reader.Close();
+            }
+
             return users;
         }
+        #endregion
     }
 }

@@ -8,6 +8,7 @@ namespace DataLayer.TableDataGateways
 {
     public class ReviewerReviewGateway
     {
+        #region SQL Commands
         public static string SQL_INSERT_NEW = "INSERT INTO Reviewer_review (title, text_of_review, score, reviewer_reviewer_id, game_game_id, \"date\", order_of_review) "
             + " VALUES (:title, :text_of_review, :score, :reviewer_reviewer_id, :game_game_id, :datee, :order_of_review)";
 
@@ -22,185 +23,110 @@ namespace DataLayer.TableDataGateways
             "WHERE reviewer_reviewer_id=:reviewer_reviewer_id";
 
         public static string SQL_SELECT_ALL_BY_GAME = "SELECT title, text_of_review, score, reviewer_reviewer_id, game_game_id, \"date\", order_of_review FROM Reviewer_review WHERE game_game_id=:game_game_id";
+        #endregion
 
-
-        // Methods
-        public int insertNew(ReviewerReviewDTO review)
+        #region Non Query Methods
+        public int InsertNew(ReviewerReviewDTO review)
         {
-            DatabaseConnection db = DatabaseConnection.Instance;
-            db.Connect();
-
-            SqlCommand command = db.CreateCommand(SQL_INSERT_NEW);
+            SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_INSERT_NEW);
             PrepareCommand(command, review);
-            int ret = db.ExecuteNonQuery(command);
-            db.Close();
-            return ret;
+
+            return DatabaseConnection.Instance.ExecuteNonQuery(command);
         }
 
-        public int delete(int reviewerId, int gameId, int order)
+        public int Delete(int reviewerId, int gameId, int order)
         {
-            DatabaseConnection db = DatabaseConnection.Instance;
-            db.Connect();
-
-            SqlCommand command = db.CreateCommand(SQL_DELETE);
+            SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_DELETE);
 
             command.Parameters.AddWithValue(":reviewer_reviewer_id", reviewerId);
             command.Parameters.AddWithValue(":game_game_id", gameId);
             command.Parameters.AddWithValue(":order_of_review", order);
 
-            int ret = db.ExecuteNonQuery(command);
-            db.Close();
-            return ret;
+            return DatabaseConnection.Instance.ExecuteNonQuery(command);
+        }
+        #endregion
+
+        #region Query Methods
+        public ReviewerReviewDTO SelectReview(int reviewerReviewId)
+        {
+            SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_SELECT_REVIEW);
+            command.Parameters.AddWithValue(":reviewer_review_id", reviewerReviewId);
+
+            SqlDataReader reader = DatabaseConnection.Instance.Select(command);
+
+            return Read(reader).ElementAt(0);
         }
 
-        public ReviewerReviewDTO selectReview(int reviewerId, int gameId, int order, IDatabaseConnection pDb = null)
+        public List<ReviewerReviewDTO> SelectReviews()
         {
-            DatabaseConnection db;
-            if (pDb == null)
-            {
-                db = DatabaseConnection.Instance;
-                db.Connect();
-            }
-            else
-            {
-                db = (DatabaseConnection)pDb;
-            }
+            SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_SELECT_ALL);
+            SqlDataReader reader = DatabaseConnection.Instance.Select(command);
 
-            SqlCommand command = db.CreateCommand(SQL_SELECT_REVIEW);
+            return Read(reader);
+        }
+
+        public List<ReviewerReviewDTO> SelectReviewsForReviewer(int reviewerId)
+        {
+            SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_SELECT_ALL_BY_REVIEWER);
             command.Parameters.AddWithValue(":reviewer_reviewer_id", reviewerId);
+            SqlDataReader reader = DatabaseConnection.Instance.Select(command);
+
+            return Read(reader);
+        }
+
+        public List<ReviewerReviewDTO> SelectReviewsForGame(int gameId)
+        {
+            SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_SELECT_ALL_BY_GAME);
             command.Parameters.AddWithValue(":game_game_id", gameId);
-            command.Parameters.AddWithValue(":order_of_review", order);
+            SqlDataReader reader = DatabaseConnection.Instance.Select(command);
 
-            SqlDataReader reader = db.Select(command);
-
-            List<ReviewerReviewDTO> Reviewer_reviews = Read(reader);
-
-            reader.Close();
-
-            if (pDb == null)
-            {
-                db.Close();
-            }
-
-            return Reviewer_reviews.ElementAt(0);
+            return Read(reader);
         }
+        #endregion
 
-        public List<ReviewerReviewDTO> selectReviews(IDatabaseConnection pDb = null)
-        {
-            DatabaseConnection db;
-            if (pDb == null)
-            {
-                db = DatabaseConnection.Instance;
-                db.Connect();
-            }
-            else
-            {
-                db = (DatabaseConnection)pDb;
-            }
-
-            SqlCommand command = db.CreateCommand(SQL_SELECT_ALL);
-            SqlDataReader reader = db.Select(command);
-
-            List<ReviewerReviewDTO> Reviewer_reviews = Read(reader);
-
-            reader.Close();
-
-            if (pDb == null)
-            {
-                db.Close();
-            }
-
-            return Reviewer_reviews;
-        }
-
-        public List<ReviewerReviewDTO> selectReviewsForReviewer(int reviewerId, IDatabaseConnection pDb = null)
-        {
-            DatabaseConnection db;
-            if (pDb == null)
-            {
-                db = DatabaseConnection.Instance;
-                db.Connect();
-            }
-            else
-            {
-                db = (DatabaseConnection)pDb;
-            }
-
-            SqlCommand command = db.CreateCommand(SQL_SELECT_ALL_BY_REVIEWER);
-            command.Parameters.AddWithValue(":reviewer_reviewer_id", reviewerId);
-            SqlDataReader reader = db.Select(command);
-
-            List<ReviewerReviewDTO> Reviewer_reviews = Read(reader);
-
-            reader.Close();
-
-            if (pDb == null)
-            {
-                db.Close();
-            }
-
-            return Reviewer_reviews;
-        }
-
-        public List<ReviewerReviewDTO> selectReviewsForGame(int gameId, IDatabaseConnection pDb = null)
-        {
-            DatabaseConnection db;
-            if (pDb == null)
-            {
-                db = DatabaseConnection.Instance;
-                db.Connect();
-            }
-            else
-            {
-                db = (DatabaseConnection)pDb;
-            }
-
-            SqlCommand command = db.CreateCommand(SQL_SELECT_ALL_BY_GAME);
-            command.Parameters.AddWithValue(":game_game_id", gameId);
-            SqlDataReader reader = db.Select(command);
-
-            List<ReviewerReviewDTO> Reviewer_reviews = Read(reader);
-
-            reader.Close();
-
-            if (pDb == null)
-            {
-                db.Close();
-            }
-
-            return Reviewer_reviews;
-        }
-
+        #region Helpers
         private static void PrepareCommand(SqlCommand command, ReviewerReviewDTO review)
         {
-            //command.Parameters.AddWithValue(":title", review.Title);
-            //command.Parameters.AddWithValue(":text_of_review", review.TextOfReview);
-            //command.Parameters.AddWithValue(":score", review.Score);
-            //command.Parameters.AddWithValue(":reviewer_reviewer_id", review.ReviewerId);
-            //command.Parameters.AddWithValue(":game_game_id", review.GameId);
-            //command.Parameters.AddWithValue(":datee", review.Date);
-            //command.Parameters.AddWithValue(":order_of_review", review.OrderOfReview);
+            command.Parameters.AddWithValue(":title", review.Title);
+            command.Parameters.AddWithValue(":text_of_review", review.TextOfReview);
+            command.Parameters.AddWithValue(":score", review.Score);
+            command.Parameters.AddWithValue(":reviewer_reviewer_id", review.Id);
+            command.Parameters.AddWithValue(":game_game_id", review.Id);
+            command.Parameters.AddWithValue(":datee", review.Date);
+            command.Parameters.AddWithValue(":order_of_review", review.OrderOfReview);
         }
 
         private static List<ReviewerReviewDTO> Read(SqlDataReader reader)
         {
-            List<ReviewerReviewDTO> Reviewer_reviews = new List<ReviewerReviewDTO>();
+            List<ReviewerReviewDTO> ReviewerReviews = new List<ReviewerReviewDTO>();
 
-            while (reader.Read())
+            try
             {
-                //int i = -1;
-                //ReviewerReviewDTO reviewer_review = new ReviewerReviewDTO();
-                //reviewer_review.Title = reader.GetString(++i);
-                //reviewer_review.TextOfReview = reader.GetString(++i);
-                //reviewer_review.Score = reader.GetInt32(++i);
-                //reviewer_review.ReviewerId = reader.GetInt32(++i);
-                //reviewer_review.GameId = reader.GetInt32(++i);
-                //reviewer_review.Date = reader.GetDateTime(++i);
-                //reviewer_review.OrderOfReview = reader.GetInt32(++i);
+                if(reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        int i = -1;
+                        ReviewerReviewDTO reviewerReview = new ReviewerReviewDTO();
+                        reviewerReview.Title = reader.GetString(++i);
+                        reviewerReview.TextOfReview = reader.GetString(++i);
+                        reviewerReview.Score = reader.GetInt32(++i);
+                        reviewerReview.Id = reader.GetInt32(++i);
+                        reviewerReview.Id = reader.GetInt32(++i);
+                        reviewerReview.Date = reader.GetDateTime(++i);
+                        reviewerReview.OrderOfReview = reader.GetInt32(++i);
 
-                //Reviewer_reviews.Add(reviewer_review);
+                        ReviewerReviews.Add(reviewerReview);
+                    }
+                }
             }
-            return Reviewer_reviews;
+            finally
+            {
+                reader.Close();
+            }
+            
+            return ReviewerReviews;
         }
+        #endregion
     }
 }

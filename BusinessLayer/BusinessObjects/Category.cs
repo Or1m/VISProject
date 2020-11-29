@@ -27,10 +27,7 @@ namespace BusinessLayer.BusinessObjects
         }
 
         #region DTO
-        public int Id { get; set; }
-        public bool IsPersisted { get; set; }
-
-        public CategoryDTO ToDTO()
+        public override CategoryDTO ToDTO()
         {
             throw new System.NotImplementedException();
         }

@@ -11,10 +11,12 @@ namespace BusinessLayer.BusinessObjects.BaseObjects
         public char Gender { get; set; }
         public string Country { get; set; }
 
-        public Category FavoriteCategory { get; set; }
-
         public DateTime DateOfBirth { get; set; }
         public DateTime RegistrationDate { get; set; }
+
+        public bool? IsDeleted { get; set; }
+
+        public Category FavoriteCategory { get; set; }
 
 
         #region Constructors
@@ -35,10 +37,7 @@ namespace BusinessLayer.BusinessObjects.BaseObjects
         #endregion
 
         #region DTO
-        public int Id { get; set; }
-        public bool IsPersisted { get; set; }
-
-        public ActorDTO ToDTO()
+        public override ActorDTO ToDTO()
         {
             throw new NotImplementedException();
         }

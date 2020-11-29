@@ -12,6 +12,8 @@ namespace DTO.BaseDTOObjects
 
         public DateTime DateOfBirth { get; set; }
         public DateTime RegistrationDate { get; set; }
+
+        public bool? IsDeleted { get; set; }
         
         public CategoryDTO FavoriteCategory { get; set; }
     }
