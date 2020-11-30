@@ -9,25 +9,26 @@ namespace DataLayer.TableDataGateways
     public class ReviewerGateway
     {
         #region SQL Commands
-        public static string SQL_REGISTER_NEW = "INSERT INTO Reviewer (first_name, last_name, gender, country, work, date_of_birth, registration_date, favorit_category_id) "
-            + " VALUES (:first_name, :last_name, :gender, :country, :work, :date_of_birth, :registration_date, :favorit_category_id)";
+        private static string SQL_INSERT                             = "INSERT INTO Reviewer (first_name, last_name, gender, country, work, date_of_birth, registration_date, favorit_category_id) " +
+                                                                       " VALUES (@first_name, @last_name, @gender, @country, @work, @date_of_birth, @registration_date, @favorite_category_id)";
 
-        public static string SQL_UPDATE = "UPDATE Reviewer SET reviewer_id=:reviewer_id, first_name=:first_name, last_name=:last_name, gender=:gender," +
-            "country=:country, work=:work, date_of_birth=:date_of_birth, registration_date=:registration_date," +
-            " favorit_category_id=:favorit_category_id WHERE reviewer_id=:reviewer_id";
+        private static string SQL_UPDATE                             = "UPDATE Reviewer SET reviewer_id=@reviewer_id, first_name=@first_name, last_name=@last_name, gender=@gender," +
+                                                                       "country=@country, work=@work, date_of_birth=@date_of_birth, registration_date=@registration_date," +
+                                                                       " favorite_category_id=@favorite_category_id WHERE reviewer_id=@reviewer_id";
 
-        public static string SQL_SELECT_ALL_REVIEWERS_HEADER = "SELECT reviewer_id, first_name, last_name, country, work FROM Reviewer";
+        private static string SQL_SELECT_ALL_REVIEWERS_HEADER        = "SELECT reviewer_id, first_name, last_name, country, work FROM Reviewer";
 
-        public static string SQL_SELECT_REVIEWER = "SELECT reviewer_id, first_name, last_name, gender, country, work, date_of_birth, registration_date, favorit_category_id, deleted FROM Reviewer WHERE reviewer_id=:reviewer_id";
+        private static string SQL_SELECT_REVIEWER                    = "SELECT reviewer_id, first_name, last_name, gender, country, work, date_of_birth, registration_date, favorite_category_id, deleted FROM Reviewer WHERE reviewer_id=@reviewer_id";
 
-        public static string SQL_SELECT_REVIEWER_WITH_CATEGORY = "SELECT r.reviewer_id, r.first_name, r.last_name, r.gender, r.country, r.work, r.date_of_birth, r.registration_date, r.favorit_category_id, r.deleted, name " +
-            "FROM Reviewer r JOIN category on category_id = favorit_category_id WHERE reviewer_id=:reviewer_id";
+        private static string SQL_SELECT_REVIEWER_WITH_CATEGORY      = "SELECT r.reviewer_id, r.first_name, r.last_name, r.gender, r.country, r.work, r.date_of_birth, r.registration_date, r.favorite_category_id, r.deleted, name " +
+                                                                       "FROM Reviewer r JOIN category on category_id = favorite_category_id WHERE reviewer_id=@reviewer_id";
 
-        public static string SQL_DELETE_ID = "UPDATE Reviewer SET deleted=1 WHERE reviewer_id=:reviewer_id";
+        private static string SQL_DELETE_ID                          = "UPDATE Reviewer SET deleted=1 WHERE reviewer_id=@reviewer_id";
 
-        public static string SQL_SELECT_FAVORIT_REVIEWERS_FOR_USER = "SELECT reviewer_id, first_name, last_name, country, work " +
-            "FROM Reviewer r JOIN Favorit_reviewer fr ON r.reviewer_id = fr.reviewer_reviewer_id WHERE user_user_id=:user_id";
+        private static string SQL_SELECT_FAVORIT_REVIEWERS_FOR_USER  = "SELECT reviewer_id, first_name, last_name, country, work " +
+                                                                       "FROM Reviewer r JOIN Favorite_reviewer fr ON r.reviewer_id = fr.reviewer_reviewer_id WHERE user_user_id=@user_id";
         #endregion
+
 
         private static readonly object lockObj = new object();
         private static ReviewerGateway instance;
@@ -43,11 +44,13 @@ namespace DataLayer.TableDataGateways
 
         private ReviewerGateway() { }
 
+
         #region Non Query Methods
         public int Insert(ReviewerDTO reviewer)
         {
-            SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_REGISTER_NEW);
+            SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_INSERT);
             PrepareCommand(command, reviewer);
+
             return DatabaseConnection.Instance.ExecuteNonQuery(command);
         }
         
@@ -55,13 +58,14 @@ namespace DataLayer.TableDataGateways
         {
             SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_UPDATE);
             PrepareCommand(command, reviewer);
+
             return DatabaseConnection.Instance.ExecuteNonQuery(command);
         }
 
         public int DeleteById(int id)
         {
             SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_DELETE_ID);
-            command.Parameters.AddWithValue(":reviewer_id", id);
+            command.Parameters.AddWithValue("@reviewer_id", id);
 
             return DatabaseConnection.Instance.ExecuteNonQuery(command);
         }
@@ -79,7 +83,7 @@ namespace DataLayer.TableDataGateways
         public List<ReviewerDTO> SelectFavoriteReviewers(int userId)
         {
             SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_SELECT_FAVORIT_REVIEWERS_FOR_USER);
-            command.Parameters.AddWithValue(":user_id", userId);
+            command.Parameters.AddWithValue("@user_id", userId);
             SqlDataReader reader = DatabaseConnection.Instance.Select(command);
 
             return ReadHeader(reader);
@@ -88,7 +92,7 @@ namespace DataLayer.TableDataGateways
         public ReviewerDTO SelectReviewer(int id)
         {
             SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_SELECT_REVIEWER);
-            command.Parameters.AddWithValue(":reviewer_id", id);
+            command.Parameters.AddWithValue("@reviewer_id", id);
             SqlDataReader reader = DatabaseConnection.Instance.Select(command);
 
             return Read(reader).ElementAt(0);
@@ -97,7 +101,7 @@ namespace DataLayer.TableDataGateways
         public ReviewerDTO SelectReviewerByIdWithCategory(int id)
         {
             SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_SELECT_REVIEWER_WITH_CATEGORY);
-            command.Parameters.AddWithValue(":reviewer_id", id);
+            command.Parameters.AddWithValue("@reviewer_id", id);
             SqlDataReader reader = DatabaseConnection.Instance.Select(command);
 
             return Read(reader, true).ElementAt(0);
@@ -107,15 +111,15 @@ namespace DataLayer.TableDataGateways
         #region Helpers
         private static void PrepareCommand(SqlCommand command, ReviewerDTO reviewer)
         {
-            command.Parameters.AddWithValue(":reviewer_id", reviewer.Id);
-            command.Parameters.AddWithValue(":first_name", reviewer.FirstName);
-            command.Parameters.AddWithValue(":last_name", reviewer.LastName);
-            command.Parameters.AddWithValue(":gender", reviewer.Gender);
-            command.Parameters.AddWithValue(":country", reviewer.Country);
-            command.Parameters.AddWithValue(":work", reviewer.Work);
-            command.Parameters.AddWithValue(":date_of_birth", reviewer.DateOfBirth);
-            command.Parameters.AddWithValue(":registration_date", reviewer.RegistrationDate);
-            command.Parameters.AddWithValue(":favorit_category_id", reviewer.FavoriteCategory == null ? DBNull.Value : (object)reviewer.FavoriteCategory.CategoryId);
+            command.Parameters.AddWithValue("@reviewer_id", reviewer.Id);
+            command.Parameters.AddWithValue("@first_name", reviewer.FirstName);
+            command.Parameters.AddWithValue("@last_name", reviewer.LastName);
+            command.Parameters.AddWithValue("@gender", reviewer.Gender);
+            command.Parameters.AddWithValue("@country", reviewer.Country);
+            command.Parameters.AddWithValue("@work", reviewer.Work);
+            command.Parameters.AddWithValue("@date_of_birth", reviewer.DateOfBirth);
+            command.Parameters.AddWithValue("@registration_date", reviewer.RegistrationDate);
+            command.Parameters.AddWithValue("@favorit_category_id", reviewer.FavoriteCategory == null ? DBNull.Value : (object)reviewer.FavoriteCategory.CategoryId);
         }
 
         private static List<ReviewerDTO> ReadHeader(SqlDataReader reader, bool withFavoritCategory = false)
