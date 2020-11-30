@@ -80,6 +80,8 @@ namespace DataLayer.TableDataGateways
             SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_SELECT_ALL_HEADERS);
             SqlDataReader reader = DatabaseConnection.Instance.Select(command);
 
+            command.Dispose();
+
             return ReadHeader(reader);
         }
 
@@ -88,6 +90,8 @@ namespace DataLayer.TableDataGateways
             SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_SELECT_FAVORITE_GAMES_FOR_USER);
             command.Parameters.AddWithValue("@user_id", userId);
             SqlDataReader reader = DatabaseConnection.Instance.Select(command);
+
+            command.Dispose();
 
             return ReadHeader(reader);
         }
@@ -98,6 +102,8 @@ namespace DataLayer.TableDataGateways
             command.Parameters.AddWithValue("@game_id", id);
             SqlDataReader reader = DatabaseConnection.Instance.Select(command);
 
+            command.Dispose();
+
             return Read(reader).ElementAt(0);
         }
 
@@ -107,6 +113,8 @@ namespace DataLayer.TableDataGateways
             command.Parameters.AddWithValue("@name", name);
             SqlDataReader reader = DatabaseConnection.Instance.Select(command);
 
+            command.Dispose();
+
             return Read(reader);
         }
 
@@ -115,6 +123,8 @@ namespace DataLayer.TableDataGateways
             SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_SELECT_GAMES_BY_DEVELOPER_HEADER);
             command.Parameters.AddWithValue("@developer", developer);
             SqlDataReader reader = DatabaseConnection.Instance.Select(command);
+
+            command.Dispose();
 
             return ReadHeader(reader);
         }
@@ -169,18 +179,6 @@ namespace DataLayer.TableDataGateways
             return categoryDict.Select(c => c.Value).ToList();
         }
 
-        private static void PrepareCommand(SqlCommand command, GameDTO game)
-        {
-            command.Parameters.AddWithValue("@game_id", game.Id);
-            command.Parameters.AddWithValue("@name", game.Name);
-            command.Parameters.AddWithValue("@description", game.Description);
-            command.Parameters.AddWithValue("@developer", game.Developer);
-            command.Parameters.AddWithValue("@rating", game.Rating);
-            command.Parameters.AddWithValue("@release_date", game.ReleaseDate == null ? DBNull.Value : (object)game.ReleaseDate);
-            command.Parameters.AddWithValue("@average_user_review", game.AverageUserScore == null ? DBNull.Value : (object)game.AverageUserScore);
-            command.Parameters.AddWithValue("@average_reviewer_score", game.AverageReviewerScore == null ? DBNull.Value : (object)game.AverageReviewerScore);
-        }
-
         private static List<GameDTO> ReadHeader(SqlDataReader reader)
         {
             List<GameDTO> games = new List<GameDTO>();
@@ -204,10 +202,12 @@ namespace DataLayer.TableDataGateways
             finally
             {
                 reader.Close();
+                DatabaseConnection.Instance.Close();
             }
 
             return games;
         }
+
         private static List<GameDTO> Read(SqlDataReader reader)
         {
             List<GameDTO> games = new List<GameDTO>();
@@ -245,9 +245,22 @@ namespace DataLayer.TableDataGateways
             finally
             {
                 reader.Close();
+                DatabaseConnection.Instance.Close();
             }
 
             return games;
+        }
+
+        private static void PrepareCommand(SqlCommand command, GameDTO game)
+        {
+            command.Parameters.AddWithValue("@game_id", game.Id);
+            command.Parameters.AddWithValue("@name", game.Name);
+            command.Parameters.AddWithValue("@description", game.Description);
+            command.Parameters.AddWithValue("@developer", game.Developer);
+            command.Parameters.AddWithValue("@rating", game.Rating);
+            command.Parameters.AddWithValue("@release_date", game.ReleaseDate == null ? DBNull.Value : (object)game.ReleaseDate);
+            command.Parameters.AddWithValue("@average_user_review", game.AverageUserScore == null ? DBNull.Value : (object)game.AverageUserScore);
+            command.Parameters.AddWithValue("@average_reviewer_score", game.AverageReviewerScore == null ? DBNull.Value : (object)game.AverageReviewerScore);
         }
         #endregion
     }

@@ -52,7 +52,6 @@ namespace DataLayer.TableDataGateways
         public int Delete(int reviewerReviewId)
         {
             SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_DELETE);
-
             command.Parameters.AddWithValue("@reviewer_review_id", reviewerReviewId);
 
             return DatabaseConnection.Instance.ExecuteNonQuery(command);
@@ -64,8 +63,9 @@ namespace DataLayer.TableDataGateways
         {
             SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_SELECT_REVIEW);
             command.Parameters.AddWithValue("@reviewer_review_id", reviewerReviewId);
-
             SqlDataReader reader = DatabaseConnection.Instance.Select(command);
+
+            command.Dispose();
 
             return Read(reader).ElementAt(0);
         }
@@ -74,6 +74,8 @@ namespace DataLayer.TableDataGateways
         {
             SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_SELECT_ALL);
             SqlDataReader reader = DatabaseConnection.Instance.Select(command);
+
+            command.Dispose();
 
             return Read(reader);
         }
@@ -84,6 +86,8 @@ namespace DataLayer.TableDataGateways
             command.Parameters.AddWithValue("@reviewer_reviewer_id", reviewerId);
             SqlDataReader reader = DatabaseConnection.Instance.Select(command);
 
+            command.Dispose();
+
             return Read(reader);
         }
 
@@ -92,6 +96,8 @@ namespace DataLayer.TableDataGateways
             SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_SELECT_ALL_BY_GAME);
             command.Parameters.AddWithValue("@game_game_id", gameId);
             SqlDataReader reader = DatabaseConnection.Instance.Select(command);
+
+            command.Dispose();
 
             return Read(reader);
         }
@@ -136,6 +142,7 @@ namespace DataLayer.TableDataGateways
             finally
             {
                 reader.Close();
+                DatabaseConnection.Instance.Close();
             }
             
             return ReviewerReviews;

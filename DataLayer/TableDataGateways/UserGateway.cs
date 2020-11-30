@@ -54,6 +54,7 @@ namespace DataLayer.TableDataGateways
         {
             SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_INSERT);
             PrepareCommand(command, user);
+
             return DatabaseConnection.Instance.ExecuteNonQuery(command);
         }
 
@@ -61,6 +62,7 @@ namespace DataLayer.TableDataGateways
         {
             SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_UPDATE);
             PrepareCommand(command, user);
+
             return DatabaseConnection.Instance.ExecuteNonQuery(command);
         }
 
@@ -68,6 +70,7 @@ namespace DataLayer.TableDataGateways
         {
             SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_DELETE_BY_ID);
             command.Parameters.AddWithValue("@user_id", id);
+
             return DatabaseConnection.Instance.ExecuteNonQuery(command);
         }
         #endregion
@@ -78,6 +81,8 @@ namespace DataLayer.TableDataGateways
             SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_SELECT_ALL_USERS_HEADER);
             SqlDataReader reader = DatabaseConnection.Instance.Select(command);
 
+            command.Dispose();
+
             return ReadHeader(reader);
         }
 
@@ -86,6 +91,8 @@ namespace DataLayer.TableDataGateways
             SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_SELECT_USER_BY_ID);
             command.Parameters.AddWithValue("@user_id", id);
             SqlDataReader reader = DatabaseConnection.Instance.Select(command);
+
+            command.Dispose();
 
             return Read(reader).ElementAt(0);
         }
@@ -96,6 +103,8 @@ namespace DataLayer.TableDataGateways
             command.Parameters.AddWithValue("@nick", nick);
             SqlDataReader reader = DatabaseConnection.Instance.Select(command);
 
+            command.Dispose();
+
             return Read(reader).ElementAt(0);
         }
 
@@ -105,6 +114,8 @@ namespace DataLayer.TableDataGateways
             command.Parameters.AddWithValue("@user_id", id);
             SqlDataReader reader = DatabaseConnection.Instance.Select(command);
 
+            command.Dispose();
+
             return Read(reader, true).ElementAt(0);
         }
 
@@ -113,6 +124,8 @@ namespace DataLayer.TableDataGateways
             SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_SELECT_USER_BY_NICK_WITH_CATEGORY);
             command.Parameters.AddWithValue("@nick", nick);
             SqlDataReader reader = DatabaseConnection.Instance.Select(command);
+
+            command.Dispose();
 
             List<UserDTO> users = Read(reader, true);
 
@@ -158,6 +171,7 @@ namespace DataLayer.TableDataGateways
             finally
             {
                 reader.Close();
+                DatabaseConnection.Instance.Close();
             }
 
             return users;
@@ -209,6 +223,7 @@ namespace DataLayer.TableDataGateways
             finally
             {
                 reader.Close();
+                DatabaseConnection.Instance.Close();
             }
 
             return users;

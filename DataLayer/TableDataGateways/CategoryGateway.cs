@@ -44,6 +44,7 @@ namespace DataLayer.TableDataGateways
         {
             SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_INSERT);
             command.Parameters.AddWithValue("@name", name);
+
             return DatabaseConnection.Instance.ExecuteNonQuery(command);
         }
 
@@ -51,6 +52,7 @@ namespace DataLayer.TableDataGateways
         {
             SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_DELETE_BY_ID);
             command.Parameters.AddWithValue("@Category_id", id);
+
             return DatabaseConnection.Instance.ExecuteNonQuery(command);
         }
 
@@ -59,6 +61,7 @@ namespace DataLayer.TableDataGateways
             SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_UPDATE);
             command.Parameters.AddWithValue("@name", name);
             command.Parameters.AddWithValue("@Category_id", id);
+
             return DatabaseConnection.Instance.ExecuteNonQuery(command);
         }
         #endregion
@@ -69,6 +72,8 @@ namespace DataLayer.TableDataGateways
             SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_SELECT_ALL);
             SqlDataReader reader = DatabaseConnection.Instance.Select(command);
 
+            command.Dispose();
+
             return Read(reader);
         }
 
@@ -77,6 +82,8 @@ namespace DataLayer.TableDataGateways
             SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_SELECT_FOR_GAME);
             command.Parameters.AddWithValue("@game_id", gameId);
             SqlDataReader reader = DatabaseConnection.Instance.Select(command);
+
+            command.Dispose();
 
             return Read(reader);
         }
@@ -87,6 +94,8 @@ namespace DataLayer.TableDataGateways
             command.Parameters.AddWithValue("@CategoryDTO_id", id);
             SqlDataReader reader = DatabaseConnection.Instance.Select(command);
 
+            command.Dispose();
+
             return Read(reader).ElementAt(0);
         }
         public List<CategoryDTO> selectCategoryDTOByName(string name)
@@ -94,6 +103,8 @@ namespace DataLayer.TableDataGateways
             SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_SELECT_BY_NAME);
             command.Parameters.AddWithValue("@name", name);
             SqlDataReader reader = DatabaseConnection.Instance.Select(command);
+
+            command.Dispose();
 
             return Read(reader);
         }
@@ -122,6 +133,7 @@ namespace DataLayer.TableDataGateways
             finally
             {
                 reader.Close();
+                DatabaseConnection.Instance.Close();
             }
 
             return categories;

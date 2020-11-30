@@ -77,6 +77,8 @@ namespace DataLayer.TableDataGateways
             SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_SELECT_ALL_REVIEWERS_HEADER);
             SqlDataReader reader = DatabaseConnection.Instance.Select(command);
 
+            command.Dispose();
+
             return ReadHeader(reader);
         }
 
@@ -85,6 +87,8 @@ namespace DataLayer.TableDataGateways
             SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_SELECT_FAVORIT_REVIEWERS_FOR_USER);
             command.Parameters.AddWithValue("@user_id", userId);
             SqlDataReader reader = DatabaseConnection.Instance.Select(command);
+
+            command.Dispose();
 
             return ReadHeader(reader);
         }
@@ -95,6 +99,8 @@ namespace DataLayer.TableDataGateways
             command.Parameters.AddWithValue("@reviewer_id", id);
             SqlDataReader reader = DatabaseConnection.Instance.Select(command);
 
+            command.Dispose();
+
             return Read(reader).ElementAt(0);
         }
 
@@ -103,6 +109,8 @@ namespace DataLayer.TableDataGateways
             SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_SELECT_REVIEWER_WITH_CATEGORY);
             command.Parameters.AddWithValue("@reviewer_id", id);
             SqlDataReader reader = DatabaseConnection.Instance.Select(command);
+
+            command.Dispose();
 
             return Read(reader, true).ElementAt(0);
         }
@@ -146,6 +154,7 @@ namespace DataLayer.TableDataGateways
             finally
             {
                 reader.Close();
+                DatabaseConnection.Instance.Close();
             }
 
             return Reviewers;
@@ -196,6 +205,7 @@ namespace DataLayer.TableDataGateways
             finally
             {
                 reader.Close();
+                DatabaseConnection.Instance.Close();
             }
 
             return Reviewers;

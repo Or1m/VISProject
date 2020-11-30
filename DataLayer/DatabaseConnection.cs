@@ -33,6 +33,7 @@ namespace DataLayer
             }
         }
 
+
         private DatabaseConnection()
         {
             connection = new SqlConnection();
@@ -42,7 +43,7 @@ namespace DataLayer
         }
 
 
-        // Service methods
+        #region Service Metods
         public bool Connect()
         {
             if (Connection.State == ConnectionState.Open)
@@ -90,9 +91,10 @@ namespace DataLayer
         {
             SqlTransaction.Rollback();
         }
+        #endregion
 
 
-        // Database manipulation methods
+        #region Database Manipulation Methods
         public int ExecuteNonQuery(SqlCommand command)
         {
             if (Connect())
@@ -108,7 +110,7 @@ namespace DataLayer
                 }
                 finally
                 {
-                    command.Dispose(); // TODO Odchytit ci funguje
+                    command.Dispose();
                     Close();
                 }
 
@@ -149,5 +151,6 @@ namespace DataLayer
             }
             return command;
         }
+        #endregion
     }
 }

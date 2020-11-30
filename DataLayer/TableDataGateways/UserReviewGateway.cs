@@ -63,8 +63,9 @@ namespace DataLayer.TableDataGateways
         {
             SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_SELECT_REVIEW);
             command.Parameters.AddWithValue("@user_review_id", userReviewId);
-
             SqlDataReader reader = DatabaseConnection.Instance.Select(command);
+
+            command.Dispose();
 
             return Read(reader).ElementAt(0);
         }
@@ -73,6 +74,8 @@ namespace DataLayer.TableDataGateways
         {
             SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_SELECT_ALL);
             SqlDataReader reader = DatabaseConnection.Instance.Select(command);
+
+            command.Dispose();
 
             return Read(reader);
         }
@@ -83,6 +86,8 @@ namespace DataLayer.TableDataGateways
             command.Parameters.AddWithValue("@user_user_id", userId);
             SqlDataReader reader = DatabaseConnection.Instance.Select(command);
 
+            command.Dispose();
+
             return Read(reader);
         }
 
@@ -91,6 +96,8 @@ namespace DataLayer.TableDataGateways
             SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_SELECT_ALL_BY_GAME);
             command.Parameters.AddWithValue("@game_game_id", gameId);
             SqlDataReader reader = DatabaseConnection.Instance.Select(command);
+
+            command.Dispose();
 
             return Read(reader);
         }
@@ -123,6 +130,7 @@ namespace DataLayer.TableDataGateways
             finally
             {
                 reader.Close();
+                DatabaseConnection.Instance.Close();
             }
             
             return UserReviews;

@@ -48,7 +48,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="Routines.cs" />
     <Compile Include="TableDataGateways\CategoryGateway.cs" />
     <Compile Include="TableDataGateways\_Legacy\DailyStatisticsGateway.cs" />
     <Compile Include="TableDataGateways\_Legacy\FavoriteGameGateway.cs" />
