@@ -9,10 +9,10 @@ namespace DataLayer.TableDataGateways
     public class GameGateway
     {
         #region SQL Commands
-        private static string SQL_INSERT                             = "INSERT INTO Game (name, description, developer, rating, release_date, average_user_review, average_reviewer_score) " +
+        private static string SQL_INSERT_NEW                         = "INSERT INTO Game (name, description, developer, rating, release_date, average_user_review, average_reviewer_score) " +
                                                                        " VALUES (@name, @description, @developer, @rating, @release_date, @average_user_review, @average_reviewer_score)";
 
-        private static string SQL_DELETE_BY_ID                       = "DELETE FROM Game WHERE game_id=@game_id";
+        private static string SQL_DELETE_ID                          = "DELETE FROM Game WHERE game_id=@game_id";
 
         private static string SQL_UPDATE                             = "UPDATE Game SET game_id=@game_id, name=@name, description=@description," +
                                                                        "developer=@developer, rating=@rating, release_date=@release_date," +
