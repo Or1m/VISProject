@@ -9,28 +9,29 @@ namespace DataLayer.TableDataGateways
     public class GameGateway
     {
         #region SQL Commands
-        public static string SQL_INSERT_NEW = "INSERT INTO Game (name, description, developer, rating, release_date, average_user_review, average_reviewer_score) "
-            + " VALUES (:name, :description, :developer, :rating, :release_date, :average_user_review, :average_reviewer_score)";
+        private static string SQL_INSERT_NEW                         = "INSERT INTO Game (name, description, developer, rating, release_date, average_user_review, average_reviewer_score) " +
+                                                                       " VALUES (@name, @description, @developer, @rating, @release_date, @average_user_review, @average_reviewer_score)";
 
-        public static string SQL_DELETE_ID = "DELETE FROM Game WHERE game_id=:game_id";
+        private static string SQL_DELETE_ID                          = "DELETE FROM Game WHERE game_id=@game_id";
 
-        public static string SQL_UPDATE = "UPDATE Game SET game_id=:game_id, name=:name, description=:description," +
-            "developer=:developer, rating=:rating, release_date=:release_date," +
-            "average_user_review=:average_user_review, average_reviewer_score=:average_reviewer_score WHERE game_id=:game_id";
+        private static string SQL_UPDATE                             = "UPDATE Game SET game_id=@game_id, name=@name, description=@description," +
+                                                                       "developer=@developer, rating=@rating, release_date=@release_date," +
+                                                                       "average_user_review=@average_user_review, average_reviewer_score=@average_reviewer_score WHERE game_id=@game_id";
 
-        public static string SQL_SELECT_ALL_HEADERS = "SELECT game_id, name, developer from Game";
+        private static string SQL_SELECT_ALL_HEADERS                 = "SELECT game_id, name, developer from Game";
 
-        public static string SQL_SELECT_GAME_BY_ID = "SELECT game_id, name, description, developer, rating, release_date, average_user_review, average_reviewer_score from Game where game_id=@game_id";
+        private static string SQL_SELECT_GAME_BY_ID                  = "SELECT game_id, name, description, developer, rating, release_date, average_user_review, average_reviewer_score from Game where game_id=@game_id";
 
-        public static string SQL_SELECT_GAMES_BY_NAME = "SELECT game_id, name, description, developer, rating, release_date, average_user_review, average_reviewer_score from Game where name=:name";
+        private static string SQL_SELECT_GAMES_BY_NAME               = "SELECT game_id, name, description, developer, rating, release_date, average_user_review, average_reviewer_score from Game where name=@name";
 
-        public static string SQL_SELECT_GAMES_BY_DEVELOPER_HEADER = "SELECT game_id, name, developer from Game where developer=:developer";
+        private static string SQL_SELECT_GAMES_BY_DEVELOPER_HEADER   = "SELECT game_id, name, developer from Game where developer=@developer";
 
-        public static string SQL_SELECT_FAVORITE_GAMES_FOR_USER = "SELECT game_id, name, developer FROM Game g JOIN Favorit_game fg ON g.game_id = fg.game_game_id WHERE user_user_id=:user_id";
+        private static string SQL_SELECT_FAVORITE_GAMES_FOR_USER     = "SELECT game_id, name, developer FROM Game g JOIN Favorit_game fg ON g.game_id = fg.game_game_id WHERE user_user_id=@user_id";
 
-        static string SQL_SELECT_GAMES_WITH_CATEGORIES = "SELECT g.game_id, g.name, g.developer, c.category_id, c.name FROM Game g " +
-            "JOIN game_category gc ON g.game_id = gc.game_game_id JOIN category c ON c.category_id = gc.category_category_id";
+        private string SQL_SELECT_GAMES_WITH_CATEGORIES              = "SELECT g.game_id, g.name, g.developer, c.category_id, c.name FROM Game g " +
+                                                                       "JOIN game_category gc ON g.game_id = gc.game_game_id JOIN category c ON c.category_id = gc.category_category_id";
         #endregion
+
 
         private static readonly object lockObj = new object();
         private static GameGateway instance;
@@ -67,7 +68,7 @@ namespace DataLayer.TableDataGateways
         public int DeleteById(int id)
         {
             SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_DELETE_ID);
-            command.Parameters.AddWithValue(":game_id", id);
+            command.Parameters.AddWithValue("@game_id", id);
 
             return DatabaseConnection.Instance.ExecuteNonQuery(command);
         }
@@ -85,7 +86,7 @@ namespace DataLayer.TableDataGateways
         public List<GameDTO> SelectFavoriteGames(int userId)
         {
             SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_SELECT_FAVORITE_GAMES_FOR_USER);
-            command.Parameters.AddWithValue(":user_id", userId);
+            command.Parameters.AddWithValue("@user_id", userId);
             SqlDataReader reader = DatabaseConnection.Instance.Select(command);
 
             return ReadHeader(reader);
@@ -103,7 +104,7 @@ namespace DataLayer.TableDataGateways
         public List<GameDTO> SelectGamesByName(string name)
         {
             SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_SELECT_GAMES_BY_NAME);
-            command.Parameters.AddWithValue(":name", name);
+            command.Parameters.AddWithValue("@name", name);
             SqlDataReader reader = DatabaseConnection.Instance.Select(command);
 
             return Read(reader);
@@ -112,7 +113,7 @@ namespace DataLayer.TableDataGateways
         public List<GameDTO> SelectGamesByDeveloper(string developer)
         {
             SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_SELECT_GAMES_BY_DEVELOPER_HEADER);
-            command.Parameters.AddWithValue(":developer", developer);
+            command.Parameters.AddWithValue("@developer", developer);
             SqlDataReader reader = DatabaseConnection.Instance.Select(command);
 
             return ReadHeader(reader);
@@ -130,7 +131,7 @@ namespace DataLayer.TableDataGateways
         #endregion
 
         #region Helpers
-        public static List<GameDTO> ReadWithCategories(SqlDataReader reader)
+        private static List<GameDTO> ReadWithCategories(SqlDataReader reader)
         {
             var categoryDict = new Dictionary<int, GameDTO>();
 
@@ -170,14 +171,14 @@ namespace DataLayer.TableDataGateways
 
         private static void PrepareCommand(SqlCommand command, GameDTO game)
         {
-            command.Parameters.AddWithValue(":game_id", game.Id);
-            command.Parameters.AddWithValue(":name", game.Name);
-            command.Parameters.AddWithValue(":description", game.Description);
-            command.Parameters.AddWithValue(":developer", game.Developer);
-            command.Parameters.AddWithValue(":rating", game.Rating);
-            command.Parameters.AddWithValue(":release_date", game.ReleaseDate == null ? DBNull.Value : (object)game.ReleaseDate);
-            command.Parameters.AddWithValue(":average_user_review", game.AverageUserScore == null ? DBNull.Value : (object)game.AverageUserScore);
-            command.Parameters.AddWithValue(":average_reviewer_score", game.AverageReviewerScore == null ? DBNull.Value : (object)game.AverageReviewerScore);
+            command.Parameters.AddWithValue("@game_id", game.Id);
+            command.Parameters.AddWithValue("@name", game.Name);
+            command.Parameters.AddWithValue("@description", game.Description);
+            command.Parameters.AddWithValue("@developer", game.Developer);
+            command.Parameters.AddWithValue("@rating", game.Rating);
+            command.Parameters.AddWithValue("@release_date", game.ReleaseDate == null ? DBNull.Value : (object)game.ReleaseDate);
+            command.Parameters.AddWithValue("@average_user_review", game.AverageUserScore == null ? DBNull.Value : (object)game.AverageUserScore);
+            command.Parameters.AddWithValue("@average_reviewer_score", game.AverageReviewerScore == null ? DBNull.Value : (object)game.AverageReviewerScore);
         }
 
         private static List<GameDTO> ReadHeader(SqlDataReader reader)
