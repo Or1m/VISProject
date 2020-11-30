@@ -5,44 +5,60 @@ using System.Linq;
 
 namespace DataLayer.TableDataGateways
 {
-    #region SQL Commands
     public class CategoryDTOGateway
     {
-        public static string SQL_INSERT_NEW      = "INSERT INTO Category (name) VALUES (:name)";
+        #region SQL Commands
+        private static string SQL_INSERT          = "INSERT INTO Category (name) VALUES (@name)";
 
-        public static string SQL_DELETE_ID       = "DELETE FROM Category WHERE Category_id=:Category_id";
+        private static string SQL_DELETE_BY_ID    = "DELETE FROM Category WHERE Category_id=@Category_id";
 
-        public static string SQL_UPDATE          = "UPDATE Category SET name=:name WHERE Category_id=:Category_id";
+        private static string SQL_UPDATE          = "UPDATE Category SET name=@name WHERE Category_id=@Category_id";
 
-        public static string SQL_SELECT_ALL      = "SELECT Category_id, name from Category";
+        private static string SQL_SELECT_ALL      = "SELECT Category_id, name from Category";
 
-        public static string SQL_SELECT_BY_ID    = "SELECT Category_id, name from Category WHERE Category_id=:Category_id";
+        private static string SQL_SELECT_BY_ID    = "SELECT Category_id, name from Category WHERE Category_id=@Category_id";
 
-        public static string SQL_SELECT_BY_NAME  = "SELECT Category_id, name from Category WHERE name=:name";
+        private static string SQL_SELECT_BY_NAME  = "SELECT Category_id, name from Category WHERE name=@name";
 
-        public static string SQL_SELECT_FOR_GAME = "SELECT Category_id, name from Category c JOIN game_Category gc ON c.Category_id = gc.Category_Category_id WHERE game_game_id=:game_id";
+        private static string SQL_SELECT_FOR_GAME = "SELECT Category_id, name from Category c JOIN game_Category gc ON c.Category_id = gc.Category_Category_id WHERE game_game_id=@game_id";
         #endregion
+
+
+        private static readonly object lockObj = new object();
+        private static CategoryDTOGateway instance;
+
+        public static CategoryDTOGateway Instance {
+            get {
+                lock (lockObj)
+                {
+                    return instance ?? (instance = new CategoryDTOGateway());
+                }
+            }
+        }
+
+        private CategoryDTOGateway() { }
+
 
         #region Non Query Methods
         public int Insert(string name)
         {
-            SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_INSERT_NEW);
-            command.Parameters.AddWithValue(":name", name);
+            SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_INSERT);
+            command.Parameters.AddWithValue("@name", name);
             return DatabaseConnection.Instance.ExecuteNonQuery(command);
         }
 
         public int DeleteById(int id)
         {
-            SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_DELETE_ID);
-            command.Parameters.AddWithValue(":Category_id", id);
+            SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_DELETE_BY_ID);
+            command.Parameters.AddWithValue("@Category_id", id);
             return DatabaseConnection.Instance.ExecuteNonQuery(command);
         }
 
         public int Update(int id, string name)
         {
             SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_UPDATE);
-            command.Parameters.AddWithValue(":name", name);
-            command.Parameters.AddWithValue(":Category_id", id);
+            command.Parameters.AddWithValue("@name", name);
+            command.Parameters.AddWithValue("@Category_id", id);
             return DatabaseConnection.Instance.ExecuteNonQuery(command);
         }
         #endregion
@@ -59,7 +75,7 @@ namespace DataLayer.TableDataGateways
         public List<CategoryDTO> SelectCategoriesForGame(int gameId)
         {
             SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_SELECT_FOR_GAME);
-            command.Parameters.AddWithValue(":game_id", gameId);
+            command.Parameters.AddWithValue("@game_id", gameId);
             SqlDataReader reader = DatabaseConnection.Instance.Select(command);
 
             return Read(reader);
@@ -68,7 +84,7 @@ namespace DataLayer.TableDataGateways
         public CategoryDTO SelectCategoryDTO(int id)
         {
             SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_SELECT_BY_ID);
-            command.Parameters.AddWithValue(":CategoryDTO_id", id);
+            command.Parameters.AddWithValue("@CategoryDTO_id", id);
             SqlDataReader reader = DatabaseConnection.Instance.Select(command);
 
             return Read(reader).ElementAt(0);
@@ -76,7 +92,7 @@ namespace DataLayer.TableDataGateways
         public List<CategoryDTO> selectCategoryDTOByName(string name)
         {
             SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_SELECT_BY_NAME);
-            command.Parameters.AddWithValue(":name", name);
+            command.Parameters.AddWithValue("@name", name);
             SqlDataReader reader = DatabaseConnection.Instance.Select(command);
 
             return Read(reader);
