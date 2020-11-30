@@ -16,5 +16,11 @@ namespace DTO.BaseDTOObjects
         public bool? IsDeleted { get; set; }
         
         public CategoryDTO FavoriteCategory { get; set; }
+        
+
+        public ActorDTO()
+        {
+            FavoriteCategory = new CategoryDTO();
+        }
     }
 }

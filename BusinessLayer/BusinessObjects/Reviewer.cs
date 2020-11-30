@@ -11,13 +11,13 @@ namespace BusinessLayer.BusinessObjects
 
         #region Constructors
         public Reviewer() : base() { }
-        public Reviewer(string firstName, string lastName, char gender, string country, string work, DateTime dateOfBirth, DateTime registrationDate, Category favoriteCategory = null)
-            : base(firstName, lastName, gender, country, dateOfBirth, registrationDate, favoriteCategory) 
+        public Reviewer(int id, string firstName, string lastName, char gender, string country, string work, DateTime dateOfBirth, DateTime registrationDate, Category favoriteCategory = null)
+            : base(id, firstName, lastName, gender, country, dateOfBirth, registrationDate, favoriteCategory) 
         {
             Work = work;
         }
         public Reviewer(ReviewerDTO DTO, Category favoriteCategory = null)
-            : this(DTO.FirstName, DTO.LastName, DTO.Gender, DTO.Country, DTO.Work, DTO.DateOfBirth, DTO.RegistrationDate, favoriteCategory) { }
+            : this(DTO.Id, DTO.FirstName, DTO.LastName, DTO.Gender, DTO.Country, DTO.Work, DTO.DateOfBirth, DTO.RegistrationDate, favoriteCategory) { }
         #endregion
 
         public override string ToString()

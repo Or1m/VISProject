@@ -109,9 +109,13 @@
       <Project>{27cf5b9f-2e45-41aa-a441-80338fec999f}</Project>
       <Name>BusinessLayer</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PresentationLayer\PresentationLayerHelper.csproj">
+    <ProjectReference Include="..\DTO\DTO.csproj">
+      <Project>{EFCC6743-C7C3-4537-B393-E7DC903A94A0}</Project>
+      <Name>DTO</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PresentationLayer\PresentationLayer.csproj">
       <Project>{a4ee9b00-e7cb-484b-a107-8985b5340100}</Project>
-      <Name>PresentationLayerHelper</Name>
+      <Name>PresentationLayer</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

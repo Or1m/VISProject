@@ -1,31 +1,21 @@
-﻿
+﻿using BusinessLayer.BusinessObjects;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DesktopApp
 {
     public partial class UserProfileForm : Form
     {
-        //User user;
+        private User user;
         public UserProfileForm()
         {
             InitializeComponent();
         }
 
-        //public UserProfile(User u)
-        //{
-        //    InitializeComponent();
-
-        //    user = u;
-        //}
+        public UserProfileForm(User user) :this()
+        {
+            this.user = user;
+        }
 
         private void UserProfile_Load(object sender, EventArgs e)
         {
@@ -33,16 +23,16 @@ namespace DesktopApp
             //string projectDirectory = Directory.GetParent(workingDirectory).Parent.FullName;
 
             //pictureBox1.ImageLocation = projectDirectory + @"\resources\" + user.Gender + ".jpg";
-            
-            //textBox1.Text = user.First_name;
-            //textBox2.Text = user.Last_name;
-            //textBox3.Text = user.Nick;
-            //textBox4.Text = user.Gender.ToString();
-            //textBox5.Text = user.Country;
-            //textBox6.Text = user.Date_of_birth.ToString("dd/MM/yyyy");
-            //textBox7.Text = user.Registration_date.ToString("dd/MM/yyyy");
 
-            //textBox8.Text = user.Favorit_category.Name;
+            textBox1.Text = user.FirstName;
+            textBox2.Text = user.LastName;
+            textBox3.Text = user.Nick;
+            textBox4.Text = user.Gender.ToString();
+            textBox5.Text = user.Country;
+            textBox6.Text = user.DateOfBirth.ToString("dd/MM/yyyy");
+            textBox7.Text = user.RegistrationDate.ToString("dd/MM/yyyy");
+
+            //textBox8.Text = user.FavoriteCategory.Name;
 
 
             //UserReviewTable userReviewTable = new UserReviewTable();
@@ -51,7 +41,7 @@ namespace DesktopApp
 
             //List<User_review> reviews = userReviewTable.selectReviewsForUser(user.User_id);
 
-            //foreach(User_review ur in reviews)
+            //foreach (User_review ur in reviews)
             //{
             //    reviewBox.Text += ur.ToString() + Environment.NewLine;
             //}

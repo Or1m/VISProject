@@ -2,13 +2,6 @@
 using BusinessLayer.Controllers;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DesktopApp
@@ -23,14 +16,13 @@ namespace DesktopApp
             InitializeComponent();
         }
 
-        public FormGame(int gameIndex, List<Category> categories, User u) : this()
+        public FormGame(int gameIndex, List<Category> categories, User user) : this()
         {
             game = GamesManager.Instance.LoadGame(gameIndex);
+            this.user = user;
 
             Text = game.Name;
             game.Categories = categories;
-
-            //user = u;
         }
 
         private void FormGame_Load(object sender, EventArgs e)
@@ -49,15 +41,7 @@ namespace DesktopApp
             textBox4.Text = ((DateTime)game.ReleaseDate).Date.ToString("dd/MM/yyyy");
             textBox5.Text = game.AverageUserScore.ToString();
             textBox6.Text = game.AverageReviewerScore.ToString();
-
-            string cat = string.Empty;
-            foreach (Category c in game.Categories)
-            {
-                cat += c.ToStringHeader() + ", ";
-            }
-            cat = cat.Remove(cat.Length - 2);
-
-            textBox7.Text = cat;
+            textBox7.Text = game.ToStringCategories();
             textBox8.Text = game.Description;
 
             //string workingDirectory = Environment.CurrentDirectory;
@@ -100,8 +84,7 @@ namespace DesktopApp
         }
             private void Button1_Click(object sender, EventArgs e)
             {
-                //        NewReview newReview = new NewReview(user.User_id, game.Game_id);
-                //        newReview.Show();
+                new AddReviewForm(user.Id, game.Id).Show();
             }
         }
     }

@@ -1,13 +1,9 @@
 ﻿using BusinessLayer.BusinessObjects;
+using PresentationLayer;
 using BusinessLayer.Controllers;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DesktopApp
@@ -15,6 +11,7 @@ namespace DesktopApp
     public partial class MainForm : Form
     {
         private List<Game> games;
+        private User user;
 
         public MainForm()
         {
@@ -26,7 +23,6 @@ namespace DesktopApp
 
         private void ButtConnect_Click(object sender, EventArgs e)
         {
-            
             if (!BusinessLayer.Routines.IsConnected())
             {
                 labelConnect.ForeColor = Color.Red;
@@ -46,15 +42,7 @@ namespace DesktopApp
             dataGridGames.DataSource = games;
 
             for (int i = 0; i < dataGridGames.Rows.Count; i++)
-            {
-                string cat = string.Empty;
-                foreach (Category c in games[i].Categories)
-                    cat += c.ToStringHeader() + ", ";
-
-                cat = cat.Remove(cat.Length - 2);
-
-                dataGridGames.Rows[i].Cells["Categories"].Value = cat;
-            }
+                dataGridGames.Rows[i].Cells["Categories"].Value = games[i].ToStringCategories();
         }
 
         private void DataGridGames_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
@@ -65,29 +53,24 @@ namespace DesktopApp
                 DataGridViewRow selectedRow = dataGridGames.Rows[selectedrowindex];
                 int gameIndex = int.Parse(selectedRow.Cells["Id"].Value.ToString());
 
-                new FormGame(gameIndex, games[selectedrowindex].Categories, null).Show();
+                new FormGame(gameIndex, games[selectedrowindex].Categories, user).Show();
             }
         }
 
         private void ButtLogin_Click(object sender, EventArgs e)
         {
-            //UserTable userTable = new UserTable();
+            user = ActorHelpers.Instance.LoadUser(textBox1.Text);
 
-            //if (!(string.IsNullOrEmpty(textBox1.Text) || string.IsNullOrWhiteSpace(textBox1.Text)))
-            //{
-            //    user = userTable.selectUserByNickWithCategory(textBox1.Text);
-            //}
-
-            //if (user is null)
-            //{
-            //    label2.ForeColor = Color.Red;
-            //    label2.Text = "Invalid name";
-            //}
-            //else
-            //{
-            //    label2.ForeColor = Color.Green;
-            //    label2.Text = "Logged in";
-            //}
+            if (user is null)
+            {
+                label2.ForeColor = Color.Red;
+                label2.Text = "Invalid name";
+            }
+            else
+            {
+                label2.ForeColor = Color.Green;
+                label2.Text = "Logged in as user";
+            }
         }
 
         private void LabelConnect_TextChanged(object sender, EventArgs e)
@@ -98,7 +81,7 @@ namespace DesktopApp
 
         private void Label2_TextChanged(object sender, EventArgs e)
         {
-            if(label2.Text == "Logged in")
+            if(label2.Text == "Logged in as user")
             {
                 button1.Visible = true;
             }
@@ -106,8 +89,7 @@ namespace DesktopApp
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            //UserProfile userProfile = new UserProfile(user);
-            //userProfile.Show();
+            new UserProfileForm(user).Show();
         }
     }
 }

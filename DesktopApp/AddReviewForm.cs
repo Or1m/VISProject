@@ -1,29 +1,20 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using System.Windows.Forms;
 
 namespace DesktopApp
 {
     public partial class AddReviewForm : Form
     {
-        int userId;
-        int gameId;
+        private int userId;
+        private int gameId;
+
         public AddReviewForm()
         {
             InitializeComponent();
         }
 
-        public AddReviewForm(int uId, int gId)
+        public AddReviewForm(int uId, int gId) : this()
         {
-            InitializeComponent();
-
             userId = uId;
             gameId = gId;
         }
@@ -31,7 +22,6 @@ namespace DesktopApp
         private void Button1_Click(object sender, EventArgs e)
         {
             bool hasTitle = false;
-
 
             if (!(string.IsNullOrEmpty(textBox1.Text) || string.IsNullOrWhiteSpace(textBox1.Text)))
             {

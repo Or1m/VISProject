@@ -21,8 +21,9 @@ namespace BusinessLayer.BusinessObjects.BaseObjects
 
         #region Constructors
         public Actor() { }
-        public Actor(string firstName, string lastName, char gender, string country, DateTime dateOfBirth, DateTime registrationDate, Category favoriteCategory = null)
+        public Actor(int id, string firstName, string lastName, char gender, string country, DateTime dateOfBirth, DateTime registrationDate, Category favoriteCategory = null)
         {
+            Id = id;
             FirstName = firstName;
             LastName = lastName;
             Gender = gender;
@@ -33,7 +34,7 @@ namespace BusinessLayer.BusinessObjects.BaseObjects
             FavoriteCategory = favoriteCategory;
         }
         public Actor(ActorDTO DTO, Category favoriteCategory = null)
-            : this(DTO.FirstName, DTO.LastName, DTO.Gender, DTO.Country, DTO.DateOfBirth, DTO.RegistrationDate, favoriteCategory) { }
+            : this(DTO.Id, DTO.FirstName, DTO.LastName, DTO.Gender, DTO.Country, DTO.DateOfBirth, DTO.RegistrationDate, favoriteCategory) { }
         #endregion
 
         #region DTO

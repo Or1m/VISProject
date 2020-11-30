@@ -9,5 +9,11 @@ namespace DTO
         
         public List<GameDTO> FavoriteGames { get; set; }
         public List<ReviewerDTO> FavoriteReviewers { get; set; }
+
+        public UserDTO()
+        {
+            FavoriteGames = new List<GameDTO>();
+            FavoriteReviewers = new List<ReviewerDTO>();
+        }
     }
 }

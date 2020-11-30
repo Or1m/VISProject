@@ -53,6 +53,16 @@ namespace BusinessLayer.BusinessObjects
             return Name + ", " +  Developer;
         }
 
+        public string ToStringCategories()
+        {
+            string cat = string.Empty;
+
+            foreach (Category c in Categories)
+                cat += c.ToStringHeader() + ", ";
+
+            return cat.Remove(cat.Length - 2);
+        }
+
         #region DTO
         public override GameDTO ToDTO()
         {

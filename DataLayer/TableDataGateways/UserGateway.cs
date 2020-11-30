@@ -29,8 +29,8 @@ namespace DataLayer.TableDataGateways
         private static string SQL_SELECT_USER_BY_ID_WITH_CATEGORY   = "SELECT u.user_id, u.nick, u.gender, u.country, u.date_of_birth, u.registration_date, u.first_name, u.last_name, u.favorite_category_id, u.deleted, name " +
                                                                       "FROM \"User\" u JOIN category on category_id = favorite_category_id WHERE user_id=@user_id";
 
-        private static string SQL_SELECT_USER_BY_NICK_WITH_CATEGORY = "SELECT u.user_id, u.nick, u.gender, u.country, u.date_of_birth, u.registration_date, u.first_name, u.last_name, u.favorit_category_id, u.deleted, name " +
-                                                                      "FROM \"User\" u JOIN category on category_id = favorit_category_id WHERE nick=@nick";
+        private static string SQL_SELECT_USER_BY_NICK_WITH_CATEGORY = "SELECT u.user_id, u.nick, u.gender, u.country, u.date_of_birth, u.registration_date, u.first_name, u.last_name, u.favorite_category_id, u.deleted, name " +
+                                                                      "FROM \"User\" u JOIN category on category_id = favorite_category_id WHERE nick=@nick";
         #endregion
 
 

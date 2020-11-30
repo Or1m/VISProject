@@ -15,13 +15,13 @@ namespace BusinessLayer.BusinessObjects
 
         #region Constructors
         public User() : base() { }
-        public User(string nick, string firstName, string lastName, char gender, string country, DateTime dateOfBirth, DateTime registrationDate, Category favoriteCategory = null)
-            : base(firstName, lastName, gender, country, dateOfBirth, registrationDate, favoriteCategory)
+        public User(int id, string nick, string firstName, string lastName, char gender, string country, DateTime dateOfBirth, DateTime registrationDate, Category favoriteCategory = null)
+            : base(id, firstName, lastName, gender, country, dateOfBirth, registrationDate, favoriteCategory)
         {
             Nick = nick;
         }
         public User(UserDTO DTO, Category favoriteCategory = null)
-            : this(DTO.Nick, DTO.FirstName, DTO.LastName, DTO.Gender, DTO.Country, DTO.DateOfBirth, DTO.RegistrationDate, favoriteCategory) { }
+            : this(DTO.Id, DTO.Nick, DTO.FirstName, DTO.LastName, DTO.Gender, DTO.Country, DTO.DateOfBirth, DTO.RegistrationDate, favoriteCategory) { }
         #endregion
 
         public override string ToString()

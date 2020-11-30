@@ -203,9 +203,9 @@
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.label8.Location = new System.Drawing.Point(20, 324);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(105, 16);
+            this.label8.Size = new System.Drawing.Size(113, 16);
             this.label8.TabIndex = 20;
-            this.label8.Text = "Favorit category";
+            this.label8.Text = "Favorite category";
             // 
             // pictureBox1
             // 
@@ -283,7 +283,7 @@
             this.textBox10.Size = new System.Drawing.Size(221, 107);
             this.textBox10.TabIndex = 28;
             // 
-            // UserProfile
+            // UserProfileForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -312,7 +312,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBox2);
             this.Controls.Add(this.label6);
-            this.Name = "UserProfile";
+            this.Name = "UserProfileForm";
             this.Text = "UserProfile";
             this.Load += new System.EventHandler(this.UserProfile_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
