@@ -1,4 +1,5 @@
 ﻿using BusinessLayer.BusinessObjects;
+using BusinessLayer.BusinessObjects.BaseObjects;
 using BusinessLayer.Controllers;
 
 namespace PresentationLayer
@@ -18,9 +19,9 @@ namespace PresentationLayer
             }
         }
 
-        public User LoadUser(string nick)
+        public Actor LoadActor(string nick, bool isReviewer)
         {
-            return (!(string.IsNullOrEmpty(nick) || string.IsNullOrWhiteSpace(nick))) ? ActorsMangager.Instance.LoadUser(nick) : null;
+            return (!(string.IsNullOrEmpty(nick) || string.IsNullOrWhiteSpace(nick))) ? ActorsMangager.Instance.LoadActor(nick, isReviewer) : null;
         }
     }
 }

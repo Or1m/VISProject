@@ -1,4 +1,5 @@
 ﻿using BusinessLayer.BusinessObjects;
+using BusinessLayer.BusinessObjects.BaseObjects;
 using DataLayer.TableDataGateways;
 
 namespace BusinessLayer.Controllers
@@ -18,9 +19,12 @@ namespace BusinessLayer.Controllers
             }
         }
 
-        public User LoadUser(string nick) 
+        public Actor LoadActor(string nick, bool isReviewer) 
         {
-            return new User(UserGateway.Instance.SelectUserByNickWithCategory(nick));
+            if(!isReviewer)
+                return new User(UserGateway.Instance.SelectUserByNickWithCategory(nick));
+            else
+                return new Reviewer(ReviewerGateway.Instance.SelectReviewerByIdWithCategory(0)); // TODO fixne idečko
         }
     }
 }

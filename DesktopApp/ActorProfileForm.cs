@@ -1,20 +1,21 @@
 ﻿using BusinessLayer.BusinessObjects;
+using BusinessLayer.BusinessObjects.BaseObjects;
 using System;
 using System.Windows.Forms;
 
 namespace DesktopApp
 {
-    public partial class UserProfileForm : Form
+    public partial class ActorProfileForm : Form
     {
-        private User user;
-        public UserProfileForm()
+        private Actor actor;
+        public ActorProfileForm()
         {
             InitializeComponent();
         }
 
-        public UserProfileForm(User user) :this()
+        public ActorProfileForm(Actor actor) :this()
         {
-            this.user = user;
+            this.actor = actor;
         }
 
         private void UserProfile_Load(object sender, EventArgs e)
@@ -24,13 +25,13 @@ namespace DesktopApp
 
             //pictureBox1.ImageLocation = projectDirectory + @"\resources\" + user.Gender + ".jpg";
 
-            textBox1.Text = user.FirstName;
-            textBox2.Text = user.LastName;
-            textBox3.Text = user.Nick;
-            textBox4.Text = user.Gender.ToString();
-            textBox5.Text = user.Country;
-            textBox6.Text = user.DateOfBirth.ToString("dd/MM/yyyy");
-            textBox7.Text = user.RegistrationDate.ToString("dd/MM/yyyy");
+            textBox1.Text = actor.FirstName;
+            textBox2.Text = actor.LastName;
+            //textBox3.Text = user.Nick; // nahrad workom
+            textBox4.Text = actor.Gender.ToString();
+            textBox5.Text = actor.Country;
+            textBox6.Text = actor.DateOfBirth.ToString("dd/MM/yyyy");
+            textBox7.Text = actor.RegistrationDate.ToString("dd/MM/yyyy");
 
             //textBox8.Text = user.FavoriteCategory.Name;
 

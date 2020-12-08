@@ -1,4 +1,5 @@
 ﻿using BusinessLayer.BusinessObjects;
+using BusinessLayer.BusinessObjects.BaseObjects;
 using BusinessLayer.Controllers;
 using System;
 using System.Collections.Generic;
@@ -9,17 +10,17 @@ namespace DesktopApp
     public partial class FormGame : Form
     {
         private Game game;
-        private User user;
+        private Actor actor;
 
         public FormGame()
         {
             InitializeComponent();
         }
 
-        public FormGame(int gameIndex, List<Category> categories, User user) : this()
+        public FormGame(int gameIndex, List<Category> categories, Actor actor) : this()
         {
             game = GamesManager.Instance.LoadGame(gameIndex);
-            this.user = user;
+            this.actor = actor;
 
             Text = game.Name;
             game.Categories = categories;
@@ -27,7 +28,7 @@ namespace DesktopApp
 
         private void FormGame_Load(object sender, EventArgs e)
         {
-            if (user is null)
+            if (actor is null)
             {
                 button1.Enabled = false;
                 button2.Enabled = false;
@@ -84,7 +85,14 @@ namespace DesktopApp
         }
             private void Button1_Click(object sender, EventArgs e)
             {
-                new AddReviewForm(user.Id, game.Id).Show();
+                if (DateTime.Now < (DateTime)game.ReleaseDate)
+                    MessageBox.Show("You cannot add review to not released game. Do you want release notification for this game?"); // TODO ano nie
+                
+                else if ((DateTime.Now > (DateTime)game.ReleaseDate) && (DateTime.Now < ((DateTime)game.ReleaseDate).AddDays(1)))
+                    MessageBox.Show("Bla bla bla neni mozne, review bombing a tak");
+
+                else
+                    new AddReviewForm(actor.Id, game.Id).Show(); // len pre usera zatial
             }
         }
     }

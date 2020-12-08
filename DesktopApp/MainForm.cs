@@ -5,13 +5,14 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using BusinessLayer.BusinessObjects.BaseObjects;
 
 namespace DesktopApp
 {
     public partial class MainForm : Form
     {
         private List<Game> games;
-        private User user;
+        private Actor actor;
 
         public MainForm()
         {
@@ -53,15 +54,15 @@ namespace DesktopApp
                 DataGridViewRow selectedRow = dataGridGames.Rows[selectedrowindex];
                 int gameIndex = int.Parse(selectedRow.Cells["Id"].Value.ToString());
 
-                new FormGame(gameIndex, games[selectedrowindex].Categories, user).Show();
+                new FormGame(gameIndex, games[selectedrowindex].Categories, actor).Show();
             }
         }
 
         private void ButtLogin_Click(object sender, EventArgs e)
         {
-            user = ActorHelpers.Instance.LoadUser(textBox1.Text);
+            actor = ActorHelpers.Instance.LoadActor(textBox1.Text, checkBoxRev.Checked);
 
-            if (user is null)
+            if (actor is null)
             {
                 label2.ForeColor = Color.Red;
                 label2.Text = "Invalid name";
@@ -69,7 +70,7 @@ namespace DesktopApp
             else
             {
                 label2.ForeColor = Color.Green;
-                label2.Text = "Logged in as user";
+                label2.Text = "Logged in";
             }
         }
 
@@ -81,7 +82,7 @@ namespace DesktopApp
 
         private void Label2_TextChanged(object sender, EventArgs e)
         {
-            if(label2.Text == "Logged in as user")
+            if(label2.Text == "Logged in")
             {
                 button1.Visible = true;
             }
@@ -89,7 +90,7 @@ namespace DesktopApp
 
         private void Button1_Click(object sender, EventArgs e)
         {
-            new UserProfileForm(user).Show();
+            new ActorProfileForm(actor).Show();
         }
     }
 }

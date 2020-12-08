@@ -1,6 +1,6 @@
 ﻿namespace DesktopApp
 {
-    partial class UserProfileForm
+    partial class ActorProfileForm
     {
         /// <summary>
         /// Required designer variable.
