@@ -26,9 +26,7 @@ namespace BusinessLayer.Controllers
 
         public bool CreateAndInsert(string title, int score, int userId, int gameId, DateTime dateTime, int order)
         {
-            UserReviewGateway.Instance.Insert((UserReviewDTO)new UserReview(title, score, userId, gameId, dateTime, order).ToDTO());
-
-            return true;
+            return UserReviewGateway.Instance.Insert(new UserReview(title, score, userId, gameId, dateTime, order).ToDTO()) > 0;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using BusinessLayer.BusinessObjects.Behaviour;
+using DTO;
 using DTO.BaseDTOObjects;
 using System;
 
@@ -37,7 +38,7 @@ namespace BusinessLayer.BusinessObjects.BaseObjects
         #region DTO
         public override ReviewDTO ToDTO()
         {
-            throw new NotImplementedException();
+            throw new Exception("Non overriden");
         }
         #endregion
     }

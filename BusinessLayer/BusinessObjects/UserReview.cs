@@ -1,4 +1,5 @@
 ﻿using BusinessLayer.BusinessObjects.BaseObjects;
+using DTO;
 using DTO.BaseDTOObjects;
 using System;
 
@@ -20,6 +21,23 @@ namespace BusinessLayer.BusinessObjects
         public override string ToString()
         {
             return Title + " " + Score + " (" + Date.Date.ToString("dd/MM/yyyy") + ")";
+        }
+
+        public UserReviewDTO ToDTO()
+        {
+            UserReviewDTO dto = new UserReviewDTO();
+            dto.Title = Title;
+            dto.Score = Score;
+            dto.Date = Date;
+            dto.OrderOfReview = OrderOfReview;
+
+            dto.Game = new GameDTO();
+            dto.Game.Id = Game.Id;
+
+            dto.Actor = new ActorDTO();
+            dto.Actor.Id = Actor.Id;
+
+            return dto;
         }
     }
 }

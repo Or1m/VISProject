@@ -1,4 +1,5 @@
 ﻿using BusinessLayer.Controllers;
+using PresentationLayer.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,15 +23,15 @@ namespace PresentationLayer
             }
         }
 
-        public bool CheckAndCreateReview(string title, int score, int userId, int gameId, DateTime dateTime, int order) // TODO booly nahradit enumami asi
+        public EnAddReview CheckAndCreateReview(string title, int score, int userId, int gameId, DateTime dateTime, int order)
         {
             if (string.IsNullOrEmpty(title) || string.IsNullOrWhiteSpace(title))
-                return false;
+                return EnAddReview.invalidInput;
 
-            // TODO chceck vysledok
-            ReviewsManager.Instance.CreateAndInsert(title, score, userId, gameId, dateTime, order);
-
-            return true;
+            if (ReviewsManager.Instance.CreateAndInsert(title, score, userId, gameId, dateTime, order))
+                return EnAddReview.successfullyAdded;
+            else
+                return EnAddReview.somethingWrong;
         }
     }
 }
