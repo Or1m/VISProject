@@ -72,6 +72,9 @@ namespace DesktopApp
                 label2.ForeColor = Color.Green;
                 label2.Text = "Logged in";
             }
+
+            if (actor is Reviewer)
+                buttonAdd.Visible = true;
         }
 
         private void LabelConnect_TextChanged(object sender, EventArgs e)
@@ -91,6 +94,11 @@ namespace DesktopApp
         private void Button1_Click(object sender, EventArgs e)
         {
             new ActorProfileForm(actor).Show();
+        }
+
+        private void buttonAdd_Click(object sender, EventArgs e)
+        {
+            new FormGame().Show();
         }
     }
 }

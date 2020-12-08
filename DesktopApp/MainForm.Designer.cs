@@ -44,6 +44,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.checkBoxRev = new System.Windows.Forms.CheckBox();
+            this.buttonAdd = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridGames)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gameBindingSource)).BeginInit();
             this.SuspendLayout();
@@ -204,11 +205,24 @@
             this.checkBoxRev.Text = "Reviewer";
             this.checkBoxRev.UseVisualStyleBackColor = true;
             // 
+            // buttonAdd
+            // 
+            this.buttonAdd.Location = new System.Drawing.Point(713, 130);
+            this.buttonAdd.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonAdd.Name = "buttonAdd";
+            this.buttonAdd.Size = new System.Drawing.Size(100, 28);
+            this.buttonAdd.TabIndex = 10;
+            this.buttonAdd.Text = "Add Game";
+            this.buttonAdd.UseVisualStyleBackColor = true;
+            this.buttonAdd.Visible = false;
+            this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(939, 543);
+            this.Controls.Add(this.buttonAdd);
             this.Controls.Add(this.checkBoxRev);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label3);
@@ -249,6 +263,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Categories;
         private System.Windows.Forms.DataGridViewTextBoxColumn Id;
         private System.Windows.Forms.CheckBox checkBoxRev;
+        private System.Windows.Forms.Button buttonAdd;
     }
 }
 

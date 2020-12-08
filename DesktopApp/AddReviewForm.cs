@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PresentationLayer;
+using System;
 using System.Windows.Forms;
 
 namespace DesktopApp
@@ -36,6 +37,7 @@ namespace DesktopApp
             {
                 //UserReviewTable userReviewTable = new UserReviewTable();
                 //User_review userReview = new User_review(textBox1.Text, score, userId, gameId, DateTime.Now, order);
+                ReviewHelpers.Instance.CheckAndCreateReview(textBox1.Text, score, userId, gameId, DateTime.Now, order);
                 
                 try
                 {
