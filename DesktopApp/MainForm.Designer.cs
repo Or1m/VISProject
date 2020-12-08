@@ -156,11 +156,11 @@
             // label2
             // 
             this.label2.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label2.Location = new System.Drawing.Point(793, 94);
+            this.label2.Location = new System.Drawing.Point(713, 94);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.MinimumSize = new System.Drawing.Size(133, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(133, 16);
+            this.label2.Size = new System.Drawing.Size(213, 16);
             this.label2.TabIndex = 5;
             this.label2.Text = "Logged off";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;

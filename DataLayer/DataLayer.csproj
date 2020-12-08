@@ -50,7 +50,7 @@
     </Compile>
     <Compile Include="TableDataGateways\CategoryGateway.cs" />
     <Compile Include="TableDataGateways\_Legacy\DailyStatisticsGateway.cs" />
-    <Compile Include="TableDataGateways\_Legacy\FavoriteGameGateway.cs" />
+    <Compile Include="TableDataGateways\FavoriteGameGateway.cs" />
     <Compile Include="TableDataGateways\_Legacy\FavoriteReviewerGateway.cs" />
     <Compile Include="TableDataGateways\_Legacy\GameCategoryGateway.cs" />
     <Compile Include="TableDataGateways\GameGateway.cs" />

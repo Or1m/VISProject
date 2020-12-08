@@ -9,24 +9,27 @@ namespace DataLayer.TableDataGateways
     public class ReviewerGateway
     {
         #region SQL Commands
-        private static string SQL_INSERT                             = "INSERT INTO Reviewer (first_name, last_name, gender, country, work, date_of_birth, registration_date, favorit_category_id) " +
-                                                                       " VALUES (@first_name, @last_name, @gender, @country, @work, @date_of_birth, @registration_date, @favorite_category_id)";
+        private static string SQL_INSERT                                = "INSERT INTO Reviewer (first_name, last_name, gender, country, work, date_of_birth, registration_date, favorit_category_id) " +
+                                                                          " VALUES (@first_name, @last_name, @gender, @country, @work, @date_of_birth, @registration_date, @favorite_category_id)";
 
-        private static string SQL_UPDATE                             = "UPDATE Reviewer SET reviewer_id=@reviewer_id, first_name=@first_name, last_name=@last_name, gender=@gender," +
-                                                                       "country=@country, work=@work, date_of_birth=@date_of_birth, registration_date=@registration_date," +
-                                                                       " favorite_category_id=@favorite_category_id WHERE reviewer_id=@reviewer_id";
+        private static string SQL_UPDATE                                = "UPDATE Reviewer SET reviewer_id=@reviewer_id, first_name=@first_name, last_name=@last_name, gender=@gender," +
+                                                                          "country=@country, work=@work, date_of_birth=@date_of_birth, registration_date=@registration_date," +
+                                                                          " favorite_category_id=@favorite_category_id WHERE reviewer_id=@reviewer_id";
 
-        private static string SQL_SELECT_ALL_REVIEWERS_HEADER        = "SELECT reviewer_id, first_name, last_name, country, work FROM Reviewer";
+        private static string SQL_SELECT_ALL_REVIEWERS_HEADER           = "SELECT reviewer_id, first_name, last_name, country, work FROM Reviewer";
 
-        private static string SQL_SELECT_REVIEWER                    = "SELECT reviewer_id, first_name, last_name, gender, country, work, date_of_birth, registration_date, favorite_category_id, deleted FROM Reviewer WHERE reviewer_id=@reviewer_id";
+        private static string SQL_SELECT_REVIEWER                       = "SELECT reviewer_id, first_name, last_name, gender, country, work, date_of_birth, registration_date, favorite_category_id, deleted FROM Reviewer WHERE reviewer_id=@reviewer_id";
 
-        private static string SQL_SELECT_REVIEWER_WITH_CATEGORY      = "SELECT r.reviewer_id, r.first_name, r.last_name, r.gender, r.country, r.work, r.date_of_birth, r.registration_date, r.favorite_category_id, r.deleted, name " +
-                                                                       "FROM Reviewer r JOIN category on category_id = favorite_category_id WHERE reviewer_id=@reviewer_id";
+        private static string SQL_SELECT_REVIEWER_WITH_CATEGORY         = "SELECT r.reviewer_id, r.first_name, r.last_name, r.gender, r.country, r.work, r.date_of_birth, r.registration_date, r.favorite_category_id, r.deleted, name " +
+                                                                          "FROM Reviewer r JOIN category on category_id = favorite_category_id WHERE reviewer_id=@reviewer_id";
 
-        private static string SQL_DELETE_ID                          = "UPDATE Reviewer SET deleted=1 WHERE reviewer_id=@reviewer_id";
+        private static string SQL_SELECT_REVIEWER_BY_NAME_WITH_CATEGORY = "SELECT r.reviewer_id, r.first_name, r.last_name, r.gender, r.country, r.work, r.date_of_birth, r.registration_date, r.favorite_category_id, r.deleted, name " +
+                                                                          "FROM Reviewer r JOIN category on category_id = favorite_category_id WHERE first_name=@first_name AND last_name=@last_name";
 
-        private static string SQL_SELECT_FAVORIT_REVIEWERS_FOR_USER  = "SELECT reviewer_id, first_name, last_name, country, work " +
-                                                                       "FROM Reviewer r JOIN Favorite_reviewer fr ON r.reviewer_id = fr.reviewer_reviewer_id WHERE user_user_id=@user_id";
+        private static string SQL_DELETE_ID                             = "UPDATE Reviewer SET deleted=1 WHERE reviewer_id=@reviewer_id";
+
+        private static string SQL_SELECT_FAVORIT_REVIEWERS_FOR_USER     = "SELECT reviewer_id, first_name, last_name, country, work " +
+                                                                           "FROM Reviewer r JOIN Favorite_reviewer fr ON r.reviewer_id = fr.reviewer_reviewer_id WHERE user_user_id=@user_id";
         #endregion
 
 
@@ -108,6 +111,18 @@ namespace DataLayer.TableDataGateways
         {
             SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_SELECT_REVIEWER_WITH_CATEGORY);
             command.Parameters.AddWithValue("@reviewer_id", id);
+            SqlDataReader reader = DatabaseConnection.Instance.Select(command);
+
+            command.Dispose();
+
+            return Read(reader, true).ElementAt(0);
+        }
+
+        public ReviewerDTO SelectReviewerByNameWithCategory(string firstName, string lastName)
+        {
+            SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_SELECT_REVIEWER_BY_NAME_WITH_CATEGORY);
+            command.Parameters.AddWithValue("@first_name", firstName);
+            command.Parameters.AddWithValue("@last_name", lastName);
             SqlDataReader reader = DatabaseConnection.Instance.Select(command);
 
             command.Dispose();

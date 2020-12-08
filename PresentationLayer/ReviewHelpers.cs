@@ -24,7 +24,7 @@ namespace PresentationLayer
 
         public bool CheckAndCreateReview(string title, int score, int userId, int gameId, DateTime dateTime, int order) // TODO booly nahradit enumami asi
         {
-            if (!(string.IsNullOrEmpty(title) || string.IsNullOrWhiteSpace(title)))
+            if (string.IsNullOrEmpty(title) || string.IsNullOrWhiteSpace(title))
                 return false;
 
             // TODO chceck vysledok

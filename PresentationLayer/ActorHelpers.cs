@@ -1,6 +1,7 @@
 ﻿using BusinessLayer.BusinessObjects;
 using BusinessLayer.BusinessObjects.BaseObjects;
 using BusinessLayer.Controllers;
+using PresentationLayer.Enums;
 
 namespace PresentationLayer
 {
@@ -21,7 +22,26 @@ namespace PresentationLayer
 
         public Actor LoadActor(string nick, bool isReviewer)
         {
-            return (!(string.IsNullOrEmpty(nick) || string.IsNullOrWhiteSpace(nick))) ? ActorsMangager.Instance.LoadActor(nick, isReviewer) : null;
+            try
+            {
+                return (!(string.IsNullOrEmpty(nick) || string.IsNullOrWhiteSpace(nick))) ? ActorsMangager.Instance.LoadActor(nick, isReviewer) : null;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public EnFavorite CheckAndAddToFavorite(int actor, int game)
+        {
+            try
+            {
+                return ActorsMangager.Instance.AddGameToFavorite(actor, game) ? EnFavorite.sucessfullyAdded : EnFavorite.somethingWentWrong;
+            }
+            catch
+            {
+                return EnFavorite.alreadyInFavoriteGames;
+            }
         }
     }
 }

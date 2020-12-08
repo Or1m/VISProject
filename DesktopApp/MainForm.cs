@@ -14,6 +14,9 @@ namespace DesktopApp
         private List<Game> games;
         private Actor actor;
 
+        private bool connected;
+        private bool loggedIn;
+
         public MainForm()
         {
             InitializeComponent();
@@ -26,13 +29,18 @@ namespace DesktopApp
         {
             if (!BusinessLayer.Routines.IsConnected())
             {
+                connected = false;
+
                 labelConnect.ForeColor = Color.Red;
                 labelConnect.Text = "An error occur";
             }
             else
             {
+                connected = true;
+
                 labelConnect.ForeColor = Color.Green;
                 labelConnect.Text = "Connected";
+
                 UpdateGames();
             }
         }
@@ -51,44 +59,44 @@ namespace DesktopApp
             if (dataGridGames.SelectedCells.Count > 0)
             {
                 int selectedrowindex = dataGridGames.SelectedCells[0].RowIndex;
-                DataGridViewRow selectedRow = dataGridGames.Rows[selectedrowindex];
-                int gameIndex = int.Parse(selectedRow.Cells["Id"].Value.ToString());
-
-                new FormGame(gameIndex, games[selectedrowindex].Categories, actor).Show();
+                new FormGame(games[selectedrowindex].Id, games[selectedrowindex].Categories, actor).Show();
             }
         }
 
         private void ButtLogin_Click(object sender, EventArgs e)
         {
             actor = ActorHelpers.Instance.LoadActor(textBox1.Text, checkBoxRev.Checked);
+            bool isReviewer = actor is Reviewer;
 
             if (actor is null)
             {
+                loggedIn = false;
+
                 label2.ForeColor = Color.Red;
                 label2.Text = "Invalid name";
             }
             else
             {
+                loggedIn = true;
+
                 label2.ForeColor = Color.Green;
-                label2.Text = "Logged in";
+                label2.Text = "Logged in as " + (isReviewer ? "reviewer" : "user");
             }
 
-            if (actor is Reviewer)
+            if (isReviewer)
                 buttonAdd.Visible = true;
+            else
+                buttonAdd.Visible = false;
         }
 
         private void LabelConnect_TextChanged(object sender, EventArgs e)
         {
-            if (labelConnect.Text == "Connected")
-                buttLogin.Enabled = true;
+            buttLogin.Enabled = connected;
         }
 
         private void Label2_TextChanged(object sender, EventArgs e)
         {
-            if(label2.Text == "Logged in")
-            {
-                button1.Visible = true;
-            }
+            button1.Visible = loggedIn;
         }
 
         private void Button1_Click(object sender, EventArgs e)
@@ -98,7 +106,7 @@ namespace DesktopApp
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            new FormGame().Show();
+            new FormGame(actor).Show();
         }
     }
 }
