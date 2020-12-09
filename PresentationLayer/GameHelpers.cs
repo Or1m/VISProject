@@ -31,7 +31,7 @@ namespace PresentationLayer
             if (!Utils.StringIsValid(rating))
                 return EnAddGame.invalidRating;
 
-            if (!Utils.StringIsValid(date) && DateTime.TryParse(date, out _))
+            if (!Utils.StringIsValid(date) || !DateTime.TryParse(date, out _))
                 return EnAddGame.invalidDate;
 
             if (!Utils.StringIsValid(categories))

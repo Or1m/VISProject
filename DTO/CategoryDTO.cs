@@ -9,5 +9,7 @@
         {
             Name = name;
         }
+
+        public CategoryDTO() { }
     }
 }

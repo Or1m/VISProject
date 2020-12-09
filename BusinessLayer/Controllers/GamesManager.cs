@@ -57,7 +57,7 @@ namespace BusinessLayer.Controllers
             string[] tempCat = categories.Split(',');
 
             if (!ValidCategories(tempCat))
-                return EnCreateGame.invalidRatingFormat;
+                return EnCreateGame.invalidCategoriesFormat;
 
             List<Category> cats = new List<Category>();
 
@@ -77,7 +77,7 @@ namespace BusinessLayer.Controllers
             bool flag = true;
             foreach(string s in tempCat)
             {
-                if (s != "Action" || s != "RPG" || s != "Strategy" || s != "Adventure" || s != "Shooter" || s != "Racing" || s != "Fighting")
+                if (s != "Action" && s != "RPG" && s != "Strategy" && s != "Adventure" && s != "Shooter" && s != "Racing" && s != "Fighting")
                     flag = false;
             }
 
