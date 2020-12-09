@@ -5,6 +5,7 @@ using PresentationLayer;
 using PresentationLayer.Enums;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace DesktopApp
@@ -14,17 +15,16 @@ namespace DesktopApp
         private Game game;
         private Actor actor;
 
-        public FormGame(Actor actor)
+        public FormGame()
         {
             InitializeComponent();
-
-            this.actor = actor;
         }
 
-        public FormGame(int gameIndex, List<Category> categories, Actor actor) : this(actor)
+        public FormGame(int gameIndex, List<Category> categories, Actor actor) : this()
         {
-            game = GamesManager.Instance.LoadGame(gameIndex);
-            
+            this.game = GamesManager.Instance.LoadGame(gameIndex);
+            this.actor = actor;
+
             Text = game.Name;
             game.Categories = categories;
         }
@@ -60,7 +60,8 @@ namespace DesktopApp
             }
 
             else if (state == EnReleaseDate.oldLessThan24)
-                MessageBox.Show("Due to protection against review bombing, you cannot review the game yet. Try to spend more time with game.");
+                MessageBox.Show("Due to protection against review bombing, you cannot review the game yet. " +
+                    "Try to spend more time with game.");
 
             else
                 new AddReviewForm(actor.Id, game.Id).Show();
@@ -72,8 +73,10 @@ namespace DesktopApp
 
             if (status == EnFavorite.sucessfullyAdded)
                 MessageBox.Show("Successfully added to list of your favorite games");
+
             else if(status == EnFavorite.somethingWentWrong)
                 MessageBox.Show("Something went wrong, try it later please");
+
             else
                 MessageBox.Show("Game is already in list of your favorite games");
         }
@@ -92,24 +95,7 @@ namespace DesktopApp
             textBox7.Text = game.ToStringCategories();
             textBox8.Text = game.Description;
 
-            //string workingDirectory = Environment.CurrentDirectory;
-            //string projectDirectory = Directory.GetParent(workingDirectory).Parent.FullName;
-
-            //pictureBox1.ImageLocation = projectDirectory + @"\resources\" + game.Game_id + ".jpg";
-
-            //Routines routines = new Routines();
-
-            //for (int i = 0; i < 10; i++)
-            //{
-            //    Tuple<string, int> tuple = routines.lastTenReviews(game.Game_id);
-            //    if (tuple.Item1 == "null")
-            //    {
-            //        textBox9.Text = game.Name + Environment.NewLine + "does not have enough reviews";
-            //        break;
-            //    }
-            //    else
-            //        textBox9.Text += tuple.Item1 + " " + tuple.Item2 + Environment.NewLine;
-            //}
+            pictureBox1.Image = new Bitmap(Properties.Resources.astro);
         }
     }
 }

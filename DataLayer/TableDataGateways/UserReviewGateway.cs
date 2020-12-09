@@ -140,8 +140,8 @@ namespace DataLayer.TableDataGateways
         {
             command.Parameters.AddWithValue("@title", review.Title);
             command.Parameters.AddWithValue("@score", review.Score);
-            command.Parameters.AddWithValue("@user_user_id", review.Id);
-            command.Parameters.AddWithValue("@game_game_id", review.Id);
+            command.Parameters.AddWithValue("@user_user_id", review.Actor.Id);
+            command.Parameters.AddWithValue("@game_game_id", review.Game.Id);
             command.Parameters.AddWithValue("@datee", review.Date);
             command.Parameters.AddWithValue("@order_of_review", review.OrderOfReview);
         }

@@ -231,11 +231,11 @@ namespace DataLayer.TableDataGateways
                         }
                         if (!reader.IsDBNull(++i))
                         {
-                            game.AverageUserScore = reader.GetInt32(i);
+                            game.AverageUserScore = (float?)reader.GetDouble(i);
                         }
                         if (!reader.IsDBNull(++i))
                         {
-                            game.AverageReviewerScore = reader.GetInt32(i);
+                            game.AverageReviewerScore = (float?)reader.GetDouble(i);
                         }
 
                         games.Add(game);

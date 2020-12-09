@@ -89,6 +89,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="ActorProfileForm.resx">
       <DependentUpon>ActorProfileForm.cs</DependentUpon>
@@ -120,6 +121,12 @@
       <Project>{a4ee9b00-e7cb-484b-a107-8985b5340100}</Project>
       <Name>PresentationLayer</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Placeholder.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\astro.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

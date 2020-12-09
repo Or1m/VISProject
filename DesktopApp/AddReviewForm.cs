@@ -27,13 +27,31 @@ namespace DesktopApp
             int order = comboBox2.SelectedIndex + 1;
 
             EnAddReview status = ReviewHelpers.Instance.CheckAndCreateReview(textBox1.Text, score, userId, gameId, DateTime.Now, order);
-            
-            if (status == EnAddReview.successfullyAdded)
+
+            bool closeAfter = false;
+
+            if (status == EnAddReview.invalidTitle)
+                MessageBox.Show("Please fill title properly");
+
+            else if (status == EnAddReview.invalidScore)
+                MessageBox.Show("Score has to be more than zero");
+
+            else if (status == EnAddReview.invalidOrder)
+                MessageBox.Show("Order has to be more than zero");
+
+            else if(status == EnAddReview.successfullyAdded)
+            {
                 MessageBox.Show("Review successfully submitted");
-            else if (status == EnAddReview.invalidInput)
-                MessageBox.Show("Please fill title properly and don´t remember to select score and order");
+                closeAfter = true;
+            }
             else
+            {
                 MessageBox.Show("Something wrong");
+                closeAfter = true;
+            }
+
+            if (closeAfter)
+                Close();
         }
     }
 }

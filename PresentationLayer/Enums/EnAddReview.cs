@@ -9,7 +9,9 @@ namespace PresentationLayer.Enums
     public enum EnAddReview
     {
         successfullyAdded,
-        invalidInput,
+        invalidTitle,
+        invalidScore,
+        invalidOrder,
         somethingWrong
     }
 }

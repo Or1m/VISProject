@@ -26,7 +26,13 @@ namespace PresentationLayer
         public EnAddReview CheckAndCreateReview(string title, int score, int userId, int gameId, DateTime dateTime, int order)
         {
             if (string.IsNullOrEmpty(title) || string.IsNullOrWhiteSpace(title))
-                return EnAddReview.invalidInput;
+                return EnAddReview.invalidTitle;
+
+            if (score <= 0)
+                return EnAddReview.invalidScore;
+
+            if (order <= 0)
+                return EnAddReview.invalidOrder;
 
             if (ReviewsManager.Instance.CreateAndInsert(title, score, userId, gameId, dateTime, order))
                 return EnAddReview.successfullyAdded;

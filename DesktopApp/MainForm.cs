@@ -106,7 +106,7 @@ namespace DesktopApp
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            new FormGame(actor).Show();
+            //new FormGame(actor).Show();
         }
     }
 }
