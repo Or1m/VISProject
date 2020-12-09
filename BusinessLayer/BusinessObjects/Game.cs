@@ -23,9 +23,11 @@ namespace BusinessLayer.BusinessObjects
         {
             Categories = new List<Category>();
         }
-        public Game(int id, string name, string description, string developer, string rating, DateTime? releaseDate = null, float? averageUserScore = null, float? averageReviewerScore = null) : this()
+        public Game(int? id, string name, string description, string developer, string rating, DateTime? releaseDate = null, float? averageUserScore = null, float? averageReviewerScore = null) : this()
         {
-            Id = id;
+            if(id != null)
+                Id = (int)id;
+
             Name = name;
             Description = description;
             Developer = developer;
@@ -66,7 +68,18 @@ namespace BusinessLayer.BusinessObjects
         #region DTO
         public override GameDTO ToDTO()
         {
-            throw new NotImplementedException();
+            GameDTO dto = new GameDTO();
+
+            dto.Name        = Name;
+            dto.Description = Description;
+            dto.Developer   = Developer;
+            dto.Rating      = Rating;
+            dto.ReleaseDate = ReleaseDate;
+
+            dto.Categories = new List<CategoryDTO>();
+            dto.Categories.AddRange(Categories.ConvertAll(c => c.ToDTO()));
+
+            return dto;
         }
         #endregion
     }

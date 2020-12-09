@@ -22,7 +22,7 @@ namespace DesktopApp
 
         public FormGame(int gameIndex, List<Category> categories, Actor actor) : this()
         {
-            this.game = GamesManager.Instance.LoadGame(gameIndex);
+            game = GamesManager.Instance.LoadGame(gameIndex);
             this.actor = actor;
 
             Text = game.Name;

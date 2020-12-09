@@ -29,7 +29,7 @@ namespace BusinessLayer.BusinessObjects
         #region DTO
         public override CategoryDTO ToDTO()
         {
-            throw new System.NotImplementedException();
+            return new CategoryDTO(Name);
         }
         #endregion
     }

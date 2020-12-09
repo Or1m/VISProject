@@ -22,5 +22,10 @@ namespace PresentationLayer
             else
                 return EnReleaseDate.released;
         }
+
+        public static bool StringIsValid(string str)
+        {
+            return !(string.IsNullOrEmpty(str) || string.IsNullOrWhiteSpace(str) || str.All(c => char.IsDigit(c)));
+        }
     }
 }

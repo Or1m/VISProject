@@ -25,7 +25,7 @@ namespace PresentationLayer
 
         public EnAddReview CheckAndCreateReview(string title, int score, int userId, int gameId, DateTime dateTime, int order)
         {
-            if (string.IsNullOrEmpty(title) || string.IsNullOrWhiteSpace(title))
+            if (!Utils.StringIsValid(title))
                 return EnAddReview.invalidTitle;
 
             if (score <= 0)

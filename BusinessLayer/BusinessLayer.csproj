@@ -57,6 +57,7 @@
     <Compile Include="Controllers\ActorsMangager.cs" />
     <Compile Include="Controllers\GamesManager.cs" />
     <Compile Include="Controllers\ReviewsManager.cs" />
+    <Compile Include="Enums\EnCreateGame.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Routines.cs" />
   </ItemGroup>
