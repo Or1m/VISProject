@@ -16,6 +16,7 @@ namespace DesktopApp
 
         private bool connected;
         private bool loggedIn;
+        private bool isReviewer;
 
         public MainForm()
         {
@@ -66,7 +67,7 @@ namespace DesktopApp
         private void ButtLogin_Click(object sender, EventArgs e)
         {
             actor = ActorHelpers.Instance.LoadActor(textBox1.Text, checkBoxRev.Checked);
-            bool isReviewer = actor is Reviewer;
+            isReviewer = actor is Reviewer;
 
             if (actor is null)
             {
@@ -96,7 +97,7 @@ namespace DesktopApp
 
         private void Label2_TextChanged(object sender, EventArgs e)
         {
-            button1.Visible = loggedIn;
+            button1.Visible = loggedIn && !isReviewer;
         }
 
         private void Button1_Click(object sender, EventArgs e)
