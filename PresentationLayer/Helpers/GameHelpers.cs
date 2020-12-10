@@ -1,9 +1,8 @@
 ﻿using BusinessLayer.Controllers;
 using PresentationLayer.Enums;
 using System;
-using System.Linq;
 
-namespace PresentationLayer
+namespace PresentationLayer.Helpers
 {
     public class GameHelpers
     {

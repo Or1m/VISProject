@@ -1,9 +1,8 @@
-﻿using BusinessLayer.BusinessObjects;
-using BusinessLayer.BusinessObjects.BaseObjects;
+﻿using BusinessLayer.BusinessObjects.BaseObjects;
 using BusinessLayer.Controllers;
 using PresentationLayer.Enums;
 
-namespace PresentationLayer
+namespace PresentationLayer.Helpers
 {
     public class ActorHelpers
     {
@@ -24,7 +23,7 @@ namespace PresentationLayer
         {
             try
             {
-                return (!(string.IsNullOrEmpty(nick) || string.IsNullOrWhiteSpace(nick))) ? ActorsMangager.Instance.LoadActor(nick, isReviewer) : null;
+                return (!(string.IsNullOrEmpty(nick) || string.IsNullOrWhiteSpace(nick))) ? ActorsManager.Instance.LoadActor(nick, isReviewer) : null;
             }
             catch
             {
@@ -36,7 +35,7 @@ namespace PresentationLayer
         {
             try
             {
-                return ActorsMangager.Instance.AddGameToFavorite(actor, game) ? EnFavorite.sucessfullyAdded : EnFavorite.somethingWentWrong;
+                return ActorsManager.Instance.AddGameToFavorite(actor, game) ? EnFavorite.sucessfullyAdded : EnFavorite.somethingWentWrong;
             }
             catch
             {

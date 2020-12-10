@@ -19,9 +19,10 @@ namespace BusinessLayer.BusinessObjects
             : base(id, firstName, lastName, gender, country, dateOfBirth, registrationDate, favoriteCategory)
         {
             Nick = nick;
+            FavoriteCategory = favoriteCategory;
         }
         public User(UserDTO DTO, Category favoriteCategory = null)
-            : this(DTO.Id, DTO.Nick, DTO.FirstName, DTO.LastName, DTO.Gender, DTO.Country, DTO.DateOfBirth, DTO.RegistrationDate, favoriteCategory) { }
+            : this(DTO.Id, DTO.Nick, DTO.FirstName, DTO.LastName, DTO.Gender, DTO.Country, DTO.DateOfBirth, DTO.RegistrationDate, new Category(DTO.FavoriteCategory)) { }
         #endregion
 
         public override string ToString()

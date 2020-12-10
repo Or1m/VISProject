@@ -3,20 +3,21 @@ using BusinessLayer.BusinessObjects.BaseObjects;
 using DataLayer.TableDataGateways;
 using DTO;
 using System;
+using System.Collections.Generic;
 
 namespace BusinessLayer.Controllers
 {
-    public class ActorsMangager
+    public class ActorsManager
     {
-        private static ActorsMangager instance = null;
+        private static ActorsManager instance = null;
 
         private static readonly object lockObj = new object();
 
-        public static ActorsMangager Instance {
+        public static ActorsManager Instance {
             get {
                 lock (lockObj)
                 {
-                    return instance ?? (instance = new ActorsMangager());
+                    return instance ?? (instance = new ActorsManager());
                 }
             }
         }
@@ -39,6 +40,11 @@ namespace BusinessLayer.Controllers
         public bool AddGameToFavorite(int actor, int game)
         {
             return FavoriteGameGateway.Instance.Insert(actor, game) > 0;
+        }
+
+        public List<Review> LoadReviewsForUser(int userId)
+        {
+            return UserReviewGateway.Instance.SelectReviewsForUser(userId).ConvertAll(r => new Review(r));
         }
     }
 }

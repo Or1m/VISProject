@@ -52,6 +52,12 @@
     <Compile Include="AddGameForm.Designer.cs">
       <DependentUpon>AddGameForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="AskForReviewerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AskForReviewerForm.Designer.cs">
+      <DependentUpon>AskForReviewerForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -83,6 +89,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AddReviewForm.resx">
       <DependentUpon>AddReviewForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AskForReviewerForm.resx">
+      <DependentUpon>AskForReviewerForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -133,6 +142,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\astro.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\F.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\M.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

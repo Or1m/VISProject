@@ -41,5 +41,10 @@ namespace BusinessLayer.BusinessObjects.BaseObjects
             throw new Exception("Non overriden");
         }
         #endregion
+
+        public override string ToString()
+        {
+            return Title + " " + Score;
+        }
     }
 }
