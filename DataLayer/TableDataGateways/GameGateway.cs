@@ -10,7 +10,7 @@ namespace DataLayer.TableDataGateways
     {
         #region SQL Commands
         private static string SQL_INSERT                             = "INSERT INTO Game (name, description, developer, rating, release_date, average_user_review, average_reviewer_score) " +
-                                                                       " VALUES (@name, @description, @developer, @rating, @release_date, @average_user_review, @average_reviewer_score)";
+                                                                       " VALUES (@name, @description, @developer, @rating, @release_date, @average_user_review, @average_reviewer_score); SELECT SCOPE_IDENTITY(); SET NOCOUNT OFF;";
 
         private static string SQL_DELETE_BY_ID                       = "DELETE FROM Game WHERE game_id=@game_id";
 
@@ -55,6 +55,31 @@ namespace DataLayer.TableDataGateways
             PrepareCommand(command, game);
 
             return DatabaseConnection.Instance.ExecuteNonQuery(command);
+        }
+
+        public int InsertWithCategories(GameDTO game)
+        {
+            SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_INSERT);
+            PrepareCommand(command, game);
+
+            int result = DatabaseConnection.Instance.ExecuteScalar(command);
+            game.Id = result;
+
+            List<CategoryDTO> categories = CategoryGateway.Instance.SelectCategories();
+
+            foreach (CategoryDTO dto in game.Categories)
+            {
+                foreach (CategoryDTO cat in categories)
+                {
+                    if(dto.Name == cat.Name)
+                    {
+                        GameCategoryGateway.Instance.Insert(game.Id, cat.CategoryId);
+                        break;
+                    }
+                }
+            }
+
+            return result;
         }
 
         public int Update(GameDTO game)

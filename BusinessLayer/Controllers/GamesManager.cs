@@ -69,7 +69,7 @@ namespace BusinessLayer.Controllers
             Game newGame = new Game(null, name, description, developer, rating, DateTime.Parse(date));
             newGame.Categories.AddRange(cats);
 
-            return GameGateway.Instance.Insert(newGame.ToDTO()) == 1 ? EnCreateGame.inserted : EnCreateGame.somethingWrong;
+            return GameGateway.Instance.InsertWithCategories(newGame.ToDTO()) > 0 ? EnCreateGame.inserted : EnCreateGame.somethingWrong;
         }
 
         private bool ValidCategories(string[] tempCat)

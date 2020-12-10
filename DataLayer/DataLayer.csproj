@@ -52,7 +52,7 @@
     <Compile Include="TableDataGateways\_Legacy\DailyStatisticsGateway.cs" />
     <Compile Include="TableDataGateways\FavoriteGameGateway.cs" />
     <Compile Include="TableDataGateways\_Legacy\FavoriteReviewerGateway.cs" />
-    <Compile Include="TableDataGateways\_Legacy\GameCategoryGateway.cs" />
+    <Compile Include="TableDataGateways\GameCategoryGateway.cs" />
     <Compile Include="TableDataGateways\GameGateway.cs" />
     <Compile Include="TableDataGateways\ReviewerReviewGateway.cs" />
     <Compile Include="TableDataGateways\ReviewerGateway.cs" />

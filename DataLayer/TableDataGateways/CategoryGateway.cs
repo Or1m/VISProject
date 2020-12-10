@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace DataLayer.TableDataGateways
 {
-    public class CategoryDTOGateway
+    public class CategoryGateway
     {
         #region SQL Commands
         private static string SQL_INSERT          = "INSERT INTO Category (name) VALUES (@name)";
@@ -25,18 +25,18 @@ namespace DataLayer.TableDataGateways
 
 
         private static readonly object lockObj = new object();
-        private static CategoryDTOGateway instance;
+        private static CategoryGateway instance;
 
-        public static CategoryDTOGateway Instance {
+        public static CategoryGateway Instance {
             get {
                 lock (lockObj)
                 {
-                    return instance ?? (instance = new CategoryDTOGateway());
+                    return instance ?? (instance = new CategoryGateway());
                 }
             }
         }
 
-        private CategoryDTOGateway() { }
+        private CategoryGateway() { }
 
 
         #region Non Query Methods

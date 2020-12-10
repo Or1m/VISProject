@@ -120,6 +120,31 @@ namespace DataLayer
                 throw new Exception("Database is not connected");
         }
 
+        public int ExecuteScalar(SqlCommand command)
+        {
+            if (Connect())
+            {
+                int result = 0;
+                try
+                {
+                    result = Convert.ToInt32(command.ExecuteScalar());
+                }
+                catch (Exception e)
+                {
+                    throw e;
+                }
+                finally
+                {
+                    command.Dispose();
+                    Close();
+                }
+
+                return result;
+            }
+            else
+                throw new Exception("Database is not connected");
+        }
+
         public SqlDataReader Select(SqlCommand command)
         {
             SqlDataReader sqlReader;
