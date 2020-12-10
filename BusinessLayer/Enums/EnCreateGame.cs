@@ -5,6 +5,7 @@
         invalidRatingFormat,
         invalidCategoriesFormat,
         inserted,
+        alreadyInDB,
         somethingWrong
     }
 }

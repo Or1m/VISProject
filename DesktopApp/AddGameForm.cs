@@ -15,8 +15,10 @@ namespace DesktopApp
 
         private void button2_Click(object sender, EventArgs e)
         {
+            DialogResult dialogResult = DialogResult.None;
+
             Enum status = GameHelpers.Instance.
-                CheckAndCreateGame(textBox1.Text, textBox2.Text, textBox3.Text, textBox4.Text, textBox7.Text, textBox8.Text);
+                CheckAndCreateGame(textBox1.Text, textBox2.Text, textBox3.Text, textBox4.Text, textBox7.Text, textBox8.Text, out int newId);
 
             if (status is EnAddGame)
             { 
@@ -58,14 +60,21 @@ namespace DesktopApp
                     case EnCreateGame.invalidCategoriesFormat:
                         MessageBox.Show("Invalid categories format");
                         break;
+                    case EnCreateGame.alreadyInDB:
+                        MessageBox.Show("Game with same name is already in database");
+                        break;
                     case EnCreateGame.inserted:
-                        MessageBox.Show("Successfully added");
+                        dialogResult = MessageBox.Show("Do you want to show game window?", "Successfully added",
+                            MessageBoxButtons.YesNo);
                         break;
                     default:
                         MessageBox.Show("Something wrong");
                         break;
                 }
             }
+
+            if (dialogResult == DialogResult.Yes && newId != -1)
+                new FormGame(newId, null, null).Show();
         }
     }
 }

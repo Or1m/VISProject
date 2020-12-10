@@ -65,6 +65,7 @@ namespace DataLayer.TableDataGateways
             int result = DatabaseConnection.Instance.ExecuteScalar(command);
             game.Id = result;
 
+
             List<CategoryDTO> categories = CategoryGateway.Instance.SelectCategories();
 
             foreach (CategoryDTO dto in game.Categories)
@@ -79,7 +80,7 @@ namespace DataLayer.TableDataGateways
                 }
             }
 
-            return result;
+            return game.Id;
         }
 
         public int Update(GameDTO game)

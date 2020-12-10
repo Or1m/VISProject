@@ -43,13 +43,20 @@ namespace BusinessLayer.Controllers
             return Games;
         }
 
-        public Game LoadGame(int gameIndex)
+        public Game LoadGame(int gameId)
         {
-            return new Game(GameGateway.Instance.SelectGame(gameIndex));
+            return new Game(GameGateway.Instance.SelectGame(gameId));
         }
 
-        public EnCreateGame CreateAndInsert(string name, string developer, string rating, string date, string categories, string description)
+        public List<Category> LoadCategoriesForGame(int gameId)
         {
+            return CategoryGateway.Instance.SelectCategoriesForGame(gameId).ConvertAll(c => new Category(c));
+        }
+
+        public EnCreateGame CreateAndInsert(string name, string developer, string rating, string date, string categories, string description, out int newId)
+        {
+            newId = -1;
+
             string[] tempRating = rating.Split(' ');
             if (tempRating[0] != "PEGI" || !IsInRatingNumbers(tempRating[1]))
                 return EnCreateGame.invalidRatingFormat;
@@ -69,7 +76,12 @@ namespace BusinessLayer.Controllers
             Game newGame = new Game(null, name, description, developer, rating, DateTime.Parse(date));
             newGame.Categories.AddRange(cats);
 
-            return GameGateway.Instance.InsertWithCategories(newGame.ToDTO()) > 0 ? EnCreateGame.inserted : EnCreateGame.somethingWrong;
+            if (GameGateway.Instance.SelectGamesByName(name).Count != 0)
+                return EnCreateGame.alreadyInDB;
+
+            newId = GameGateway.Instance.InsertWithCategories(newGame.ToDTO());
+
+            return newId > 0 ? EnCreateGame.inserted : EnCreateGame.somethingWrong;
         }
 
         private bool ValidCategories(string[] tempCat)

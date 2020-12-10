@@ -20,8 +20,10 @@ namespace PresentationLayer
             }
         }
 
-        public Enum CheckAndCreateGame(string name, string developer, string rating, string date, string categories, string description)
+        public Enum CheckAndCreateGame(string name, string developer, string rating, string date, string categories, string description, out int newId)
         {
+            newId = -1;
+
             if (!Utils.StringIsValid(name))
                 return EnAddGame.invalidName;
 
@@ -40,7 +42,7 @@ namespace PresentationLayer
             if (!Utils.StringIsValid(description))
                 return EnAddGame.invalidDescription;
 
-            return GamesManager.Instance.CreateAndInsert(name, developer, rating, date, categories, description);
+            return GamesManager.Instance.CreateAndInsert(name, developer, rating, date, categories, description, out newId);
         }
     }
 }

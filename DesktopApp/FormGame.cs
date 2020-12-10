@@ -15,18 +15,22 @@ namespace DesktopApp
         private Game game;
         private Actor actor;
 
-        public FormGame()
+        private FormGame()
         {
             InitializeComponent();
         }
 
-        public FormGame(int gameIndex, List<Category> categories, Actor actor) : this()
+        public FormGame(int gameId, List<Category> categories, Actor actor) : this()
         {
-            game = GamesManager.Instance.LoadGame(gameIndex);
+            game = GamesManager.Instance.LoadGame(gameId);
             this.actor = actor;
 
             Text = game.Name;
-            game.Categories = categories;
+
+            if (categories != null)
+                game.Categories = categories;
+            else
+                game.Categories = GamesManager.Instance.LoadCategoriesForGame(gameId);
         }
 
         private void FormGame_Load(object sender, EventArgs e)
