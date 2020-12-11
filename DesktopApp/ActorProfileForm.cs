@@ -55,5 +55,20 @@ namespace DesktopApp
         {
             new AskForReviewerForm(((User)actor)).Show();
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if(EmailManager.Instance.EmailsFromAdmin.Count > 0)
+            {
+                Email<User, string, bool> email = EmailManager.Instance.EmailsFromAdmin.Peek();
+
+                if (email.t.Id == actor.Id)
+                {
+                    EmailManager.Instance.EmailsFromAdmin.Dequeue();
+                }
+
+                new ReadEmailForm(email.t, email.u, email.q).Show();
+            }
+        }
     }
 }

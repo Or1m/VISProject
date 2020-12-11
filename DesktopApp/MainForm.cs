@@ -67,6 +67,13 @@ namespace DesktopApp
 
         private void ButtLogin_Click(object sender, EventArgs e)
         {
+            if(textBox1.Text == "admin" || textBox1.Text == "Admin" || textBox1.Text == "Root" || textBox1.Text == "root")
+            {
+                new AdminPanelForm().Show();
+                return;
+            }
+
+
             actor = ActorHelpers.Instance.LoadActor(textBox1.Text, checkBoxRev.Checked);
             isReviewer = actor is Reviewer;
 

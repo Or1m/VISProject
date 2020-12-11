@@ -1,10 +1,6 @@
 ﻿using BusinessLayer.BusinessObjects;
 using BusinessLayer.Enums;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BusinessLayer.Controllers
 {
@@ -43,7 +39,7 @@ namespace BusinessLayer.Controllers
 
             try
             {
-                EmailManager.Instance.Emails.Add(email);
+                EmailManager.Instance.EmailsToAdmin.Enqueue(email);
             }
             catch
             {

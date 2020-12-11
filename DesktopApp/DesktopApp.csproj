@@ -52,6 +52,12 @@
     <Compile Include="AddGameForm.Designer.cs">
       <DependentUpon>AddGameForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="AdminPanelForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AdminPanelForm.Designer.cs">
+      <DependentUpon>AdminPanelForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="AskForReviewerForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -84,11 +90,20 @@
     <Compile Include="ActorProfileForm.Designer.cs">
       <DependentUpon>ActorProfileForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ReadEmailForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ReadEmailForm.Designer.cs">
+      <DependentUpon>ReadEmailForm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="AddGameForm.resx">
       <DependentUpon>AddGameForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AddReviewForm.resx">
       <DependentUpon>AddReviewForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AdminPanelForm.resx">
+      <DependentUpon>AdminPanelForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AskForReviewerForm.resx">
       <DependentUpon>AskForReviewerForm.cs</DependentUpon>
@@ -111,6 +126,9 @@
     </Compile>
     <EmbeddedResource Include="ActorProfileForm.resx">
       <DependentUpon>ActorProfileForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ReadEmailForm.resx">
+      <DependentUpon>ReadEmailForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="BusinessLayer.BusinessObjects.Game.datasource" />
     <None Include="Properties\Settings.settings">
