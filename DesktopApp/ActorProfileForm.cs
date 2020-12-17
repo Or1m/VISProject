@@ -26,6 +26,7 @@ namespace DesktopApp
             isUser = actor is User;
 
             button1.Visible = isUser;
+            button2.Visible = isUser;
         }
 
         private void UserProfile_Load(object sender, EventArgs e)
@@ -53,7 +54,7 @@ namespace DesktopApp
 
         private void button1_Click_1(object sender, EventArgs e)
         {
-            new AskForReviewerForm(((User)actor)).Show();
+            new AskForReviewerForm((User)actor).Show();
         }
 
         private void button2_Click(object sender, EventArgs e)

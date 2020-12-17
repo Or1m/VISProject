@@ -43,16 +43,13 @@ namespace PresentationLayer.Helpers
                 return EnRequest.invalidWork;
 
             if (!DateTime.TryParse(dateOfBirth, out DateTime birth))
-            {
-                birthDate = birth;
                 return EnRequest.invalidDateOfBirth;
-            }
                 
             if (!DateTime.TryParse(registrationDate, out DateTime reg))
-            {
-                regDate = reg;
                 return EnRequest.invalidRegistrationDate;
-            }
+
+            birthDate = birth;
+            regDate = reg;
 
             return EnRequest.valid;
         }

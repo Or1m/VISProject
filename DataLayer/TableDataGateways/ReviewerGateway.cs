@@ -9,7 +9,7 @@ namespace DataLayer.TableDataGateways
     public class ReviewerGateway
     {
         #region SQL Commands
-        private static string SQL_INSERT                                = "INSERT INTO Reviewer (first_name, last_name, gender, country, work, date_of_birth, registration_date, favorit_category_id) " +
+        private static string SQL_INSERT                                = "INSERT INTO Reviewer (first_name, last_name, gender, country, work, date_of_birth, registration_date, favorite_category_id) " +
                                                                           " VALUES (@first_name, @last_name, @gender, @country, @work, @date_of_birth, @registration_date, @favorite_category_id)";
 
         private static string SQL_UPDATE                                = "UPDATE Reviewer SET reviewer_id=@reviewer_id, first_name=@first_name, last_name=@last_name, gender=@gender," +
@@ -142,7 +142,8 @@ namespace DataLayer.TableDataGateways
             command.Parameters.AddWithValue("@work", reviewer.Work);
             command.Parameters.AddWithValue("@date_of_birth", reviewer.DateOfBirth);
             command.Parameters.AddWithValue("@registration_date", reviewer.RegistrationDate);
-            command.Parameters.AddWithValue("@favorit_category_id", reviewer.FavoriteCategory == null ? DBNull.Value : (object)reviewer.FavoriteCategory.CategoryId);
+            command.Parameters.AddWithValue("@favorite_category_id", 
+                reviewer.FavoriteCategory == null || reviewer.FavoriteCategory.CategoryId <= 0 ? DBNull.Value : (object)reviewer.FavoriteCategory.CategoryId);
         }
 
         private static List<ReviewerDTO> ReadHeader(SqlDataReader reader, bool withFavoritCategory = false)

@@ -22,7 +22,7 @@ namespace DesktopApp
             InitializeComponent();
         }
 
-        public ReadEmailForm(User user, string work, bool approved)
+        public ReadEmailForm(User user, string work, bool approved) : this()
         {
             this.user = user;
             this.work = work;
