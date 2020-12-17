@@ -40,5 +40,10 @@ namespace DesktopApp
 
             EmailManager.Instance.EmailsFromAdmin.Enqueue(newEmail);
         }
+
+        private void button2_Click(object sender, System.EventArgs e)
+        {
+            //TODO Send reject email
+        }
     }
 }

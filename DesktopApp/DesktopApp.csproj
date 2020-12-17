@@ -96,6 +96,12 @@
     <Compile Include="ReadEmailForm.Designer.cs">
       <DependentUpon>ReadEmailForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="RegisterReviewerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RegisterReviewerForm.Designer.cs">
+      <DependentUpon>RegisterReviewerForm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="AddGameForm.resx">
       <DependentUpon>AddGameForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -129,6 +135,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ReadEmailForm.resx">
       <DependentUpon>ReadEmailForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RegisterReviewerForm.resx">
+      <DependentUpon>RegisterReviewerForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="BusinessLayer.BusinessObjects.Game.datasource" />
     <None Include="Properties\Settings.settings">

@@ -61,7 +61,7 @@
     <Compile Include="Controllers\GeneralManager.cs" />
     <Compile Include="Controllers\ReviewsManager.cs" />
     <Compile Include="Enums\EnCreateGame.cs" />
-    <Compile Include="Enums\EnEmailRequest.cs" />
+    <Compile Include="Enums\EnBusinessRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Routines.cs" />
   </ItemGroup>

@@ -19,11 +19,11 @@ namespace BusinessLayer.Controllers
             }
         }
 
-        public EnEmailRequest CheckAndCreateEmail(string firstName, string lastName, string gender, string country, 
+        public EnBusinessRequest CheckAndCreateEmail(string firstName, string lastName, string gender, string country, 
             DateTime birthDate, DateTime regDate, string work, string whyMe)
         {
             if (birthDate > regDate)
-                return EnEmailRequest.dateMismatch;
+                return EnBusinessRequest.dateMismatch;
 
             User user = new User()
             {
@@ -43,10 +43,10 @@ namespace BusinessLayer.Controllers
             }
             catch
             {
-                return EnEmailRequest.somethingWrong;
+                return EnBusinessRequest.somethingWrong;
             }
 
-            return EnEmailRequest.sended;
+            return EnBusinessRequest.sucess;
         }
     }
 }

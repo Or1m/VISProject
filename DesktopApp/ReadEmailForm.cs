@@ -41,7 +41,7 @@ namespace DesktopApp
             {
                 label2.Text = "Rejected";
                 label2.ForeColor = Color.Red;
-                button1.Text = "Disagree";
+                button1.Text = "Close";
 
                 richTextBox1.Enabled = true;
                 label3.Enabled = true;
@@ -52,11 +52,11 @@ namespace DesktopApp
         {
             if(approved)
             {
-
+                new RegisterReviewerForm(user, work).Show();
             }
             else
             {
-
+                Close();
             }
         }
     }

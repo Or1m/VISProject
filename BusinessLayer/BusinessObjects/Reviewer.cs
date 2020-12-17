@@ -28,5 +28,21 @@ namespace BusinessLayer.BusinessObjects
         {
             return FirstName + " " + LastName + " [ " + Work + " ]" + ", " + Country;
         }
+
+        public ReviewerDTO ToDTO()
+        {
+            ReviewerDTO dto = new ReviewerDTO();
+
+            dto.FirstName = FirstName;
+            dto.LastName = LastName;
+            dto.Gender = Gender;
+            dto.Work = Work;
+            dto.Country = Country;
+
+            dto.DateOfBirth = DateOfBirth;
+            dto.RegistrationDate = RegistrationDate;
+
+            return dto;
+        }
     }
 }

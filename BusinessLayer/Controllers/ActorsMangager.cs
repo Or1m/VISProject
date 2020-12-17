@@ -1,5 +1,6 @@
 ﻿using BusinessLayer.BusinessObjects;
 using BusinessLayer.BusinessObjects.BaseObjects;
+using BusinessLayer.Enums;
 using DataLayer.TableDataGateways;
 using DTO;
 using System;
@@ -45,6 +46,29 @@ namespace BusinessLayer.Controllers
         public List<Review> LoadReviewsForUser(int userId)
         {
             return UserReviewGateway.Instance.SelectReviewsForUser(userId).ConvertAll(r => new Review(r));
+        }
+
+        public EnBusinessRequest CheckAndRegisterReviewer(string firstName, string lastName, string gender, string country,
+            string dateOfBirth, string registrationDate, string work)
+        {
+            DateTime birth = DateTime.Parse(dateOfBirth);
+            DateTime reg = DateTime.Parse(registrationDate);
+
+            if (birth > reg)
+                return EnBusinessRequest.dateMismatch;
+
+            Reviewer reviewer = new Reviewer()
+            {
+                FirstName = firstName,
+                LastName = lastName,
+                Gender = gender.ToCharArray()[0],
+                Country = country,
+                Work = work,
+                RegistrationDate = reg,
+                DateOfBirth = birth
+            };
+
+            return ReviewerGateway.Instance.Insert(reviewer.ToDTO()) > 0 ? EnBusinessRequest.sucess : EnBusinessRequest.somethingWrong; ;
         }
     }
 }
