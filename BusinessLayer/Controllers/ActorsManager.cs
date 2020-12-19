@@ -54,7 +54,7 @@ namespace BusinessLayer.Controllers
             DateTime birth = DateTime.Parse(dateOfBirth);
             DateTime reg = DateTime.Parse(registrationDate);
 
-            if (birth > reg)
+            if (birth > reg || reg.Year < 2014)
                 return EnBusinessRequest.dateMismatch;
 
             Reviewer reviewer = new Reviewer()
@@ -68,7 +68,7 @@ namespace BusinessLayer.Controllers
                 DateOfBirth = birth
             };
 
-            return ReviewerGateway.Instance.Insert(reviewer.ToDTO()) > 0 ? EnBusinessRequest.sucess : EnBusinessRequest.somethingWrong; ;
+            return ReviewerGateway.Instance.Insert(reviewer.ToDTO()) > 0 ? EnBusinessRequest.sucess : EnBusinessRequest.somethingWrong;
         }
     }
 }

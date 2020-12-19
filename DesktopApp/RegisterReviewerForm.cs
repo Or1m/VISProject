@@ -15,7 +15,7 @@ using System.Windows.Forms;
 
 namespace DesktopApp
 {
-    public partial class RegisterReviewerForm : Form
+    public partial class RegisterReviewerForm : ValidatableForm
     {
         private User oldUser;
         private string work;
@@ -44,20 +44,25 @@ namespace DesktopApp
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //TODO dorobit checky
-            EnRequest result = GeneralHelpers.Instance.CheckRequst(textBox1.Text, textBox2.Text, textBox4.Text, textBox5.Text,
+            EnRequest status = GeneralHelpers.Instance.CheckRequest(textBox1.Text, textBox2.Text, textBox4.Text, textBox5.Text,
                 textBox6.Text, textBox7.Text, textBox3.Text, out _, out _);
 
-            if (result == EnRequest.valid)
+            ProcessEnRequest(status);
+
+            if (status == EnRequest.valid)
             {
+                DialogResult dialogResult = DialogResult.None;
+
                 EnBusinessRequest req =  ActorsManager.Instance.CheckAndRegisterReviewer
                 (
                     textBox1.Text, textBox2.Text, textBox4.Text, textBox5.Text,
                     textBox6.Text, textBox7.Text, textBox3.Text
                 );
 
-                if (req == EnBusinessRequest.sucess)
-                    MessageBox.Show("Added");
+                ProcessEnBusinessRequest(req, ref dialogResult);
+
+                if (dialogResult == DialogResult.OK)
+                    Close();
             }  
         }
     }

@@ -30,20 +30,48 @@ namespace DesktopApp
             {
                 button1.Enabled = false;
                 button2.Enabled = false;
+                richTextBox2.Enabled = false;
             }
         }
 
         private void button1_Click(object sender, System.EventArgs e)
         {
-            Email<User, string, bool> newEmail = 
-                new Email<User, string, bool>(email.t, textBox2.Text, true);
-
-            EmailManager.Instance.EmailsFromAdmin.Enqueue(newEmail);
+            ProcessResult(SendEmail(textBox2.Text, true));
         }
 
         private void button2_Click(object sender, System.EventArgs e)
         {
-            //TODO Send reject email
+            ProcessResult(SendEmail(richTextBox2.Text, false));
+        }
+
+        private bool SendEmail(string msg, bool approved)
+        {
+            Email<User, string, bool> newEmail =
+                new Email<User, string, bool>(email.t, msg, approved);
+
+            try
+            {
+                EmailManager.Instance.EmailsFromAdmin.Enqueue(newEmail);
+            }
+            catch
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        private void ProcessResult(bool result)
+        {
+            if (result)
+            {
+                if (MessageBox.Show("Sended") == DialogResult.OK)
+                    Close();
+            }
+            else
+            {
+                MessageBox.Show("Something wromg");
+            }
         }
     }
 }

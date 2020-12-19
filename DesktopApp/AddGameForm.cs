@@ -47,7 +47,7 @@ namespace DesktopApp
                         MessageBox.Show("Validation successfull");
                         break;
                     default:
-                        MessageBox.Show("Invalid name");
+                        MessageBox.Show("Something wrong");
                         break;
                 }
             }

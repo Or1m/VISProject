@@ -20,13 +20,14 @@ namespace BusinessLayer.Controllers
         }
 
         public EnBusinessRequest CheckAndCreateEmail(string firstName, string lastName, string gender, string country, 
-            DateTime birthDate, DateTime regDate, string work, string whyMe)
+            DateTime birthDate, DateTime regDate, string work, string whyMe, int id)
         {
-            if (birthDate > regDate)
+            if (birthDate > regDate || regDate.Year < 2014)
                 return EnBusinessRequest.dateMismatch;
 
             User user = new User()
             {
+                Id = id,
                 FirstName = firstName,
                 LastName = lastName,
                 Gender = gender.ToCharArray()[0],

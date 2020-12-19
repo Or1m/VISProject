@@ -21,7 +21,7 @@ namespace PresentationLayer.Helpers
             }
         }
 
-        public EnRequest CheckRequst(string firstName, string lastName, string gender, string country,
+        public EnRequest CheckRequest(string firstName, string lastName, string gender, string country,
             string dateOfBirth, string registrationDate, string work, out DateTime birthDate, out DateTime regDate)
         {
             birthDate = DateTime.MinValue;
@@ -55,9 +55,9 @@ namespace PresentationLayer.Helpers
         }
 
         public Enum CheckRequestAndSendFurther(string firstName, string lastName, string gender, string country,
-            string dateOfBirth, string registrationDate, string work, string whyMe)
+            string dateOfBirth, string registrationDate, string work, string whyMe, int id)
         {
-            EnRequest result = CheckRequst(firstName, lastName, gender, country, dateOfBirth, registrationDate, work, 
+            EnRequest result = CheckRequest(firstName, lastName, gender, country, dateOfBirth, registrationDate, work, 
                 out DateTime birthDate, out DateTime regDate);
             
             if (result != EnRequest.valid)
@@ -67,7 +67,7 @@ namespace PresentationLayer.Helpers
                 return EnRequest.invalidWhyMe;
 
             if (birthDate != DateTime.MinValue && regDate != DateTime.MinValue)
-                return GeneralManager.Instance.CheckAndCreateEmail(firstName, lastName, gender, country, birthDate, regDate, work, whyMe);
+                return GeneralManager.Instance.CheckAndCreateEmail(firstName, lastName, gender, country, birthDate, regDate, work, whyMe, id);
             else
                 return EnRequest.somethingWrong;
         }

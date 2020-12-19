@@ -20,7 +20,7 @@ namespace DesktopApp
             InitializeComponent();
         }
 
-        public ActorProfileForm(Actor actor) :this()
+        public ActorProfileForm(Actor actor) : this()
         {
             this.actor = actor;
             isUser = actor is User;
@@ -44,11 +44,13 @@ namespace DesktopApp
             textBox8.Text = isUser ? ((User)actor).FavoriteCategory.Name : "---";
 
             if(isUser)
+            {
                 rews = ActorsManager.Instance.LoadReviewsForUser(actor.Id);
 
-            foreach (var r in rews)
-            {
-                reviewBox.Text += r.ToString() + Environment.NewLine;
+                foreach (var r in rews)
+                {
+                    reviewBox.Text += r.ToString() + Environment.NewLine;
+                }
             }
         }
 

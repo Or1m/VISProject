@@ -105,7 +105,7 @@ namespace DesktopApp
 
         private void Label2_TextChanged(object sender, EventArgs e)
         {
-            button1.Visible = loggedIn && !isReviewer;
+            button1.Visible = loggedIn || isReviewer;
         }
 
         private void Button1_Click(object sender, EventArgs e)

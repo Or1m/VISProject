@@ -55,7 +55,7 @@
     <Compile Include="BusinessObjects\ReviewerReview.cs" />
     <Compile Include="BusinessObjects\User.cs" />
     <Compile Include="BusinessObjects\UserReview.cs" />
-    <Compile Include="Controllers\ActorsMangager.cs" />
+    <Compile Include="Controllers\ActorsManager.cs" />
     <Compile Include="Controllers\EmailManager.cs" />
     <Compile Include="Controllers\GamesManager.cs" />
     <Compile Include="Controllers\GeneralManager.cs" />

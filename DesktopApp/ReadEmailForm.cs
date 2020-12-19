@@ -14,7 +14,7 @@ namespace DesktopApp
     public partial class ReadEmailForm : Form
     {
         private User user;
-        private string work;
+        private string workOrMsg;
         private bool approved;
 
         public ReadEmailForm()
@@ -22,10 +22,10 @@ namespace DesktopApp
             InitializeComponent();
         }
 
-        public ReadEmailForm(User user, string work, bool approved) : this()
+        public ReadEmailForm(User user, string workOrMsg, bool approved) : this()
         {
             this.user = user;
-            this.work = work;
+            this.workOrMsg = workOrMsg;
             this.approved = approved;
         }
 
@@ -45,19 +45,17 @@ namespace DesktopApp
 
                 richTextBox1.Enabled = true;
                 label3.Enabled = true;
+
+                richTextBox1.Text = workOrMsg;
             }
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             if(approved)
-            {
-                new RegisterReviewerForm(user, work).Show();
-            }
-            else
-            {
-                Close();
-            }
+                new RegisterReviewerForm(user, workOrMsg).Show();
+
+            Close();
         }
     }
 }
