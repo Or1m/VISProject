@@ -45,16 +45,16 @@
             this.button1 = new System.Windows.Forms.Button();
             this.checkBoxRev = new System.Windows.Forms.CheckBox();
             this.buttonAdd = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridGames)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gameBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // buttLogin
             // 
-            this.buttLogin.Location = new System.Drawing.Point(823, 15);
-            this.buttLogin.Margin = new System.Windows.Forms.Padding(4);
+            this.buttLogin.Location = new System.Drawing.Point(617, 12);
             this.buttLogin.Name = "buttLogin";
-            this.buttLogin.Size = new System.Drawing.Size(100, 28);
+            this.buttLogin.Size = new System.Drawing.Size(75, 23);
             this.buttLogin.TabIndex = 0;
             this.buttLogin.Text = "Log in";
             this.buttLogin.UseVisualStyleBackColor = true;
@@ -62,10 +62,9 @@
             // 
             // buttConnect
             // 
-            this.buttConnect.Location = new System.Drawing.Point(720, 500);
-            this.buttConnect.Margin = new System.Windows.Forms.Padding(4);
+            this.buttConnect.Location = new System.Drawing.Point(540, 386);
             this.buttConnect.Name = "buttConnect";
-            this.buttConnect.Size = new System.Drawing.Size(100, 28);
+            this.buttConnect.Size = new System.Drawing.Size(75, 43);
             this.buttConnect.TabIndex = 1;
             this.buttConnect.Text = "Connect";
             this.buttConnect.UseVisualStyleBackColor = true;
@@ -74,10 +73,9 @@
             // labelConnect
             // 
             this.labelConnect.AutoSize = true;
-            this.labelConnect.Location = new System.Drawing.Point(828, 506);
-            this.labelConnect.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelConnect.Location = new System.Drawing.Point(621, 401);
             this.labelConnect.Name = "labelConnect";
-            this.labelConnect.Size = new System.Drawing.Size(94, 17);
+            this.labelConnect.Size = new System.Drawing.Size(73, 13);
             this.labelConnect.TabIndex = 2;
             this.labelConnect.Text = "Disconnected";
             this.labelConnect.TextChanged += new System.EventHandler(this.LabelConnect_TextChanged);
@@ -94,12 +92,11 @@
             this.Categories,
             this.Id});
             this.dataGridGames.DataSource = this.gameBindingSource;
-            this.dataGridGames.Location = new System.Drawing.Point(16, 50);
-            this.dataGridGames.Margin = new System.Windows.Forms.Padding(4);
+            this.dataGridGames.Location = new System.Drawing.Point(12, 41);
             this.dataGridGames.Name = "dataGridGames";
             this.dataGridGames.ReadOnly = true;
             this.dataGridGames.RowHeadersWidth = 51;
-            this.dataGridGames.Size = new System.Drawing.Size(564, 478);
+            this.dataGridGames.Size = new System.Drawing.Size(423, 388);
             this.dataGridGames.TabIndex = 3;
             this.dataGridGames.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.DataGridGames_CellMouseDoubleClick);
             // 
@@ -146,21 +143,19 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label1.Location = new System.Drawing.Point(11, 15);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(8, 12);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(75, 25);
+            this.label1.Size = new System.Drawing.Size(61, 20);
             this.label1.TabIndex = 4;
             this.label1.Text = "Games";
             // 
             // label2
             // 
             this.label2.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.label2.Location = new System.Drawing.Point(713, 94);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label2.MinimumSize = new System.Drawing.Size(133, 0);
+            this.label2.Location = new System.Drawing.Point(535, 76);
+            this.label2.MinimumSize = new System.Drawing.Size(100, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(213, 16);
+            this.label2.Size = new System.Drawing.Size(160, 13);
             this.label2.TabIndex = 5;
             this.label2.Text = "Logged off";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -168,28 +163,25 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(643, 19);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(4);
+            this.textBox1.Location = new System.Drawing.Point(482, 15);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(170, 22);
+            this.textBox1.Size = new System.Drawing.Size(128, 20);
             this.textBox1.TabIndex = 6;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(559, 21);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Location = new System.Drawing.Point(419, 17);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(76, 17);
+            this.label3.Size = new System.Drawing.Size(62, 13);
             this.label3.TabIndex = 7;
             this.label3.Text = "Name/Nick";
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(823, 130);
-            this.button1.Margin = new System.Windows.Forms.Padding(4);
+            this.button1.Location = new System.Drawing.Point(617, 106);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(100, 28);
+            this.button1.Size = new System.Drawing.Size(75, 23);
             this.button1.TabIndex = 8;
             this.button1.Text = "Profile";
             this.button1.UseVisualStyleBackColor = true;
@@ -198,30 +190,41 @@
             // checkBoxRev
             // 
             this.checkBoxRev.AutoSize = true;
-            this.checkBoxRev.Location = new System.Drawing.Point(838, 59);
+            this.checkBoxRev.Location = new System.Drawing.Point(628, 48);
+            this.checkBoxRev.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.checkBoxRev.Name = "checkBoxRev";
-            this.checkBoxRev.Size = new System.Drawing.Size(88, 21);
+            this.checkBoxRev.Size = new System.Drawing.Size(71, 17);
             this.checkBoxRev.TabIndex = 9;
             this.checkBoxRev.Text = "Reviewer";
             this.checkBoxRev.UseVisualStyleBackColor = true;
             // 
             // buttonAdd
             // 
-            this.buttonAdd.Location = new System.Drawing.Point(713, 130);
-            this.buttonAdd.Margin = new System.Windows.Forms.Padding(4);
+            this.buttonAdd.Location = new System.Drawing.Point(535, 106);
             this.buttonAdd.Name = "buttonAdd";
-            this.buttonAdd.Size = new System.Drawing.Size(100, 28);
+            this.buttonAdd.Size = new System.Drawing.Size(75, 23);
             this.buttonAdd.TabIndex = 10;
             this.buttonAdd.Text = "Add Game";
             this.buttonAdd.UseVisualStyleBackColor = true;
             this.buttonAdd.Visible = false;
             this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
             // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(441, 386);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(93, 43);
+            this.button2.TabIndex = 11;
+            this.button2.Text = "Export Daily statistics";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(939, 543);
+            this.ClientSize = new System.Drawing.Size(704, 441);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.buttonAdd);
             this.Controls.Add(this.checkBoxRev);
             this.Controls.Add(this.button1);
@@ -234,7 +237,6 @@
             this.Controls.Add(this.buttConnect);
             this.Controls.Add(this.buttLogin);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MainForm";
             this.Text = "Game database";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridGames)).EndInit();
@@ -262,6 +264,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Id;
         private System.Windows.Forms.CheckBox checkBoxRev;
         private System.Windows.Forms.Button buttonAdd;
+        private System.Windows.Forms.Button button2;
     }
 }
 

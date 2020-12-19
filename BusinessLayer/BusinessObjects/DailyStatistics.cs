@@ -10,10 +10,22 @@ namespace BusinessLayer.BusinessObjects
         public int NumberOfUserReviews { get; set; }
         public int NumberOfReviewerReviews { get; set; }
 
+        public DailyStatistics()
+        {
+            Date = DateTime.Now;
+        }
+
 
         public override DailyStatisticsDTO ToDTO()
         {
-            throw new NotImplementedException();
+            DailyStatisticsDTO dto = new DailyStatisticsDTO()
+            {
+                Date = Date,
+                NumberOfUserReviews = NumberOfUserReviews,
+                NumberOfReviewerReviews = NumberOfReviewerReviews
+            };
+
+            return dto;
         }
 
         public override string ToString()

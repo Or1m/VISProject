@@ -19,9 +19,12 @@ namespace DesktopApp
         private bool loggedIn;
         private bool isReviewer;
 
+        public DailyStatistics dailyStatistics { get; set; }
+
         public MainForm()
         {
             InitializeComponent();
+            dailyStatistics = new DailyStatistics();
 
             buttLogin.Enabled = false;
             button1.Visible = false;
@@ -116,6 +119,11 @@ namespace DesktopApp
         private void buttonAdd_Click(object sender, EventArgs e)
         {
             new AddGameForm().Show();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            GeneralManager.Instance.ExportDaily(dailyStatistics);
         }
     }
 }

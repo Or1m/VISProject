@@ -36,7 +36,7 @@ namespace DataLayer.TableDataGateways
             return DatabaseConnection.Instance.ExecuteNonQuery(command);
         }
 
-        public int delete(int gameId, int categoryId)
+        public int Delete(int gameId, int categoryId)
         {
             SqlCommand command = DatabaseConnection.Instance.CreateCommand(SQL_DELETE);
             command.Parameters.AddWithValue("@game_game_id", gameId);

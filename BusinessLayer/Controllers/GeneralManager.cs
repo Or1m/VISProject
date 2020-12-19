@@ -1,5 +1,6 @@
 ﻿using BusinessLayer.BusinessObjects;
 using BusinessLayer.Enums;
+using DataLayer.TableDataGateways;
 using System;
 
 namespace BusinessLayer.Controllers
@@ -48,6 +49,11 @@ namespace BusinessLayer.Controllers
             }
 
             return EnBusinessRequest.sucess;
+        }
+
+        public void ExportDaily(DailyStatistics daily)
+        {
+            DailyStatisticsGateway.Instance.Save(daily.ToDTO(), out string errMsg);
         }
     }
 }

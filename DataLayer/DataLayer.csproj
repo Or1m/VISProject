@@ -49,9 +49,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="TableDataGateways\CategoryGateway.cs" />
-    <Compile Include="TableDataGateways\_Legacy\DailyStatisticsGateway.cs" />
+    <Compile Include="TableDataGateways\DailyStatisticsGateway.cs" />
     <Compile Include="TableDataGateways\FavoriteGameGateway.cs" />
-    <Compile Include="TableDataGateways\_Legacy\FavoriteReviewerGateway.cs" />
+    <Compile Include="TableDataGateways\FavoriteReviewerGateway.cs" />
     <Compile Include="TableDataGateways\GameCategoryGateway.cs" />
     <Compile Include="TableDataGateways\GameGateway.cs" />
     <Compile Include="TableDataGateways\ReviewerReviewGateway.cs" />
