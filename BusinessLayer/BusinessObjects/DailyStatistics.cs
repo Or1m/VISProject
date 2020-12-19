@@ -8,7 +8,6 @@ namespace BusinessLayer.BusinessObjects
     {
         public DateTime Date { get; set; }
         public int NumberOfUserReviews { get; set; }
-
         public int NumberOfReviewerReviews { get; set; }
 
 

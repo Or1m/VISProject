@@ -15,8 +15,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp", "WebApp\WebApp.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DTO", "DTO\DTO.csproj", "{EFCC6743-C7C3-4537-B393-E7DC903A94A0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMDTest", "CMDTest\CMDTest.csproj", "{2515FB29-0504-47C5-87B4-0FBED98F8CB9}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,10 +45,6 @@ Global
 		{EFCC6743-C7C3-4537-B393-E7DC903A94A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EFCC6743-C7C3-4537-B393-E7DC903A94A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EFCC6743-C7C3-4537-B393-E7DC903A94A0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2515FB29-0504-47C5-87B4-0FBED98F8CB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2515FB29-0504-47C5-87B4-0FBED98F8CB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2515FB29-0504-47C5-87B4-0FBED98F8CB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2515FB29-0504-47C5-87B4-0FBED98F8CB9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
