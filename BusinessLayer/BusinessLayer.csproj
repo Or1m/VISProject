@@ -46,10 +46,7 @@
     <Compile Include="BusinessObjects\Category.cs" />
     <Compile Include="BusinessObjects\Email.cs" />
     <Compile Include="BusinessObjects\DailyStatistics.cs" />
-    <Compile Include="BusinessObjects\_Legacy\FavoriteGame.cs" />
-    <Compile Include="BusinessObjects\_Legacy\FavoriteReviewer.cs" />
     <Compile Include="BusinessObjects\Game.cs" />
-    <Compile Include="BusinessObjects\_Legacy\GameCategory.cs" />
     <Compile Include="BusinessObjects\Behaviour\Persistable.cs" />
     <Compile Include="BusinessObjects\Reviewer.cs" />
     <Compile Include="BusinessObjects\ReviewerReview.cs" />
