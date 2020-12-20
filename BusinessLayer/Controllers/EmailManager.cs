@@ -31,7 +31,7 @@ namespace BusinessLayer.Controllers
         }
         #endregion
 
-
+        #region Public Methods
         public bool IsEmailForAdminInMailbox()
         {
             return emailsForAdmin.Count > 0;
@@ -71,5 +71,6 @@ namespace BusinessLayer.Controllers
         {
             emailsFromAdmin.Enqueue(email);
         }
+        #endregion
     }
 }
