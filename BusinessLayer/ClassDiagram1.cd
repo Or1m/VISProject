@@ -1,35 +1,89 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="BusinessLayer.BusinessObjects.BaseObjects.Actor">
-    <Position X="1.75" Y="3.25" Width="1.75" />
+    <Position X="1.75" Y="3.5" Width="1.75" />
+    <AssociationLine Name="FavoriteCategory" Type="BusinessLayer.BusinessObjects.Category" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="3.094" Y="3.5" />
+        <Point X="3.094" Y="2.998" />
+        <Point X="5.698" Y="2.998" Type="JumpStart" />
+        <Point X="5.865" Y="2.998" Type="JumpEnd" />
+        <Point X="8.417" Y="2.998" Type="JumpStart" />
+        <Point X="8.583" Y="2.998" Type="JumpEnd" />
+        <Point X="12.688" Y="2.998" />
+        <Point X="12.688" Y="4.5" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.134" Y="0.941" />
+      </MemberNameLabel>
+    </AssociationLine>
     <TypeIdentifier>
       <HashCode>AAAAAECAAAAAAACAAAAAQAAAAQIQAAAAAAAAAQAAAAg=</HashCode>
       <FileName>BusinessObjects\BaseObjects\Actor.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="FavoriteCategory" />
+    </ShowAsAssociation>
   </Class>
   <Class Name="BusinessLayer.BusinessObjects.BaseObjects.Review">
-    <Position X="4.25" Y="3.25" Width="2" />
+    <Position X="4.25" Y="3.5" Width="2" />
+    <AssociationLine Name="FavoriteCategory" Type="BusinessLayer.BusinessObjects.Category" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="5.781" Y="3.5" />
+        <Point X="5.781" Y="2.522" />
+        <Point X="8.417" Y="2.522" Type="JumpStart" />
+        <Point X="8.583" Y="2.522" Type="JumpEnd" />
+        <Point X="13.75" Y="2.522" />
+        <Point X="13.75" Y="4.5" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-1.419" Y="1.504" />
+      </MemberNameLabel>
+    </AssociationLine>
     <TypeIdentifier>
       <HashCode>AAAAAACAAEAAgEgEAAAAQAAAAAgAAAABAAAAAAAAAAA=</HashCode>
       <FileName>BusinessObjects\BaseObjects\Review.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Actor" />
+      <Property Name="FavoriteCategory" />
+      <Property Name="Game" />
+    </ShowAsAssociation>
   </Class>
   <Class Name="BusinessLayer.BusinessObjects.Behaviour.Persistable&lt;T&gt;">
-    <Position X="7.75" Y="0.75" Width="1.5" />
+    <Position X="7.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACABAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>BusinessObjects\Behaviour\Persistable.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BusinessLayer.BusinessObjects.Category">
-    <Position X="11.5" Y="3.25" Width="2" />
+    <Position X="12.25" Y="4.5" Width="2" />
+    <InheritanceLine Type="BusinessLayer.BusinessObjects.Behaviour.Persistable&lt;T&gt;" ManuallyRouted="true" FixedToPoint="true">
+      <Path>
+        <Point X="8.5" Y="2.247" />
+        <Point X="8.5" Y="2.875" />
+        <Point X="13.375" Y="2.875" />
+        <Point X="13.375" Y="4.5" />
+      </Path>
+    </InheritanceLine>
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAEAAAAQAQAAAIAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>BusinessObjects\Category.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BusinessLayer.BusinessObjects.DailyStatistics">
-    <Position X="14" Y="3.25" Width="2.25" />
+    <Position X="15" Y="3.25" Width="2.25" />
+    <InheritanceLine Type="BusinessLayer.BusinessObjects.Behaviour.Persistable&lt;T&gt;" ManuallyRouted="true">
+      <Path>
+        <Point X="8.5" Y="2.247" />
+        <Point X="8.5" Y="2.622" />
+        <Point X="13.667" Y="2.622" Type="JumpStart" />
+        <Point X="13.833" Y="2.622" Type="JumpEnd" />
+        <Point X="16.125" Y="2.622" />
+        <Point X="16.125" Y="3.25" />
+      </Path>
+    </InheritanceLine>
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAEAAAAQAAAAABAAAABQAAgAAICAAA=</HashCode>
       <FileName>BusinessObjects\DailyStatistics.cs</FileName>
@@ -43,35 +97,47 @@
     </TypeIdentifier>
   </Class>
   <Class Name="BusinessLayer.BusinessObjects.Game">
-    <Position X="9" Y="3.25" Width="2" />
+    <Position X="9" Y="3.5" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAoAAAEAAAAQAQCAIIgEAEAAAAEAAAAAAA=</HashCode>
       <FileName>BusinessObjects\Game.cs</FileName>
     </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="Categories" />
+    </ShowAsCollectionAssociation>
   </Class>
   <Class Name="BusinessLayer.BusinessObjects.Reviewer">
-    <Position X="0.5" Y="7.25" Width="2" />
+    <Position X="0.5" Y="7.5" Width="2" />
     <TypeIdentifier>
       <HashCode>AAgAAAAAAAAAAAAEAAAAQAAAAAIAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>BusinessObjects\Reviewer.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BusinessLayer.BusinessObjects.ReviewerReview">
-    <Position X="6.75" Y="3.75" Width="1.5" />
+    <Position X="6.75" Y="4" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AACAAAAAAAAAAAAEAAAAQAAAAAIAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>BusinessObjects\ReviewerReview.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="BusinessLayer.BusinessObjects.User">
-    <Position X="3" Y="7.25" Width="2" />
+    <Position X="4" Y="7.5" Width="2" />
+    <AssociationLine Name="FavoriteGames" Type="BusinessLayer.BusinessObjects.Game">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="-1.334" Y="0.146" />
+      </MemberNameLabel>
+    </AssociationLine>
     <TypeIdentifier>
       <HashCode>AQAAAAAAAAAAAAAEAAAAAAAAABIAAAAAAAAAAAAAAgA=</HashCode>
       <FileName>BusinessObjects\User.cs</FileName>
     </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="FavoriteGames" />
+      <Property Name="FavoriteReviewers" />
+    </ShowAsCollectionAssociation>
   </Class>
   <Class Name="BusinessLayer.BusinessObjects.UserReview">
-    <Position X="5.5" Y="7.25" Width="2.25" />
+    <Position X="6.5" Y="7" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAEAAAAQAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>BusinessObjects\UserReview.cs</FileName>
