@@ -1,18 +1,20 @@
 ﻿using BusinessLayer.BusinessObjects;
-using System;
 using System.Collections.Generic;
 
 namespace BusinessLayer.Controllers
 {
     public class EmailManager
     {
-        private static EmailManager instance = null;
+        #region Private Fields
+        private Queue<Email<User, string, string>>  emailsForAdmin;
+        private Queue<Email<User, string, bool>>    emailsFromAdmin;
+        #endregion
 
-        private static readonly object lockObj = new object();
 
-        public Queue<Email<User, string, string>> EmailsForAdmin { get; }
-        public Queue<Email<User, string, bool>> EmailsFromAdmin { get; }
-
+        #region Private Constructor & Singleton Pattern
+        private static EmailManager instance    = null;
+        private static readonly object lockObj  = new object();
+        
         public static EmailManager Instance {
             get {
                 lock (lockObj)
@@ -24,28 +26,37 @@ namespace BusinessLayer.Controllers
 
         private EmailManager()
         {
-            EmailsForAdmin = new Queue<Email<User, string, string>>();
-            EmailsFromAdmin = new Queue<Email<User, string, bool>>();
+            emailsForAdmin  = new Queue<Email<User, string, string>>();
+            emailsFromAdmin = new Queue<Email<User, string, bool>>();
         }
+        #endregion
+
 
         public bool IsEmailForAdminInMailbox()
         {
-            return EmailsForAdmin.Count > 0;
+            return emailsForAdmin.Count > 0;
         }
 
         public bool IsEmailFromAdminInMailbox()
         {
-            return EmailsFromAdmin.Count > 0;
+            return emailsFromAdmin.Count > 0;
         }
 
         public Email<User, string, string> ReadLastEmailForAdmin()
         {
-            return EmailsForAdmin.Dequeue();
+            return emailsForAdmin.Dequeue();
+        }
+
+        public Email<User, string, bool> CheckLastEmailFromAdmin(int id)
+        {
+            var mail = emailsFromAdmin.Peek();
+
+            return mail.t.Id == id ? emailsFromAdmin.Dequeue() : null;
         }
 
         public void SendEmailToAdmin(Email<User, string, string> email)
         {
-            EmailsForAdmin.Enqueue(email);
+            emailsForAdmin.Enqueue(email);
         }
 
         public void SendEmailFromAdmin(User t, string msg, bool approved)
@@ -58,17 +69,7 @@ namespace BusinessLayer.Controllers
 
         public void SendEmailFromAdmin(Email<User, string, bool> email)
         {
-            EmailsFromAdmin.Enqueue(email);
-        }
-
-        public Email<User, string, bool> CheckLastEmailFromAdmin(int id)
-        {
-            var mail = EmailsFromAdmin.Peek();
-
-            if (mail.t.Id == id)
-                return EmailsFromAdmin.Dequeue();
-            else
-                return null;
+            emailsFromAdmin.Enqueue(email);
         }
     }
 }
