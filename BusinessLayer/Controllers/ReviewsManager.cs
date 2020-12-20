@@ -24,9 +24,28 @@ namespace BusinessLayer.Controllers
             }
         }
 
-        public bool CreateAndInsert(string title, int score, int userId, int gameId, DateTime dateTime, int order)
+        public bool CreateAndInsertUserReview(string title, int score, int userId, int gameId, DateTime dateTime, int order)
         {
-            return UserReviewGateway.Instance.Insert(new UserReview(title, score, userId, gameId, dateTime, order).ToDTO()) > 0;
+            bool result = UserReviewGateway.Instance.Insert(new UserReview(title, score, userId, gameId, dateTime, order).ToDTO()) > 0;
+            if (result)
+            {
+                DailyStatistics.Instance.NumberOfUserReviews++;
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool CreateAndInsertReviewerReview(string title, int score, string text, int userId, int gameId, DateTime dateTime, int order)
+        {
+            bool result = ReviewerReviewGateway.Instance.Insert(new ReviewerReview(title, score, text, dateTime, order).ToDTO()) > 0;
+            if (result)
+            {
+                DailyStatistics.Instance.NumberOfReviewerReviews++;
+                return true;
+            }
+
+            return false;
         }
     }
 }

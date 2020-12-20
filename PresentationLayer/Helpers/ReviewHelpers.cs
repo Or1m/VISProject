@@ -30,7 +30,7 @@ namespace PresentationLayer.Helpers
             if (order <= 0)
                 return EnAddReview.invalidOrder;
 
-            if (ReviewsManager.Instance.CreateAndInsert(title, score, userId, gameId, dateTime, order))
+            if (ReviewsManager.Instance.CreateAndInsertUserReview(title, score, userId, gameId, dateTime, order))
                 return EnAddReview.successfullyAdded;
             else
                 return EnAddReview.somethingWrong;

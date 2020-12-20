@@ -1,4 +1,6 @@
 ﻿using BusinessLayer.BusinessObjects.BaseObjects;
+using DTO;
+using System;
 
 namespace BusinessLayer.BusinessObjects
 {
@@ -6,6 +8,11 @@ namespace BusinessLayer.BusinessObjects
     {
         public string TextOfReview { get; set; }
 
+        public ReviewerReview(string title, int score, string text, DateTime date, int orderOfReview, Game game = null, Actor actor = null)
+            : base(title, score, date, orderOfReview, game, actor)
+        {
+            TextOfReview = text;
+        }
 
         public override string ToString()
         {
@@ -14,6 +21,11 @@ namespace BusinessLayer.BusinessObjects
         public string ToStringHeader()
         {
             return Title + " " + Score + " " + Date.Date;
+        }
+
+        public ReviewerReviewDTO ToDTO()
+        {
+            throw new Exception("Non overriden");
         }
     }
 }

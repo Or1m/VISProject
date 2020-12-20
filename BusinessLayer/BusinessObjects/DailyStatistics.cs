@@ -10,7 +10,20 @@ namespace BusinessLayer.BusinessObjects
         public int NumberOfUserReviews { get; set; }
         public int NumberOfReviewerReviews { get; set; }
 
-        public DailyStatistics()
+
+        private static DailyStatistics instance = null;
+
+        private static readonly object lockObj = new object();
+
+        public static DailyStatistics Instance {
+            get {
+                lock (lockObj)
+                {
+                    return instance ?? (instance = new DailyStatistics());
+                }
+            }
+        }
+        private DailyStatistics()
         {
             Date = DateTime.Now;
         }

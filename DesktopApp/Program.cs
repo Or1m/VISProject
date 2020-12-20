@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using BusinessLayer.BusinessObjects;
+using System;
 using System.Windows.Forms;
 
 namespace DesktopApp
@@ -16,6 +14,9 @@ namespace DesktopApp
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            var daily = DailyStatistics.Instance;
+
             Application.Run(new MainForm());
         }
     }

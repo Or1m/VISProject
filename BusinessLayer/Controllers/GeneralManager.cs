@@ -1,6 +1,7 @@
 ﻿using BusinessLayer.BusinessObjects;
 using BusinessLayer.Enums;
 using DataLayer.TableDataGateways;
+using DTO;
 using System;
 
 namespace BusinessLayer.Controllers
@@ -51,9 +52,26 @@ namespace BusinessLayer.Controllers
             return EnBusinessRequest.sucess;
         }
 
-        public void ExportDaily(DailyStatistics daily)
+        public void ExportDaily()
         {
-            DailyStatisticsGateway.Instance.Save(daily.ToDTO(), out string errMsg);
+            DailyStatisticsGateway.Instance.Save(DailyStatistics.Instance.ToDTO(), out string errMsg);
+        }
+
+        public bool TryToFindDaily(string selectedDateString, out DailyStatisticsDTO dailyDto)
+        {
+            dailyDto = null;
+
+            DailyStatisticsGateway.Instance.Load(selectedDateString, out DailyStatisticsDTO dto, out string errMsg);
+
+            if (dto == null)
+            {
+                return false;
+            }
+            else
+            {
+                dailyDto = dto;
+                return true;
+            }
         }
     }
 }

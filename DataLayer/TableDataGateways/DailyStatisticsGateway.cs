@@ -46,16 +46,17 @@ namespace DataLayer.TableDataGateways
             return true;
         }
 
-        public bool Load(out DailyStatisticsDTO dto, out string msgErr)
+        public bool Load(string selectedDateStríng, out DailyStatisticsDTO dto, out string msgErr)
         {
+            string filePath = Properties.Settings.Default.XMLPath + selectedDateStríng + ".xml";
             msgErr = string.Empty;
             dto = null;
 
-            if (!File.Exists(Properties.Settings.Default.XMLPath))
+            if (!File.Exists(filePath))
                 return true;
 
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(DailyStatisticsDTO));
-            using (FileStream stream = new FileStream(Properties.Settings.Default.XMLPath, FileMode.Open))
+            using (FileStream stream = new FileStream(filePath, FileMode.Open))
             {
                 try
                 {
@@ -67,6 +68,7 @@ namespace DataLayer.TableDataGateways
                     return false;
                 }
             }
+
             return true;
         }
     }

@@ -35,7 +35,7 @@ namespace DataLayer.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\Mirec\\Desktop\\Daily")]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\Mirec\\Desktop\\")]
         public string XMLPath {
             get {
                 return ((string)(this["XMLPath"]));

@@ -64,6 +64,12 @@
     <Compile Include="AskForReviewerForm.Designer.cs">
       <DependentUpon>AskForReviewerForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="DailyStatisticsViewForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DailyStatisticsViewForm.Designer.cs">
+      <DependentUpon>DailyStatisticsViewForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -119,6 +125,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AskForReviewerForm.resx">
       <DependentUpon>AskForReviewerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DailyStatisticsViewForm.resx">
+      <DependentUpon>DailyStatisticsViewForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

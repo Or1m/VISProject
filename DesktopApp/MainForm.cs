@@ -19,12 +19,9 @@ namespace DesktopApp
         private bool loggedIn;
         private bool isReviewer;
 
-        public DailyStatistics dailyStatistics { get; set; }
-
         public MainForm()
         {
             InitializeComponent();
-            dailyStatistics = new DailyStatistics();
 
             buttLogin.Enabled = false;
             button1.Visible = false;
@@ -96,9 +93,17 @@ namespace DesktopApp
             }
 
             if (isReviewer)
+            {
                 buttonAdd.Visible = true;
+                button2.Visible   = true;
+                button3.Visible   = true;
+            }
             else
+            {
                 buttonAdd.Visible = false;
+                button2.Visible   = false;
+                button3.Visible   = false;
+            }
         }
 
         private void LabelConnect_TextChanged(object sender, EventArgs e)
@@ -123,7 +128,12 @@ namespace DesktopApp
 
         private void button2_Click(object sender, EventArgs e)
         {
-            GeneralManager.Instance.ExportDaily(dailyStatistics);
+            GeneralManager.Instance.ExportDaily();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            new DailyStatisticsViewForm().Show();
         }
     }
 }
