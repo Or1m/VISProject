@@ -42,6 +42,7 @@ namespace BusinessLayer.Controllers
             return emailsFromAdmin.Count > 0;
         }
 
+
         public Email<User, string, string> ReadLastEmailForAdmin()
         {
             return emailsForAdmin.Dequeue();
@@ -53,6 +54,7 @@ namespace BusinessLayer.Controllers
 
             return mail.t.Id == id ? emailsFromAdmin.Dequeue() : null;
         }
+
 
         public void SendEmailToAdmin(Email<User, string, string> email)
         {
