@@ -48,7 +48,6 @@ namespace WebApp
             else
             {
                 MsgBox("Something wrong", Page, this);
-                closeAfter = true;
             }
 
             if (closeAfter)
