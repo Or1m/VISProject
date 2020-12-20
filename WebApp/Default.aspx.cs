@@ -9,7 +9,7 @@ namespace WebApp
 {
     public partial class Default : Page
     {
-        private User user;
+        private User loggedUser;
 
         private static List<Game> games;
         public static List<Game> Games { get => games; }
@@ -36,13 +36,15 @@ namespace WebApp
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            user = (User)ActorHelpers.Instance.LoadActor(textbox1.Text, false);
+            loggedUser = (User)ActorHelpers.Instance.LoadActor(textbox1.Text, false);
 
-            if(user != null)
+            if(loggedUser != null)
             {
                 labelResults.Text = "Logged in";
                 labelResults.ForeColor = System.Drawing.Color.Green;
                 Button2.Enabled = true;
+
+                Application["userId"] = loggedUser.Id;
             }
             else
             {

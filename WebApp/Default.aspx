@@ -14,13 +14,9 @@
 
             <p style="margin-top:20px">
                 <asp:DropDownList ID="DropDownList1" CssClass="form-control" runat="server"></asp:DropDownList>
-                <asp:Label ID="Label1" runat="server"></asp:Label>
             </p>
-            <p>
-                <asp:Button ID="Button2" CssClass="btn btn-primary" runat="server" Text="Add review" OnClick="Button2_Click" />
-            </p>
-
-    </form>
+            <p><asp:Button ID="Button2" CssClass="btn btn-primary" runat="server" Text="Add review" OnClick="Button2_Click" /></p>
+        </form>
 
     </div>
 

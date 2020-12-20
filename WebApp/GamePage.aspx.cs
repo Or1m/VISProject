@@ -1,11 +1,7 @@
 ﻿using BusinessLayer.BusinessObjects;
 using BusinessLayer.Controllers;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace WebApp
 {
@@ -20,9 +16,10 @@ namespace WebApp
                 Default lastPage = (Default)Context.Handler;
 
                 game = GamesManager.Instance.LoadGame(Default.Games[lastPage.SelectedIndex].Id);
-            }
+                Application["gameId"] = game.Id;
 
-            FillBoxes();
+                FillBoxes();
+            }
         }
 
         private void FillBoxes()
@@ -38,7 +35,7 @@ namespace WebApp
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-
+            Server.Transfer("AddReviewPage.aspx");
         }
     }
 }
