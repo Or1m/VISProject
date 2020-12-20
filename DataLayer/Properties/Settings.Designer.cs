@@ -32,14 +32,5 @@ namespace DataLayer.Properties {
                 return ((string)(this["ConnectionString"]));
             }
         }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\Users\\Mirec\\Desktop\\")]
-        public string XMLPath {
-            get {
-                return ((string)(this["XMLPath"]));
-            }
-        }
     }
 }
