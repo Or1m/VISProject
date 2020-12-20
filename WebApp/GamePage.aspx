@@ -3,20 +3,25 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-    <form id="form2" runat="server">
-            <p>Name:</p>
-            <p><asp:TextBox ID="textbox1" CssClass="form-control" runat="server" /></p>
-            <span><asp:Button ID="Button1" CssClass="btn btn-primary" runat="server" Text="Log in" OnClick="Button1_Click" /></span>
+    <div class="container" style="margin-top:50px">
+        <form id="form2" runat="server">
+            Name:
+            <p><asp:TextBox ID="textbox1" CssClass="form-control" runat="server" ReadOnly="true"/></p>
+            Description:
+            <p><asp:TextBox ID="textbox2" CssClass="form-control" runat="server" ReadOnly="true"/></p>
+            Developer:
+            <p><asp:TextBox ID="textbox3" CssClass="form-control" runat="server" ReadOnly="true"/></p>
+            Rating:
+            <p><asp:TextBox ID="textbox4" CssClass="form-control" runat="server" ReadOnly="true"/></p>
+            Release Date:
+            <p><asp:TextBox ID="textbox5" CssClass="form-control" runat="server" ReadOnly="true"/></p>
+            Average User Score:
+            <p><asp:TextBox ID="textbox6" CssClass="form-control" runat="server" ReadOnly="true"/></p>
+            Average Reviewer Score:
+            <p><asp:TextBox ID="textbox7" CssClass="form-control" runat="server" ReadOnly="true"/></p>
         
-            <span style="margin-left:10px"><asp:Label runat="server" ID="labelResults"></asp:Label></span>
+            <span><asp:Button ID="Button1" CssClass="btn btn-success" runat="server" Text="Add review" OnClick="Button1_Click" /></span>
+        </form>
+    </div>
 
-            <p style="margin-top:20px">
-                <asp:DropDownList ID="DropDownList1" CssClass="form-control" runat="server"></asp:DropDownList>
-                <asp:Label ID="Label1" runat="server"></asp:Label>
-            </p>
-            <p>
-                <asp:Button ID="Button2" CssClass="btn btn-primary" runat="server" Text="Add review" OnClick="Button2_Click" />
-            </p>
-
-    </form>
 </asp:Content>

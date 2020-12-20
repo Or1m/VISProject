@@ -10,7 +10,12 @@ namespace WebApp
     public partial class Default : Page
     {
         private User user;
+
         private static List<Game> games;
+        public static List<Game> Games { get => games; }
+
+        private int selectedIndex;
+        public int SelectedIndex { get => selectedIndex; }
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -48,8 +53,7 @@ namespace WebApp
 
         protected void Button2_Click(object sender, EventArgs e)
         {
-            var a = games[DropDownList1.SelectedIndex];
-
+            selectedIndex = DropDownList1.SelectedIndex;
             Server.Transfer("GamePage.aspx");
         }
     }
