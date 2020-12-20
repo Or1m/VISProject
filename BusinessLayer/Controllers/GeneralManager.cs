@@ -41,7 +41,7 @@ namespace BusinessLayer.Controllers
 
             try
             {
-                EmailManager.Instance.EmailsToAdmin.Enqueue(email);
+                EmailManager.Instance.SendEmailToAdmin(email);
             }
             catch
             {

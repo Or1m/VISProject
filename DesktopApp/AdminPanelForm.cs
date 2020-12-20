@@ -15,11 +15,9 @@ namespace DesktopApp
 
         private void AdminPanelForm_Load(object sender, System.EventArgs e)
         {
-            var newEmails = EmailManager.Instance.EmailsToAdmin;
-
-            if(newEmails.Count > 0)
+            if(EmailManager.Instance.IsEmailForAdminInMailbox())
             {
-                email = newEmails.Dequeue();
+                email = EmailManager.Instance.ReadLastEmailForAdmin();
             
                 textBox1.Text = email.t.FirstName + " " + email.t.LastName;
                 textBox2.Text = email.u;
@@ -46,12 +44,9 @@ namespace DesktopApp
 
         private bool SendEmail(string msg, bool approved)
         {
-            Email<User, string, bool> newEmail =
-                new Email<User, string, bool>(email.t, msg, approved);
-
             try
             {
-                EmailManager.Instance.EmailsFromAdmin.Enqueue(newEmail);
+                EmailManager.Instance.SendEmailFromAdmin(email.t, msg, approved);
             }
             catch
             {

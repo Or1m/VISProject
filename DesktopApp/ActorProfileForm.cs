@@ -61,16 +61,12 @@ namespace DesktopApp
 
         private void button2_Click(object sender, EventArgs e)
         {
-            if(EmailManager.Instance.EmailsFromAdmin.Count > 0)
+            if(EmailManager.Instance.IsEmailFromAdminInMailbox())
             {
-                Email<User, string, bool> email = EmailManager.Instance.EmailsFromAdmin.Peek();
+                Email<User, string, bool> email = EmailManager.Instance.CheckLastEmailFromAdmin(actor.Id);
 
-                if (email.t.Id == actor.Id)
-                {
-                    EmailManager.Instance.EmailsFromAdmin.Dequeue();
-                }
-
-                new ReadEmailForm(email.t, email.u, email.q).Show();
+                if(email != null)
+                    new ReadEmailForm(email.t, email.u, email.q).Show();
             }
         }
     }
