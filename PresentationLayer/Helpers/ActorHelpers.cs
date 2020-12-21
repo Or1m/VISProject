@@ -6,6 +6,7 @@ namespace PresentationLayer.Helpers
 {
     public class ActorHelpers
     {
+        #region Singleton Pattern
         private static ActorHelpers instance = null;
 
         private static readonly object lockObj = new object();
@@ -18,7 +19,9 @@ namespace PresentationLayer.Helpers
                 }
             }
         }
+        #endregion
 
+        #region Public Methods
         public Actor LoadActor(string nick, bool isReviewer)
         {
             try
@@ -42,5 +45,6 @@ namespace PresentationLayer.Helpers
                 return EnFavorite.alreadyInFavoriteGames;
             }
         }
+        #endregion
     }
 }

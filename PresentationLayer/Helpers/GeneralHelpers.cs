@@ -1,6 +1,4 @@
-﻿
-using BusinessLayer.Controllers;
-using BusinessLayer.Enums;
+﻿using BusinessLayer.Controllers;
 using PresentationLayer.Enums;
 using System;
 
@@ -8,6 +6,7 @@ namespace PresentationLayer.Helpers
 {
     public class GeneralHelpers
     {
+        #region Singleton Pattern
         private static GeneralHelpers instance = null;
 
         private static readonly object lockObj = new object();
@@ -20,7 +19,9 @@ namespace PresentationLayer.Helpers
                 }
             }
         }
+        #endregion
 
+        #region Public Methods
         public EnRequest CheckRequest(string firstName, string lastName, string gender, string country,
             string dateOfBirth, string registrationDate, string work, out DateTime birthDate, out DateTime regDate)
         {
@@ -71,5 +72,6 @@ namespace PresentationLayer.Helpers
             else
                 return EnRequest.somethingWrong;
         }
+        #endregion
     }
 }

@@ -4,6 +4,7 @@ using System;
 
 namespace PresentationLayer.Helpers
 {
+    #region Singleton Pattern
     public class ReviewHelpers
     {
         private static ReviewHelpers instance = null;
@@ -18,7 +19,9 @@ namespace PresentationLayer.Helpers
                 }
             }
         }
+        #endregion
 
+        #region Public Methods
         public EnAddReview CheckAndCreateReview(string title, int score, int userId, int gameId, DateTime dateTime, int order)
         {
             if (!Utils.StringIsValid(title))
@@ -35,5 +38,6 @@ namespace PresentationLayer.Helpers
             else
                 return EnAddReview.somethingWrong;
         }
+        #endregion
     }
 }

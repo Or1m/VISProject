@@ -1,5 +1,4 @@
-﻿
-namespace PresentationLayer.Enums
+﻿namespace PresentationLayer.Enums
 {
     public enum EnAddGame
     {

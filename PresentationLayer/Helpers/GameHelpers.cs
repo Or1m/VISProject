@@ -6,6 +6,7 @@ namespace PresentationLayer.Helpers
 {
     public class GameHelpers
     {
+        #region Singleton Pattern
         private static GameHelpers instance = null;
 
         private static readonly object lockObj = new object();
@@ -18,7 +19,9 @@ namespace PresentationLayer.Helpers
                 }
             }
         }
+        #endregion
 
+        #region Public Methods
         public Enum CheckAndCreateGame(string name, string developer, string rating, string date, string categories, string description, out int newId)
         {
             newId = -1;
@@ -43,5 +46,6 @@ namespace PresentationLayer.Helpers
 
             return GamesManager.Instance.CreateAndInsert(name, developer, rating, date, categories, description, out newId);
         }
+        #endregion
     }
 }
