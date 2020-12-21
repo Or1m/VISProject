@@ -23,7 +23,7 @@ namespace DataLayer.TableDataGateways
 
         private DailyStatisticsGateway() { }
 
-
+        #region XML Database Manipulation Methods
         public bool Save(DailyStatisticsDTO dto, out string msgErr)
         {
             msgErr = string.Empty;
@@ -72,5 +72,6 @@ namespace DataLayer.TableDataGateways
 
             return true;
         }
+        #endregion
     }
 }
