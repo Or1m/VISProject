@@ -3,14 +3,12 @@ using BusinessLayer.Enums;
 using DataLayer.TableDataGateways;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BusinessLayer.Controllers
 {
     public class GamesManager
     {
+        #region Constructor & Singleton Pattern
         private static GamesManager instance = null;
 
         private static readonly object lockObj = new object();
@@ -31,8 +29,9 @@ namespace BusinessLayer.Controllers
         {
             Games = new List<Game>();
         }
+        #endregion
 
-
+        #region Public Methods
         public List<Game> LoadGamesHeadersWithCategories()
         {
             var gamesDTO = GameGateway.Instance.SelectGamesWithCategories();
@@ -83,7 +82,9 @@ namespace BusinessLayer.Controllers
 
             return newId > 0 ? EnCreateGame.inserted : EnCreateGame.somethingWrong;
         }
+        #endregion
 
+        #region Private Methods
         private bool ValidCategories(string[] tempCat)
         {
             bool flag = true;
@@ -109,5 +110,6 @@ namespace BusinessLayer.Controllers
                     return false;
             }
         }
+        #endregion
     }
 }

@@ -11,6 +11,7 @@ namespace BusinessLayer.Controllers
 {
     public class ReviewsManager
     {
+        #region Constructor & Singleton Pattern
         private static ReviewsManager instance = null;
 
         private static readonly object lockObj = new object();
@@ -24,6 +25,10 @@ namespace BusinessLayer.Controllers
             }
         }
 
+        private ReviewsManager() { }
+        #endregion
+
+        #region Public Methods
         public bool CreateAndInsertUserReview(string title, int score, int userId, int gameId, DateTime dateTime, int order)
         {
             bool result = UserReviewGateway.Instance.Insert(new UserReview(title, score, userId, gameId, dateTime, order).ToDTO()) > 0;
@@ -47,5 +52,6 @@ namespace BusinessLayer.Controllers
 
             return false;
         }
+        #endregion
     }
 }

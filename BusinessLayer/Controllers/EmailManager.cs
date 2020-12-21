@@ -31,6 +31,7 @@ namespace BusinessLayer.Controllers
         }
         #endregion
 
+
         #region Public Methods
         public bool IsEmailForAdminInMailbox()
         {

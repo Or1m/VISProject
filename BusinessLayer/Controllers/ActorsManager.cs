@@ -8,6 +8,7 @@ using System.Collections.Generic;
 
 namespace BusinessLayer.Controllers
 {
+    #region Constructor & Singleton Pattern
     public class ActorsManager
     {
         private static ActorsManager instance = null;
@@ -23,6 +24,10 @@ namespace BusinessLayer.Controllers
             }
         }
 
+        private ActorsManager() { }
+        #endregion
+
+        #region Public Methods
         public Actor LoadActor(string nick, bool isReviewer) 
         {
             if (!isReviewer)
@@ -70,5 +75,6 @@ namespace BusinessLayer.Controllers
 
             return ReviewerGateway.Instance.Insert(reviewer.ToDTO()) > 0 ? EnBusinessRequest.sucess : EnBusinessRequest.somethingWrong;
         }
+        #endregion
     }
 }

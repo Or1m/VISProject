@@ -6,6 +6,7 @@ using System;
 
 namespace BusinessLayer.Controllers
 {
+    #region Constructor & Singleton Pattern
     public class GeneralManager
     {
         private static GeneralManager instance = null;
@@ -21,6 +22,10 @@ namespace BusinessLayer.Controllers
             }
         }
 
+        private GeneralManager() { }
+        #endregion
+
+        #region Public Methods
         public EnBusinessRequest CheckAndCreateEmail(string firstName, string lastName, string gender, string country, 
             DateTime birthDate, DateTime regDate, string work, string whyMe, int id)
         {
@@ -73,5 +78,6 @@ namespace BusinessLayer.Controllers
                 return true;
             }
         }
+        #endregion
     }
 }
