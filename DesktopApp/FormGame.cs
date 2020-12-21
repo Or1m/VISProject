@@ -13,9 +13,13 @@ namespace DesktopApp
 {
     public partial class FormGame : Form
     {
+        #region Private Fields
         private Game game;
         private Actor actor;
+        #endregion
 
+
+        #region Constructors
         private FormGame()
         {
             InitializeComponent();
@@ -33,7 +37,9 @@ namespace DesktopApp
             else
                 game.Categories = GamesManager.Instance.LoadCategoriesForGame(gameId);
         }
+        #endregion
 
+        #region Event Handlers
         private void FormGame_Load(object sender, EventArgs e)
         {
             if (actor is null || actor is Reviewer)
@@ -71,7 +77,9 @@ namespace DesktopApp
             else
                 new AddReviewForm(actor.Id, game.Id).Show();
         }
+        #endregion
 
+        #region Private Methods
         private void AddGameToFavorite()
         {
             EnFavorite status = ActorHelpers.Instance.CheckAndAddToFavorite(actor.Id, game.Id);
@@ -102,5 +110,6 @@ namespace DesktopApp
 
             pictureBox1.Image = new Bitmap(Properties.Resources.astro);
         }
+        #endregion
     }
 }

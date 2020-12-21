@@ -10,11 +10,15 @@ namespace DesktopApp
 {
     public partial class ActorProfileForm : Form
     {
+        #region Private Fields
         private Actor actor;
         private bool isUser;
 
         private List<Review> rews;
+        #endregion
 
+
+        #region Constructors
         public ActorProfileForm()
         {
             InitializeComponent();
@@ -28,7 +32,10 @@ namespace DesktopApp
             button1.Visible = isUser;
             button2.Visible = isUser;
         }
+        #endregion
 
+
+        #region Event Handlers
         private void UserProfile_Load(object sender, EventArgs e)
         {
             pictureBox1.Image = actor.Gender == 'F' ? new Bitmap(Properties.Resources.F) : new Bitmap(Properties.Resources.M);
@@ -69,5 +76,6 @@ namespace DesktopApp
                     new ReadEmailForm(email.t, email.u, email.q).Show();
             }
         }
+        #endregion
     }
 }

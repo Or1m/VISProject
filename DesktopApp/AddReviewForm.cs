@@ -1,5 +1,4 @@
-﻿using PresentationLayer;
-using PresentationLayer.Enums;
+﻿using PresentationLayer.Enums;
 using PresentationLayer.Helpers;
 using System;
 using System.Windows.Forms;
@@ -8,9 +7,13 @@ namespace DesktopApp
 {
     public partial class AddReviewForm : Form
     {
+        #region Privatee Fields
         private int userId;
         private int gameId;
+        #endregion
 
+
+        #region Constructors
         public AddReviewForm()
         {
             InitializeComponent();
@@ -21,6 +24,8 @@ namespace DesktopApp
             userId = uId;
             gameId = gId;
         }
+        #endregion
+
 
         private void Button1_Click(object sender, EventArgs e)
         {

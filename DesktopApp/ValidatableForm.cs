@@ -11,7 +11,9 @@ namespace DesktopApp
             InitializeComponent();
         }
 
-        public static void ProcessEnRequest(EnRequest status)
+
+        #region Protected Static Void Methods
+        protected static void ProcessEnRequest(EnRequest status)
         {
             switch (status)
             {
@@ -47,7 +49,7 @@ namespace DesktopApp
             }
         }
 
-        public static void ProcessEnBusinessRequest(EnBusinessRequest status, ref DialogResult dialogResult)
+        protected static void ProcessEnBusinessRequest(EnBusinessRequest status, ref DialogResult dialogResult)
         {
             switch (status)
             {
@@ -62,5 +64,6 @@ namespace DesktopApp
                     break;
             }
         }
+        #endregion
     }
 }

@@ -8,11 +8,15 @@ namespace DesktopApp
     public partial class AdminPanelForm : Form
     {
         private Email<User, string, string> email;
+
+
         public AdminPanelForm()
         {
             InitializeComponent();
         }
 
+
+        #region Event Handlers
         private void AdminPanelForm_Load(object sender, System.EventArgs e)
         {
             if(EmailManager.Instance.IsEmailForAdminInMailbox())
@@ -41,7 +45,10 @@ namespace DesktopApp
         {
             ProcessResult(SendEmail(richTextBox2.Text, false));
         }
+        #endregion
 
+
+        #region Private Methods
         private bool SendEmail(string msg, bool approved)
         {
             try
@@ -68,5 +75,6 @@ namespace DesktopApp
                 MessageBox.Show("Something wromg");
             }
         }
+        #endregion
     }
 }

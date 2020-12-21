@@ -4,22 +4,18 @@ using BusinessLayer.Enums;
 using PresentationLayer.Enums;
 using PresentationLayer.Helpers;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DesktopApp
 {
     public partial class RegisterReviewerForm : ValidatableForm
     {
+        #region Private Fields
         private User oldUser;
         private string work;
-        
+        #endregion
+
+        #region Constructors
         public RegisterReviewerForm()
         {
             InitializeComponent();
@@ -30,7 +26,9 @@ namespace DesktopApp
             this.work = work;
             oldUser = user;
         }
+        #endregion
 
+        #region Private Event Handlers
         private void RegisterReviewerForm_Load(object sender, EventArgs e)
         {
             textBox1.Text = oldUser.FirstName;
@@ -65,5 +63,6 @@ namespace DesktopApp
                     Close();
             }  
         }
+        #endregion
     }
 }

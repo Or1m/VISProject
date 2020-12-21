@@ -1,22 +1,20 @@
 ﻿using BusinessLayer.BusinessObjects;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace DesktopApp
 {
     public partial class ReadEmailForm : Form
     {
+        #region Private Fields
         private User user;
         private string workOrMsg;
         private bool approved;
+        #endregion
 
+
+        #region Constructors
         public ReadEmailForm()
         {
             InitializeComponent();
@@ -24,29 +22,30 @@ namespace DesktopApp
 
         public ReadEmailForm(User user, string workOrMsg, bool approved) : this()
         {
-            this.user = user;
-            this.workOrMsg = workOrMsg;
-            this.approved = approved;
+            this.user       = user;
+            this.workOrMsg  = workOrMsg;
+            this.approved   = approved;
         }
+        #endregion
 
+        #region Private Event Handlers
         private void ReadEmailForm_Load(object sender, EventArgs e)
         {
             if(approved)
             {
-                label2.Text = "Approved";
+                label2.Text      = "Approved";
+                button1.Text     = "Register account";
                 label2.ForeColor = Color.Green;
-                button1.Text = "Register account";
             }
             else
             {
-                label2.Text = "Rejected";
-                label2.ForeColor = Color.Red;
-                button1.Text = "Close";
+                button1.Text      = "Close";
+                label2.Text       = "Rejected";
+                label2.ForeColor  = Color.Red;
+                richTextBox1.Text = workOrMsg;
 
                 richTextBox1.Enabled = true;
-                label3.Enabled = true;
-
-                richTextBox1.Text = workOrMsg;
+                label3.Enabled       = true;
             }
         }
 
@@ -57,5 +56,6 @@ namespace DesktopApp
 
             Close();
         }
+        #endregion
     }
 }

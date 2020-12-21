@@ -11,12 +11,15 @@ namespace DesktopApp
 {
     public partial class MainForm : Form
     {
+        #region Private Fields
         private List<Game> games;
         private Actor actor;
 
         private bool connected;
         private bool loggedIn;
         private bool isReviewer;
+        #endregion
+
 
         public MainForm()
         {
@@ -26,6 +29,17 @@ namespace DesktopApp
             button1.Visible = false;
         }
 
+
+        private void UpdateGames()
+        {
+            games = GamesManager.Instance.LoadGamesHeadersWithCategories();
+            dataGridGames.DataSource = games;
+
+            for (int i = 0; i < dataGridGames.Rows.Count; i++)
+                dataGridGames.Rows[i].Cells["Categories"].Value = games[i].ToStringCategories();
+        }
+
+        #region Event Handlers
         private void ButtConnect_Click(object sender, EventArgs e)
         {
             if (!BusinessLayer.Routines.IsConnected())
@@ -44,15 +58,6 @@ namespace DesktopApp
 
                 UpdateGames();
             }
-        }
-
-        private void UpdateGames()
-        {
-            games = GamesManager.Instance.LoadGamesHeadersWithCategories();
-            dataGridGames.DataSource = games;
-
-            for (int i = 0; i < dataGridGames.Rows.Count; i++)
-                dataGridGames.Rows[i].Cells["Categories"].Value = games[i].ToStringCategories();
         }
 
         private void DataGridGames_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
@@ -134,5 +139,6 @@ namespace DesktopApp
         {
             new DailyStatisticsViewForm().Show();
         }
+        #endregion
     }
 }
