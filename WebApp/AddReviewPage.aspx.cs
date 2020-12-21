@@ -7,27 +7,24 @@ namespace WebApp
 {
     public partial class AddReviewPage : System.Web.UI.Page
     {
+        #region Private Static Fields
         private static int[] validScores = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
         private static int[] validOrders = { 1, 2, 3, 4, 5};
+        #endregion
+
 
         protected void Page_Load(object sender, EventArgs e)
         {
             if(!IsPostBack)
             {
-                DropDown2.DataSource = validScores;
-                DropDown2.DataBind();
-                DropDown3.DataSource = validOrders;
-                DropDown3.DataBind();
+                BindDataSources();
             }
         }
+
+        #region Event Handlers
         protected void Button1_Click(object sender, EventArgs e)
         {
-            int score = DropDown2.SelectedIndex + 1;
-            int order = DropDown3.SelectedIndex + 1;
-
-            int gameId = int.Parse(Application["gameId"].ToString());
-            int userId = int.Parse(Application["userId"].ToString());
-            EnAddReview status = ReviewHelpers.Instance.CheckAndCreateReview(textbox1.Text, score, userId, gameId, DateTime.Now, order);
+            EnAddReview status = ProcessCreatingReview();
 
             bool closeAfter = false;
 
@@ -53,13 +50,35 @@ namespace WebApp
             if (closeAfter)
                 Server.Transfer("Default.aspx");
         }
+        #endregion
 
-        public void MsgBox(string ex, Page pg, object obj)
+        #region Private Methods
+        private void BindDataSources()
+        {
+            DropDown2.DataSource = validScores;
+            DropDown2.DataBind();
+            DropDown3.DataSource = validOrders;
+            DropDown3.DataBind();
+        }
+
+        private EnAddReview ProcessCreatingReview()
+        {
+            int score = DropDown2.SelectedIndex + 1;
+            int order = DropDown3.SelectedIndex + 1;
+
+            int gameId = int.Parse(Application["gameId"].ToString());
+            int userId = int.Parse(Application["userId"].ToString());
+
+            return ReviewHelpers.Instance.CheckAndCreateReview(textbox1.Text, score, userId, gameId, DateTime.Now, order);
+        }
+
+        private void MsgBox(string ex, Page pg, object obj)
         {
             string s = "<SCRIPT language='javascript'>alert('" + ex.Replace("\r\n", "\\n").Replace("'", "") + "'); </SCRIPT>";
             Type cstype = obj.GetType();
             ClientScriptManager cs = pg.ClientScript;
             cs.RegisterClientScriptBlock(cstype, s, s.ToString());
         }
+        #endregion
     }
 }

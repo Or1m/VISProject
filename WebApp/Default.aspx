@@ -13,9 +13,9 @@
             <span style="margin-left:10px"><asp:Label runat="server" ID="labelResults"></asp:Label></span>
 
             <p style="margin-top:20px">
-                <asp:DropDownList ID="DropDownList1" CssClass="form-control" runat="server"></asp:DropDownList>
+                <asp:DropDownList ID="DropDownList1" CssClass="form-control" runat="server" AppendDataBoundItems="false"></asp:DropDownList>
             </p>
-            <p><asp:Button ID="Button2" CssClass="btn btn-primary" runat="server" Text="Add review" OnClick="Button2_Click" /></p>
+            <p><asp:Button ID="Button2" CssClass="btn btn-primary" runat="server" Text="Show Game" OnClick="Button2_Click" /></p>
         </form>
 
     </div>

@@ -12,6 +12,7 @@ namespace WebApp
     {
         private Game game;
 
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if(!IsPostBack)
@@ -26,17 +27,8 @@ namespace WebApp
             }
         }
 
-        private void FillBoxes()
-        {
-            textbox1.Text = game.Name;
-            textbox2.Text = game.Description;
-            textbox3.Text = game.Developer;
-            textbox4.Text = game.Rating;
-            textbox5.Text = game.ReleaseDate.ToString();
-            textbox6.Text = game.AverageUserScore.ToString();
-            textbox7.Text = game.AverageReviewerScore.ToString();
-        }
 
+        #region Event Handlers
         protected void Button1_Click(object sender, EventArgs e)
         {
             EnReleaseDate state = Utils.CompareDate(DateTime.Parse(Application["gameDate"].ToString()));
@@ -56,7 +48,9 @@ namespace WebApp
 
         protected void Button2_Click(object sender, EventArgs e)
         {
-            EnFavorite status = ActorHelpers.Instance.CheckAndAddToFavorite(int.Parse(Application["userId"].ToString()), int.Parse(Application["gameId"].ToString()));
+            EnFavorite status = ActorHelpers.Instance.CheckAndAddToFavorite(int.Parse(Application["userId"].ToString()), 
+                int.Parse(Application["gameId"].ToString()));
+
 
             if (status == EnFavorite.sucessfullyAdded)
                 MsgBox("Successfully added to list of your favorite games", Page, this);
@@ -67,6 +61,19 @@ namespace WebApp
             else
                 MsgBox("Game is already in list of your favorite games", Page, this);
         }
+        #endregion
+
+        #region Private Methods
+        private void FillBoxes()
+        {
+            textbox1.Text = game.Name;
+            textbox2.Text = game.Description;
+            textbox3.Text = game.Developer;
+            textbox4.Text = game.Rating;
+            textbox5.Text = game.ReleaseDate.ToString();
+            textbox6.Text = game.AverageUserScore.ToString();
+            textbox7.Text = game.AverageReviewerScore.ToString();
+        }
 
         public void MsgBox(string ex, Page pg, object obj)
         {
@@ -75,5 +82,6 @@ namespace WebApp
             ClientScriptManager cs = pg.ClientScript;
             cs.RegisterClientScriptBlock(cstype, s, s.ToString());
         }
+        #endregion
     }
 }

@@ -9,6 +9,7 @@ namespace WebApp
 {
     public partial class Default : Page
     {
+        #region Fields and Properties
         private User loggedUser;
 
         private static List<Game> games;
@@ -16,6 +17,8 @@ namespace WebApp
 
         private int selectedIndex;
         public int SelectedIndex { get => selectedIndex; }
+        #endregion
+
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -27,13 +30,7 @@ namespace WebApp
             }
         }
 
-        private void UpdateGames()
-        {
-            games = GamesManager.Instance.LoadGamesHeadersWithCategories();
-            DropDownList1.DataSource = games;
-            DropDownList1.DataBind();
-        }
-
+        #region Event Handlers
         protected void Button1_Click(object sender, EventArgs e)
         {
             loggedUser = (User)ActorHelpers.Instance.LoadActor(textbox1.Text, false);
@@ -57,6 +54,14 @@ namespace WebApp
         {
             selectedIndex = DropDownList1.SelectedIndex;
             Server.Transfer("GamePage.aspx");
+        }
+        #endregion
+
+        private void UpdateGames()
+        {
+            games = GamesManager.Instance.LoadGamesHeadersWithCategories();
+            DropDownList1.DataSource = games;
+            DropDownList1.DataBind();
         }
     }
 }
