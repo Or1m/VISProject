@@ -7,10 +7,12 @@ namespace BusinessLayer.BusinessObjects
 {
     public class User : Actor
     {
+        #region Public Properties
         public string Nick { get; set; }
         
         public List<Game> FavoriteGames { get; set; }
         public List<Reviewer> FavoriteReviewers { get; set; }
+        #endregion
 
 
         #region Constructors

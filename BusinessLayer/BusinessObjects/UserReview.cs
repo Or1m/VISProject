@@ -7,6 +7,7 @@ namespace BusinessLayer.BusinessObjects
 {
     public class UserReview : Review
     {
+        #region Constructors
         public UserReview() { }
         public UserReview(string title, int score, int userId, int gameId, DateTime dateTime, int order)
         : base(title, score, dateTime, order)
@@ -17,6 +18,7 @@ namespace BusinessLayer.BusinessObjects
             Actor = new User();
             Actor.Id = userId;
         }
+        #endregion
 
         public override string ToString()
         {

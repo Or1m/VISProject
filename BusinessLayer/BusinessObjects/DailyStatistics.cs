@@ -6,11 +6,14 @@ namespace BusinessLayer.BusinessObjects
 {
     public class DailyStatistics : Persistable<DailyStatisticsDTO>
     {
+        #region Public Properties
         public DateTime Date { get; set; }
         public int NumberOfUserReviews { get; set; }
         public int NumberOfReviewerReviews { get; set; }
+        #endregion
 
 
+        #region Constructor & Singleton Pattern
         private static DailyStatistics instance = null;
 
         private static readonly object lockObj = new object();
@@ -27,6 +30,7 @@ namespace BusinessLayer.BusinessObjects
         {
             Date = DateTime.Now;
         }
+        #endregion
 
 
         public override DailyStatisticsDTO ToDTO()

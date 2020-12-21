@@ -6,6 +6,7 @@ namespace BusinessLayer.BusinessObjects.BaseObjects
 {
     public class Actor : Persistable<ActorDTO>
     {
+        #region Public Properties
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public char Gender { get; set; }
@@ -17,6 +18,7 @@ namespace BusinessLayer.BusinessObjects.BaseObjects
         public bool? IsDeleted { get; set; }
 
         public Category FavoriteCategory { get; set; }
+        #endregion
 
 
         #region Constructors

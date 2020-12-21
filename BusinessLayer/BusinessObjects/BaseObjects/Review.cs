@@ -7,6 +7,7 @@ namespace BusinessLayer.BusinessObjects.BaseObjects
 {
     public class Review : Persistable<ReviewDTO>
     {
+        #region Public Properties
         public string Title { get; set; }
         public int Score { get; set; }
 
@@ -16,6 +17,7 @@ namespace BusinessLayer.BusinessObjects.BaseObjects
 
         public DateTime Date { get; set; }
         public int OrderOfReview { get; set; }
+        #endregion
 
 
         #region Constructors
