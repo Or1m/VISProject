@@ -21,6 +21,7 @@
             <p><asp:TextBox ID="textbox7" CssClass="form-control" runat="server" ReadOnly="true"/></p>
         
             <span><asp:Button ID="Button1" CssClass="btn btn-success" runat="server" Text="Add review" OnClick="Button1_Click" /></span>
+            <span><asp:Button ID="Button2" CssClass="btn btn-primary" runat="server" Text="Add game to favorite" OnClick="Button2_Click" /></span>
         </form>
     </div>
 
