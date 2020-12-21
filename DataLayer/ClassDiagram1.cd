@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="DataLayer.DatabaseConnection" BaseTypeListCollapsed="true">
+    <Position X="8.25" Y="3.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAABIABAAAECAAAFAMAAAABAAAABQAAAQAKAAAA=</HashCode>
+      <FileName>DatabaseConnection.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.429" />
+  </Class>
+  <Class Name="DataLayer.Properties.Settings">
+    <Position X="12.75" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAABAAAAACAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DataLayer.TableDataGateways.CategoryGateway" Collapsed="true">
+    <Position X="12" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAEAAAAQAAAAAAAAAAAIgASRAEQBAQGQAAAIABAA=</HashCode>
+      <FileName>TableDataGateways\CategoryGateway.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DataLayer.TableDataGateways.DailyStatisticsGateway">
+    <Position X="4.75" Y="0.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgIAAAAAAAAAAAAAAAAAAAABAAAAAQAAAAAIAAgA=</HashCode>
+      <FileName>TableDataGateways\DailyStatisticsGateway.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DataLayer.TableDataGateways.FavoriteGameGateway" Collapsed="true">
+    <Position X="11.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAQAAAAAAAAAAAAAAAFAAAAAQAIAAAIAAAA=</HashCode>
+      <FileName>TableDataGateways\FavoriteGameGateway.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DataLayer.TableDataGateways.FavoriteReviewerGateway">
+    <Position X="11.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAQAAAAAAAAAAQAAAABAAAAAQAIAAAIAAAA=</HashCode>
+      <FileName>TableDataGateways\FavoriteReviewerGateway.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DataLayer.TableDataGateways.GameCategoryGateway">
+    <Position X="14.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAQAAAAAAAAAAAAAAAFAAAAAQAIAAAIAAAA=</HashCode>
+      <FileName>TableDataGateways\GameCategoryGateway.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DataLayer.TableDataGateways.GameGateway">
+    <Position X="14.25" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACSAAFCAAASAgAAACAAAIAAggCRAEQAAYAAQgCIAgAQ=</HashCode>
+      <FileName>TableDataGateways\GameGateway.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DataLayer.TableDataGateways.ReviewerGateway" Collapsed="true">
+    <Position X="13.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAYAIFCAAAQAgAAAAAAAAIAgACTCAQAAQAAAAAKEAAA=</HashCode>
+      <FileName>TableDataGateways\ReviewerGateway.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DataLayer.TableDataGateways.ReviewerReviewGateway">
+    <Position X="13" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAIECEAiQAAIAAAAAAAAAgAANAAAAAQAIAAAIABAA=</HashCode>
+      <FileName>TableDataGateways\ReviewerReviewGateway.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DataLayer.TableDataGateways.UserGateway">
+    <Position X="0.5" Y="2.75" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>AAwAAFCIABQiAAABAAACIAAgACRAASAQQAQAAAIAAAA=</HashCode>
+      <FileName>TableDataGateways\UserGateway.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DataLayer.TableDataGateways.UserReviewGateway">
+    <Position X="4.75" Y="3.75" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AgQAIECEAAAABIAAAAAAACAgAANAAAAAQAIAAAIABAA=</HashCode>
+      <FileName>TableDataGateways\UserReviewGateway.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="DataLayer.Behaviour.IDatabaseConnection">
+    <Position X="7.75" Y="1" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABAABAAAACAAAAAIAAAAAAAAAAAAAAAACAAAA=</HashCode>
+      <FileName>Behaviour\IDatabaseConnection.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
